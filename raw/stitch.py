@@ -16,4 +16,4 @@ for row in csv.DictReader(open(sys.argv[1])):
 
     row['consMapIt'] = cons_gss2mapit[ward['PCON12CD']]
     row.update(ward)
-    writer.writerow(row)
+    writer.writerow({k: v.decode('ISO-8859-1').encode('utf-8') for k, v in row.iteritems()})
