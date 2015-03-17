@@ -1,0 +1,12 @@
+$guss-webfonts-base-url: '//pasteup.guim.co.uk/fonts/';
+
+@import 'bower_components/pasteup-palette/src/_palette';
+@import 'bower_components/guss-webfonts/src/_webfonts.scss';
+@import 'bower_components/guss-typography/_typography.scss';
+@import 'bower_components/guss-colours/_colours';
+@import 'bower_components/guss-grid-system/_grid-system';
+@import 'bower_components/sass-mq/_mq';
+@import 'bower_components/pasteup-buttons/src/_buttons';
+
+@include guss-webfonts();
+@include guss-typography-defaults;
