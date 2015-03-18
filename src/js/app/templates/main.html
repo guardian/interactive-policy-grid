@@ -27,14 +27,13 @@
         </div>
     {{/currentQuestion}}
 
-    <div class="tags {{^currentTags}}is-hidden{{/currentTags}}">
-        <a class="tags__toggle" href="#">See all</a>
-        {{#currentTags}}
-            <a class="tags__tag" href="#">{{.}}</a>
-        {{/currentTags}}
-    </div>
-
     <div class="policies">
+        <div class="tags {{^currentTags}}is-hidden{{/currentTags}}">
+            <a class="tags__toggle" href="#">See all</a>
+            {{#currentTags}}
+                <a class="tags__tag" href="#">{{.}}</a>
+            {{/currentTags}}
+        </div>
         <h3>{{policies.length}} policies</h3>
         {{#policies}}
             <div class="policy">

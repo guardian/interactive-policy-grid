@@ -97,9 +97,8 @@ h3 {
 }
 
 .answer-list {
-    padding: 0 $gs-gutter ($gs-baseline * 2);
-    border-bottom: 1px solid map-get($pasteup-palette, neutral-6);
-    box-shadow: 0px ($gs-gutter / 2) $gs-gutter (-$gs-gutter / 2) transparentize($c-neutral6, 0.2);
+    display: inline-block;
+    margin: 0 $gs-gutter ($gs-baseline * 2);
 }
 
 .answer-list__item {
@@ -142,6 +141,10 @@ h3 {
 
 .tags {
     @include fs-textSans(3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     color: white;
     background-color: darken($c-neutral3, 10%);
     min-height: gs-height(1);
@@ -210,8 +213,12 @@ h3 {
 }
 
 .policies {
-    margin: ($gs-baseline * 2) ($gs-gutter / 2) 0;
+    position: relative;
+    padding-top: ($gs-baseline + gs-height(1));
+    margin: 0 ($gs-gutter / 2);
     overflow: hidden;
+    border-top: 1px solid $c-neutral6;
+    box-shadow: inset 0px $gs-gutter $gs-gutter (-$gs-gutter) transparentize($c-neutral6, 0.2);
 }
 
 .policy {
