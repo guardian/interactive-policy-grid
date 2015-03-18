@@ -8,7 +8,7 @@
         </p>
     </div>
 
-    <div class="breadcrumb {{^userAnswers}}breadcrumb--hidden{{/userAnswers}}">
+    <div class="breadcrumb {{^userAnswers}}is-hidden{{/userAnswers}}">
         {{#userAnswers}}
             <span class="breadcrumb__item">{{answer}}</span>
         {{/userAnswers}}
@@ -27,9 +27,10 @@
         </div>
     {{/currentQuestion}}
 
-    <div class="tags {{^currentTags}}tags--hidden{{/currentTags}}">
+    <div class="tags {{^currentTags}}is-hidden{{/currentTags}}">
+        <a class="tags__toggle" href="#">See all</a>
         {{#currentTags}}
-            {{.}},
+            <a class="tags__tag" href="#">{{.}}</a>
         {{/currentTags}}
     </div>
 

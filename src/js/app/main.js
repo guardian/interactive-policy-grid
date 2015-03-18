@@ -29,7 +29,7 @@ define([
                 'questions': questions,
                 'questionNo': 0,
                 'userAnswers': [],
-                'userTags': []
+                'userTags': [] // TODO: user selected tags
             },
             'computed': {
                 'currentQuestion': '${questions}[${questionNo}]',

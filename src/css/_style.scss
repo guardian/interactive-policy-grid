@@ -82,10 +82,10 @@ h3 {
         content: "You've picked";
         color: $c-neutral2;
     }
-}
 
-.breadcrumb--hidden {
-    visibility: hidden;
+    &.is-hidden {
+        visibility: hidden;
+    }
 }
 
 .breadcrumb::before,
@@ -98,9 +98,8 @@ h3 {
 
 .answer-list {
     padding: 0 $gs-gutter ($gs-baseline * 2);
-    margin-bottom: ($gs-baseline * 2);
     border-bottom: 1px solid map-get($pasteup-palette, neutral-6);
-    box-shadow: 0px ($gs-gutter / 2) $gs-gutter (-$gs-gutter / 2) transparentize($c-neutral6, 0.5);
+    box-shadow: 0px ($gs-gutter / 2) $gs-gutter (-$gs-gutter / 2) transparentize($c-neutral6, 0.2);
 }
 
 .answer-list__item {
@@ -116,6 +115,7 @@ h3 {
     box-sizing: border-box;
     cursor: pointer;
     outline: 0;
+    transition: background-color 0.1s ease-out;
 
     .answer-list:hover > & {
         background-color: $c-neutral7;
@@ -140,8 +140,77 @@ h3 {
     }
 }
 
+.tags {
+    @include fs-textSans(3);
+    color: white;
+    background-color: darken($c-neutral3, 10%);
+    min-height: gs-height(1);
+    line-height: gs-height(1);
+    padding: 0 $gs-gutter;
+
+    &::before {
+        content: "Policy tags";
+        display: inline-block;
+        font-weight: bold;
+        padding-right: $gs-gutter;
+    }
+
+    &.is-hidden {
+        display: none;
+    }
+
+    &.is-sticky {
+        position: fixed;
+        top: 0;
+    }
+}
+
+.tags__toggle {
+    display: inline-block;
+    margin-right: ($gs-gutter * 2);
+    text-decoration: none;
+
+    &,
+    &:hover,
+    &:active {
+        color: white;
+    }
+
+    &:hover,
+    &:active {
+        text-decoration: underline;
+    }
+}
+
+.tags__tag {
+    @include fs-textSans(3, $size-only: true);
+    display: inline-block;
+    background-color: transparent;
+    vertical-align: middle;
+    margin-right: ($gs-gutter / 2);
+    padding: 0 ($gs-gutter / 2);
+    border: 1px solid white;
+    border-radius: 100px;
+
+    &,
+    &:hover,
+    &:active {
+        color: white;
+        text-decoration: none;
+    }
+
+    &:hover {
+        border-color: map-get($pasteup-palette, news-main-2);
+    }
+
+    &:active {
+        border-color: $c-neutral2;
+        background-color: $c-neutral2;
+    }
+}
+
 .policies {
-    margin: 0 ($gs-gutter / 2);
+    margin: ($gs-baseline * 2) ($gs-gutter / 2) 0;
     overflow: hidden;
 }
 
