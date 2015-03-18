@@ -34,12 +34,11 @@
                 <a class="tags__tag" href="#">{{.}}</a>
             {{/currentTags}}
         </div>
-        <h3>{{policies.length}} policies</h3>
-        {{#policies}}
-            <div class="policy">
-                <p>{{policy}}</p>
-                <div class="policy__party policy__party--{{party.toLowerCase()}}">{{party}}</div>
-            </div>
-        {{/policies}}
+
+        {{#currentPolicies.length}}
+            <policy-grid title="Your policies" policies="{{currentPolicies}}" />
+        {{/currentPolicies}}
+
+        <policy-grid title="All policies" policies="{{policies}}" />
     </div>
 </div>

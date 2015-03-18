@@ -1,11 +1,13 @@
 define([
     'iframe-messenger',
     'text!templates/main.html',
+    'text!templates/policyGrid.html',
     'ractive',
     'pegasus'
 ], function(
     iframeMessenger,
     mainTemplate,
+    policyGridTemplate,
     Ractive,
     pegasus
 ) {
@@ -21,9 +23,13 @@ define([
     }
 
     function app(el, policies, questions) {
+
         var ractive = new Ractive({
             'el': el,
             'template': mainTemplate,
+            'components': {
+                'policy-grid': Ractive.extend({'template': policyGridTemplate})
+            },
             'data': {
                 'policies': policies,
                 'questions': questions,
@@ -40,6 +46,14 @@ define([
                     });
 
                     return tags.concat(this.get('userTags'));
+                },
+                'currentPolicies': function () {
+                    var currentTags = this.get('currentTags');
+                    return policies.filter(function (policy) {
+                        return policy.tags.reduce(function (show, tag) {
+                            return show || currentTags.indexOf(tag) !== -1;
+                        }, false);
+                    });
                 }
             }
         });
@@ -55,6 +69,11 @@ define([
         iframeMessenger.enableAutoResize();
 
         pegasus(SHEET_URL).then(function (spreadsheet) {
+            var policies = spreadsheet.sheets.policies.map(function (policy) {
+                policy.tags = parseTags(policy.willtags); // TODO
+                return policy;
+            });
+
             var questions = spreadsheet.sheets.questions.map(function (question) {
                 var i, s, answers = [];
                 for (i = 0; i < MAX_ANSWERS; i++) {
@@ -73,7 +92,7 @@ define([
                 };
             });
 
-            app(el, spreadsheet.sheets.policies, questions);
+            app(el, policies, questions);
         });
     }
 

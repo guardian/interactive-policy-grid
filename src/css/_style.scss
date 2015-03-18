@@ -142,14 +142,14 @@ h3 {
 .tags {
     @include fs-textSans(3);
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: -1px; // hide the policy-grid border
+    left: (-$gs-gutter * 1.5);
+    right: (-$gs-gutter * 1.5);
     color: white;
     background-color: darken($c-neutral3, 10%);
     min-height: gs-height(1);
     line-height: gs-height(1);
-    padding: 0 $gs-gutter;
+    padding: 0 ($gs-gutter * 2);
 
     &::before {
         content: "Policy tags";
@@ -195,6 +195,8 @@ h3 {
     border: 1px solid white;
     border-radius: 100px;
 
+    transition: border-color 0.1s ease-out;
+
     &,
     &:hover,
     &:active {
@@ -216,12 +218,21 @@ h3 {
     position: relative;
     padding-top: ($gs-baseline + gs-height(1));
     margin: 0 ($gs-gutter / 2);
-    overflow: hidden;
     border-top: 1px solid $c-neutral6;
     box-shadow: inset 0px $gs-gutter $gs-gutter (-$gs-gutter) transparentize($c-neutral6, 0.2);
 }
 
-.policy {
+.policy-grid {
+    overflow: hidden;
+    clear: left;
+    margin-bottom: ($gs-baseline * 2);
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.policy-grid__item {
     $gap: $gs-gutter / 2;
     @include fs-data(3);
     height: 100px;
@@ -247,7 +258,7 @@ h3 {
     }
 }
 
-.policy__party {
+.party {
     @include fs-data(2, $size-only: true);
     font-weight: bold;
 
@@ -262,8 +273,8 @@ h3 {
     }
 }
 
-@mixin policy__party($party, $color) {
-    .policy__party--#{$party} {
+@mixin party--color($party, $color) {
+    .party--#{$party} {
         color: $color;
         &::before {
             background-color: $color;
@@ -271,9 +282,9 @@ h3 {
     }
 }
 
-@include policy__party(conservative, #0087dc);
-@include policy__party(labour, #d50000);
-@include policy__party(ukip, #efe600);
-@include policy__party(ld, #fdbb30);
-@include policy__party(pc, #3f8428);
-@include policy__party(snp, #fff95d);
+@include party--color(conservative, #0087dc);
+@include party--color(labour, #d50000);
+@include party--color(ukip, #efe600);
+@include party--color(ld, #fdbb30);
+@include party--color(pc, #3f8428);
+@include party--color(snp, #fff95d);
