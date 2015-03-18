@@ -35,10 +35,12 @@
             {{/currentTags}}
         </div>
 
-        {{#currentPolicies.length}}
-            <policy-grid title="Your policies" policies="{{currentPolicies}}" />
-        {{/currentPolicies}}
+        <div>
+            {{#currentPolicies.length}}
+                <policy-grid title="Your policies" policies="{{currentPolicies}}" />
+            {{/currentPolicies}}
 
-        <policy-grid title="All policies" policies="{{policies}}" />
+            <policy-grid title="All policies" policies="{{policies}}" />
+        </div>
     </div>
 </div>

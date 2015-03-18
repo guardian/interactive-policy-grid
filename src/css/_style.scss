@@ -12,7 +12,7 @@ body {
 }
 
 .interactive {
-    margin: 0;
+    margin: 0 !important; // Override NGW
     padding: 0;
     background-color: $c-neutral8;
 }
@@ -20,7 +20,6 @@ body {
 .container {
     margin: 0 auto;
     padding: $gs-gutter;
-    box-sizing: border-box;
     background-color: white;
     overflow: hidden;
 
@@ -54,9 +53,8 @@ h2 {
     padding-left: $gs-gutter;
 }
 
-h3 {
-    @include fs-header(2);
-    padding-left: ($gs-gutter / 2);
+p {
+    margin: 0 0 $gs-baseline;
 }
 
 .header {
@@ -73,8 +71,8 @@ h3 {
 
 .breadcrumb {
     @include fs-textSans(4);
-    height: gs-height(1);
-    line-height: gs-height(1);
+    height: ($gs-baseline * 4);
+    line-height: ($gs-baseline * 4);
     border-bottom: 1px solid $c-neutral6;
     margin-bottom: $gs-baseline;
 
@@ -84,6 +82,7 @@ h3 {
     }
 
     &.is-hidden {
+        display: block !important; // Override NGW
         visibility: hidden;
     }
 }
@@ -216,8 +215,7 @@ h3 {
 
 .policies {
     position: relative;
-    padding-top: ($gs-baseline + gs-height(1));
-    margin: 0 ($gs-gutter / 2);
+    padding: ($gs-baseline + gs-height(1)) ($gs-gutter / 2) 0;
     border-top: 1px solid $c-neutral6;
     box-shadow: inset 0px $gs-gutter $gs-gutter (-$gs-gutter) transparentize($c-neutral6, 0.2);
 }
@@ -225,17 +223,33 @@ h3 {
 .policy-grid {
     overflow: hidden;
     clear: left;
-    margin-bottom: ($gs-baseline * 2);
+    margin: 0 (-$gs-gutter / 2) ($gs-baseline * 4);
 
     &:last-child {
         margin-bottom: 0;
     }
 }
 
+.policy-grid__title {
+    @include fs-header(4);
+    line-height: 1;
+    border-top: 1px solid $c-neutral6;
+    border-bottom: 1px solid $c-neutral6;
+    padding: ($gs-baseline * 1.5) $gs-gutter;
+    margin-bottom: ($gs-baseline * 2);
+
+    .policy-grid:first-child > & {
+        border-top: 0;
+    }
+}
+
+
 .policy-grid__item {
-    $gap: $gs-gutter / 2;
-    @include fs-data(3);
-    height: 100px;
+    $gap: $gs-gutter;
+    @include fs-textSans(3);
+    font-size: 20px;
+    line-height: 1.2;
+    height: 160px;
     box-shadow: ($gap + 1px) 0 0 (-$gap) $c-neutral6, 0 ($gap + 1px) 0 (-$gap) $c-neutral6;
     border: 2px solid transparent;
     padding: $gap;
@@ -259,8 +273,15 @@ h3 {
 }
 
 .party {
-    @include fs-data(2, $size-only: true);
+    font-size: 13px;
+    line-height: 13px;
+    display: inline-block;
     font-weight: bold;
+    color: #666;
+    border-radius: 4px;
+    background-color: $c-neutral7;
+    padding: 6px 8px 5px;
+    margin-bottom: $gs-baseline;
 
     &::before {
         content: "";
@@ -269,16 +290,13 @@ h3 {
         width: 6px;
         border-radius: 2px;
         vertical-align: middle;
-        margin-right: 5px;
+        margin: -2px 5px 0 0;
     }
 }
 
 @mixin party--color($party, $color) {
-    .party--#{$party} {
-        color: $color;
-        &::before {
-            background-color: $color;
-        }
+    .party--#{$party}::before {
+        background-color: $color;
     }
 }
 

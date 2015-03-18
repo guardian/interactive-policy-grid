@@ -129,7 +129,7 @@ module.exports = function(grunt) {
         prod: {
             options: {
                 patterns: [{
-                  match: /\/@@assets@@/g,
+                  match: /@@assets@@/g,
                   replacement: pkg.config.cdn_url + 'assets-'+currentTime
                 }]
             },
