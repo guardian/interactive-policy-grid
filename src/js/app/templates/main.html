@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="header">
+        <h1>Will their policies work for you?</h1>
+        <p class="header__text">
+            Lorem ipsum Dolor sit amet, consectetur adipiscing elit. Nam et mattis nunc.
+            Sed sed elementum justo, et aliquam lectus. Quisque lacinia, erat sit amet
+            fermentum sollicitudin, massa.
+        </p>
+    </div>
+
+    <div class="breadcrumb {{^userAnswers}}breadcrumb--hidden{{/userAnswers}}">
+        {{#userAnswers}}
+            <span class="breadcrumb__item">{{answer}}</span>
+        {{/userAnswers}}
+    </div>
+    {{#currentQuestion}}
+        <h2>{{question}}</h2>
+        <div class="answer-list">
+            {{#answers:answerNo}}
+                <button class="answer-list__item" on-click="answer">
+                    <i class="answer-list__item__icon">
+                        <img src="@@assets@@/imgs/icon.svg" />
+                    </i>
+                    {{answer}}
+                </button>
+            {{/answers}}
+        </div>
+    {{/currentQuestion}}
+
+    <div class="tags {{^currentTags}}tags--hidden{{/currentTags}}">
+        {{#currentTags}}
+            {{.}},
+        {{/currentTags}}
+    </div>
+
+    <div class="policies">
+        <h3>{{policies.length}} policies</h3>
+        {{#policies}}
+            <div class="policy">
+                <p>{{policy}}</p>
+                <div class="policy__party policy__party--{{party.toLowerCase()}}">{{party}}</div>
+            </div>
+        {{/policies}}
+    </div>
+</div>

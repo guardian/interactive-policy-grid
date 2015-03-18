@@ -1,0 +1,203 @@
+$c-neutral1: map-get($pasteup-palette, neutral-1);
+$c-neutral2: map-get($pasteup-palette, neutral-2);
+$c-neutral3: map-get($pasteup-palette, neutral-3);
+$c-neutral6: map-get($pasteup-palette, neutral-6);
+$c-neutral7: map-get($pasteup-palette, neutral-7);
+$c-neutral8: map-get($pasteup-palette, neutral-8);
+
+body {
+    @include fs-bodyCopy(2);
+    color: $c-neutral1;
+    margin: 0;
+}
+
+.interactive {
+    margin: 0;
+    padding: 0;
+    background-color: $c-neutral8;
+}
+
+.container {
+    margin: 0 auto;
+    padding: $gs-gutter;
+    box-sizing: border-box;
+    background-color: white;
+    overflow: hidden;
+
+    @media (min-width: gs-span(9)) {
+        max-width: gs-span(9);
+    }
+    @media (min-width: gs-span(12)) {
+        max-width: gs-span(12);
+    }
+    @media (min-width: gs-span(14)) {
+        max-width: gs-span(14);
+    }
+    @media (min-width: gs-span(16)) {
+        max-width: gs-span(16);
+    }
+}
+
+h1, h2, h3 {
+    margin: 0 0 $gs-baseline;
+}
+
+h1 {
+    @include fs-header(5);
+    margin-bottom: ($gs-baseline * 2);
+    font-size: 44px;
+}
+
+h2 {
+    @include fs-header(4);
+    max-width: gs-span(6);
+    padding-left: $gs-gutter;
+}
+
+h3 {
+    @include fs-header(2);
+    padding-left: ($gs-gutter / 2);
+}
+
+.header {
+    padding-left: $gs-gutter;
+    border-bottom: 1px solid $c-neutral3;
+}
+
+.header__text {
+    color: $c-neutral2;
+    font-size: 14px;
+    line-height: 1.25;
+    max-width: gs-span(6);
+}
+
+.breadcrumb {
+    @include fs-textSans(4);
+    height: gs-height(1);
+    line-height: gs-height(1);
+    border-bottom: 1px solid $c-neutral6;
+    margin-bottom: $gs-baseline;
+
+    &::before {
+        content: "You've picked";
+        color: $c-neutral2;
+    }
+}
+
+.breadcrumb--hidden {
+    visibility: hidden;
+}
+
+.breadcrumb::before,
+.breadcrumb__item {
+    display: inline-block;
+    height: 100%;
+    border-right: 1px solid $c-neutral6;
+    padding: 0 $gs-gutter;
+}
+
+.answer-list {
+    padding: 0 $gs-gutter ($gs-baseline * 2);
+    margin-bottom: ($gs-baseline * 2);
+    border-bottom: 1px solid map-get($pasteup-palette, neutral-6);
+    box-shadow: 0px ($gs-gutter / 2) $gs-gutter (-$gs-gutter / 2) transparentize($c-neutral6, 0.5);
+}
+
+.answer-list__item {
+    @include fs-textSans(2);
+    display: inline-block;
+    vertical-align: top;
+    border: 1px solid $c-neutral6;
+    background-color: white;
+    width: 200px;
+    height: 150px;
+    margin: 0 ($gs-gutter / 2) ($gs-gutter / 2) 0;
+    padding: 0 $gs-gutter;
+    box-sizing: border-box;
+    cursor: pointer;
+    outline: 0;
+
+    .answer-list:hover > & {
+        background-color: $c-neutral7;
+    }
+
+    &:hover {
+        background-color: white !important;
+        box-shadow: 0 0 ($gs-gutter / 2) 0 transparentize($c-neutral7, 0.1);
+    }
+}
+
+.answer-list__item__icon {
+    display: block;
+    margin: 0 auto $gs-baseline;
+    width: 40px;
+    border-bottom: 1px solid $c-neutral6;
+    padding-bottom: ($gs-baseline / 2);
+
+    & > img {
+        display: block;
+        width: 100%;
+    }
+}
+
+.policies {
+    margin: 0 ($gs-gutter / 2);
+    overflow: hidden;
+}
+
+.policy {
+    $gap: $gs-gutter / 2;
+    @include fs-data(3);
+    height: 100px;
+    box-shadow: ($gap + 1px) 0 0 (-$gap) $c-neutral6, 0 ($gap + 1px) 0 (-$gap) $c-neutral6;
+    border: 2px solid transparent;
+    padding: $gap;
+    box-sizing: border-box;
+    float: left;
+
+    @mixin policy--cols($cols, $start) {
+        @media (min-width: gs-span($start)) {
+            width: (100% / $cols);
+        }
+    }
+
+    @include policy--cols(2, 1);
+    @include policy--cols(3, 8);
+    @include policy--cols(4, 12);
+
+    &:hover {
+        box-shadow: none;
+        border-color: $c-neutral6;
+    }
+}
+
+.policy__party {
+    @include fs-data(2, $size-only: true);
+    font-weight: bold;
+
+    &::before {
+        content: "";
+        display: inline-block;
+        height: 14px;
+        width: 6px;
+        border-radius: 2px;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+}
+
+@mixin policy__party($party, $color) {
+    .policy__party--#{$party} {
+        color: $color;
+        &::before {
+            background-color: $color;
+        }
+    }
+}
+
+@include policy__party(conservative, #0087dc);
+@include policy__party(labour, #d50000);
+@include policy__party(ukip, #efe600);
+@include policy__party(ld, #fdbb30);
+@include policy__party(pc, #3f8428);
+@include policy__party(snp, #fff95d);
