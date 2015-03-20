@@ -1,9 +1,9 @@
 <div class="policy-grid">
     <h3 class="policy-grid__title">{{title}} ({{policies.length}})</h3>
     {{#policies}}
-        <div class="policy-grid__item">
+        <a class="policy-grid__item" href="#">
             <div class="party party--{{party.toLowerCase()}}">{{party}}</div>
             <p>{{policy}}</p>
-        </div>
+        </a>
     {{/policies}}
 </div>

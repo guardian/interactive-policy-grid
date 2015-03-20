@@ -24,12 +24,12 @@
         <h2>{{question}}</h2>
         <div class="answer-list">
             {{#answers:answerNo}}
-                <button class="answer-list__item" on-click="answer">
+                <a class="answer-list__item" href="#" on-click="answer">
                     <i class="answer-list__item__icon">
                         <img src="@@assets@@/imgs/icon.svg" />
                     </i>
                     {{answer}}
-                </button>
+                </a>
             {{/answers}}
         </div>
     {{/currentQuestion}}

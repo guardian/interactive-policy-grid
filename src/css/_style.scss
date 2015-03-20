@@ -6,6 +6,19 @@ $c-neutral7: map-get($pasteup-palette, neutral-7);
 $c-neutral8: map-get($pasteup-palette, neutral-8);
 $c-newsmain2: map-get($pasteup-palette, news-main-2);
 
+@mixin link($color, $hover: false) {
+    &, &:hover, &:active {
+        color: $color;
+        text-decoration: none;
+    }
+
+    @if $hover == true {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
 body {
     @include fs-bodyCopy(2);
     color: $c-neutral1;
@@ -104,12 +117,7 @@ p {
     text-align: center;
     box-sizing: border-box;
 
-    &,
-    &:hover,
-    &:active {
-        color: inherit;
-        text-decoration: none;
-    }
+    @include link($c-neutral1);
 
     &::after {
         position: absolute;
@@ -151,15 +159,15 @@ p {
     display: inline-block;
     vertical-align: top;
     border: 1px solid $c-neutral6;
-    background-color: white;
     width: 200px;
     height: 150px;
     margin: 0 ($gs-gutter / 2) ($gs-gutter / 2) 0;
-    padding: 0 $gs-gutter;
+    padding: $gs-gutter;
     box-sizing: border-box;
-    cursor: pointer;
-    outline: 0;
     transition: background-color 0.1s ease-out;
+    text-align: center;
+
+    @include link($c-neutral1);
 
     .answer-list:hover > & {
         background-color: $c-neutral7;
@@ -216,18 +224,8 @@ p {
 .tags__toggle {
     display: inline-block;
     margin-right: ($gs-gutter * 2);
-    text-decoration: none;
 
-    &,
-    &:hover,
-    &:active {
-        color: white;
-    }
-
-    &:hover,
-    &:active {
-        text-decoration: underline;
-    }
+    @include link(white, true);
 }
 
 .tags__tag {
@@ -242,12 +240,7 @@ p {
 
     transition: border-color 0.1s ease-out;
 
-    &,
-    &:hover,
-    &:active {
-        color: white;
-        text-decoration: none;
-    }
+    @include link(white);
 
     &:hover {
         border-color: $c-newsmain2;
@@ -301,6 +294,8 @@ p {
     padding: $gap;
     box-sizing: border-box;
     float: left;
+
+    @include link($c-neutral1, true);
 
     @mixin policy--cols($cols, $start) {
         @media (min-width: gs-span($start)) {
