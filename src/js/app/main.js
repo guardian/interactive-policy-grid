@@ -38,6 +38,7 @@ define([
                 'userTags': [] // TODO: user selected tags
             },
             'computed': {
+                'answersCount': '${userAnswers}.length',
                 'currentQuestion': '${questions}[${questionNo}]',
                 'currentTags': function () {
                     var userAnswers = this.get('userAnswers');
@@ -58,10 +59,14 @@ define([
             }
         });
 
+        ractive.on('question', function (evt, questionNo) {
+            this.set('questionNo', questionNo);
+        });
+
         ractive.on('answer', function (evt) {
             var questionNo = this.get('questionNo');
             this.set('userAnswers.' + questionNo, questions[questionNo].answers[evt.index.answerNo]);
-            this.add('questionNo');
+            this.set('questionNo', this.get('userAnswers').length);
         });
     }
 

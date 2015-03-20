@@ -8,10 +8,17 @@
         </p>
     </div>
 
-    <div class="breadcrumb {{^userAnswers}}is-hidden{{/userAnswers}}">
-        {{#userAnswers}}
-            <span class="breadcrumb__item">{{answer}}</span>
+    <div class="breadcrumb">
+        {{#userAnswers:i}}
+            <a class="breadcrumb__item {{^questionNo == i}}breadcrumb__item--change{{/questionNo}}"
+               href="#" on-click="question:{{i}}">
+                {{answer}}
+            </a>
         {{/userAnswers}}
+        <a class="breadcrumb__item {{^questionNo == answersCount}}breadcrumb__item--change{{/questionNo}}"
+           href="#" on-click="question:{{answersCount}}">
+            Current question
+        </a>
     </div>
     {{#currentQuestion}}
         <h2>{{question}}</h2>
