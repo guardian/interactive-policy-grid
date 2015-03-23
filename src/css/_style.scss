@@ -62,7 +62,7 @@ h1 {
 }
 
 h2 {
-    @include fs-header(4);
+    @include fs-header(5);
     max-width: gs-span(6);
     padding-left: $gs-gutter;
 }
@@ -88,7 +88,7 @@ p {
     height: ($gs-baseline * 4);
     line-height: ($gs-baseline * 4);
     border-bottom: 1px solid $c-neutral6;
-    margin-bottom: $gs-baseline;
+    margin-bottom: ($gs-baseline * 4);
 
     &::before {
         content: "Questions";
@@ -146,17 +146,17 @@ p {
 
 
 .answer-list {
-    display: inline-block;
-    margin: 0 $gs-gutter ($gs-baseline * 2);
+    margin: 0 $gs-gutter ($gs-baseline * 4);
 }
 
 .answer-list__item {
-    @include fs-textSans(2);
+    @include fs-textSans(4);
+    font-weight: bold;
     display: inline-block;
     vertical-align: top;
     border: 1px solid $c-neutral6;
-    width: 200px;
-    height: 150px;
+    width: calc(25% - #{$gs-gutter / 2});
+    height: 240px;
     margin: 0 ($gs-gutter / 2) ($gs-gutter / 2) 0;
     padding: $gs-gutter;
     box-sizing: border-box;
@@ -178,9 +178,9 @@ p {
 .answer-list__item__icon {
     display: block;
     margin: 0 auto $gs-baseline;
-    width: 40px;
+    width: 120px;
     border-bottom: 1px solid $c-neutral6;
-    padding-bottom: ($gs-baseline / 2);
+    padding-bottom: 28px;
 
     & > img {
         display: block;
