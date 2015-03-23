@@ -31,12 +31,17 @@
     {{/currentQuestion}}
 
     <div class="policies">
-        <div class="tags {{^currentTags}}is-hidden{{/currentTags}}">
+        <div class="tags {{^visibleTags}}is-hidden{{/visibleTags}}">
             <a class="tags__toggle" href="#">See all</a>
             <div class="tags__list">
-                {{#currentTags}}
-                    <a class="tags__list__tag" href="#" on-click="remove-tag">{{.}}</a>
-                {{/currentTags}}
+                {{#visibleTags}}
+                    <a class="tags__list__tag" href="#tag" on-click="remove-tag">{{.}}</a>
+                {{/visibleTags}}
+                <span class="tags__list--hidden">
+                    {{#hiddenTags}}
+                        <a class="tags__list__tag" href="#tag" on-click="add-tag">{{.}}</a>
+                    {{/hiddenTags}}
+                </span>
             </div>
         </div>
 

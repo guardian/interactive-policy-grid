@@ -239,6 +239,10 @@ p {
     }
 }
 
+.tags__list--hidden {
+    opacity: 0.5;
+}
+
 .tags__list__tag {
     @include fs-textSans(3, $size-only: true);
     position: relative;
@@ -255,8 +259,8 @@ p {
     @include link(white);
 
     &:hover {
-        background-color: $c-newsmain2;
         border-color: $c-newsmain2;
+        background-color: $c-newsmain2;
         &::after {
             content: "";
             position: absolute;
@@ -270,13 +274,16 @@ p {
             background-color: $c-neutral2;
             background-image: url('../imgs/cross.svg');
             background-size: contain;
-            box-shadow: -5px 0px 10px 5px $c-newsmain2;
+            box-shadow: -5px 0px 5px $c-newsmain2, 0 0 0 2px $c-newsmain2;
         }
     }
 
     &:active {
         border-color: $c-neutral2;
         background-color: $c-neutral2;
+        &::after {
+            box-shadow: -5px 0px 5px $c-neutral2, 0 0 0 2px $c-neutral2;
+        }
     }
 }
 
