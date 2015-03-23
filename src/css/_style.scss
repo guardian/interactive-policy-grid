@@ -31,6 +31,10 @@ body {
     background-color: $c-neutral8;
 }
 
+.is-hidden {
+    display: none;
+}
+
 .container {
     margin: 0 auto;
     padding: $gs-gutter;
@@ -211,10 +215,6 @@ p {
         padding-right: $gs-gutter;
     }
 
-    &.is-hidden {
-        display: none;
-    }
-
     &.is-sticky {
         position: fixed;
         top: 0;
@@ -318,36 +318,43 @@ p {
     }
 }
 
-
-.policy-grid__item {
-    $gap: $gs-gutter;
-    line-height: 1.2;
-    height: 160px;
-    box-shadow: ($gap + 1px) 0 0 (-$gap) $c-neutral6, 0 ($gap + 1px) 0 (-$gap) $c-neutral6;
-    border: 2px solid transparent;
-    padding: $gap;
-    box-sizing: border-box;
-    float: left;
-
-    @include link($c-neutral1, true);
-
+.policy-grid__list__sizer,
+.policy-grid__list__item {
     @mixin policy--cols($cols, $start) {
         @media (min-width: gs-span($start)) {
             width: (100% / $cols);
         }
     }
 
-    @include policy--cols(2, 1);
-    @include policy--cols(3, 8);
-    @include policy--cols(4, 12);
+    @include policy--cols(1, 1);
+    @include policy--cols(2, 7);
+    @include policy--cols(3, 12);
+    @include policy--cols(4, 14);
+}
+
+.policy-grid__list__item {
+    line-height: 1.2;
+    height: 160px;
+    box-shadow: ($gs-gutter + 1px) 0 0 (-$gs-gutter) $c-neutral6, 0 ($gs-gutter + 1px) 0 (-$gs-gutter) $c-neutral6;
+    border: 2px solid transparent;
+    padding: $gs-gutter;
+    box-sizing: border-box;
+
+    @include link($c-neutral1, true);
 
     &:hover {
         box-shadow: none;
         border-color: $c-neutral6;
     }
+
+    &.is-selected {
+        min-width: 50%;
+        height: 320px;
+        border-color: $c-neutral2;
+    }
 }
 
-.policy-grid__item__party {
+.policy-grid__list__item__party {
     @include f-textSans;
     font-size: 13px;
     line-height: 13px;
@@ -370,15 +377,15 @@ p {
     }
 }
 
-@mixin policy-grid__item__party--color($party, $color) {
-    .policy-grid__item__party--#{$party}::before {
+@mixin policy-grid__list__item__party--color($party, $color) {
+    .policy-grid__list__item__party--#{$party}::before {
         background-color: $color;
     }
 }
 
-@include policy-grid__item__party--color(conservative, #0087dc);
-@include policy-grid__item__party--color(labour, #d50000);
-@include policy-grid__item__party--color(ukip, #efe600);
-@include policy-grid__item__party--color(ld, #fdbb30);
-@include policy-grid__item__party--color(pc, #3f8428);
-@include policy-grid__item__party--color(snp, #fff95d);
+@include policy-grid__list__item__party--color(conservative, #0087dc);
+@include policy-grid__list__item__party--color(labour, #d50000);
+@include policy-grid__list__item__party--color(ukip, #efe600);
+@include policy-grid__list__item__party--color(ld, #fdbb30);
+@include policy-grid__list__item__party--color(pc, #3f8428);
+@include policy-grid__list__item__party--color(snp, #fff95d);

@@ -3,13 +3,15 @@ define([
     'text!templates/main.html',
     'text!templates/policyGrid.html',
     'ractive',
-    'pegasus'
+    'pegasus',
+    'masonry'
 ], function(
     iframeMessenger,
     mainTemplate,
     policyGridTemplate,
     Ractive,
-    pegasus
+    pegasus,
+    Masonry
 ) {
     'use strict';
 
@@ -28,6 +30,33 @@ define([
 
     function app(el, policies, questions) {
 
+        function masonryDecorator(node) {
+            new Masonry(node, {
+                'itemSelector': '.policy-grid__list__item',
+                'columnWidth': '.policy-grid__list__sizer',
+                'transitionDuration': 0
+            });
+
+            return { 'teardown': function () {} };
+        }
+
+        function masonryItemDecorator(node) {
+            var masonry = Masonry.data(node.parentNode);
+            if (masonry) {
+                masonry.addItems(node);
+                masonry.layout();
+
+                return {
+                    'teardown': function () {
+                        masonry.remove(node);
+                        masonry.layout();
+                    }
+                };
+            }
+
+            return { 'teardown': function () {} };
+        }
+
         var ractive = new Ractive({
             'el': el,
             'template': mainTemplate,
@@ -36,13 +65,11 @@ define([
             },
             'data': {
                 'policies': policies,
+                'policyNo': 0,
                 'questions': questions,
                 'questionNo': 0,
                 'userAnswers': [],
-                'userTags': {
-                    'added': [],
-                    'removed': []
-                }
+                'userTags': { 'added': [], 'removed': [] }
             },
             'computed': {
                 'tags': function () {
@@ -68,14 +95,18 @@ define([
                     });
                 },
                 'currentQuestion': '${questions}[${questionNo}]',
-                'currentPolicies': function () {
+                'userPolicies': function () {
                     var visibleTags = this.get('visibleTags');
-                    return policies.filter(function (policy) {
+                    return this.get('policies').filter(function (policy) {
                         return policy.tags.reduce(function (show, tag) {
                             return show || visibleTags.indexOf(tag) !== -1;
                         }, false);
                     });
                 }
+            },
+            'decorators': {
+                'masonry': masonryDecorator,
+                'masonryItem': masonryItemDecorator
             }
         });
 
@@ -95,6 +126,11 @@ define([
 
         ractive.on('remove-tag', function (evt) {
             this.push('userTags.removed', evt.context);
+        });
+
+        ractive.on('policy-grid.policy', function (evt) {
+            this.set('policyNo', evt.context.rowNumber);
+            Masonry.data(evt.node.parentNode).layout();
         });
     }
 

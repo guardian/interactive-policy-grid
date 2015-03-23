@@ -30,7 +30,8 @@ module.exports = function(grunt) {
         all: {
             rjsConfig: './src/js/app/require.js',
             options: {
-                baseUrl: './src/js/app/'
+                baseUrl: './src/js/app/',
+                transitive: true
             }
         }
     },

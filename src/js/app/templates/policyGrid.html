@@ -1,9 +1,13 @@
-<div class="policy-grid">
+<div class="policy-grid {{^policies}}is-hidden{{/policies}}">
     <h3 class="policy-grid__title">{{title}} ({{policies.length}})</h3>
-    {{#policies}}
-        <a class="policy-grid__item" href="#policy" on-click="policy">
-            <div class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</div>
-            <p class="policy-grid__item__title">{{policy}}</p>
-        </a>
-    {{/policies}}
+    <div class="policy-grid__list" decorator="masonry">
+        <div class="policy-grid__list__sizer"></div>
+        {{#policies}}
+            <a class="policy-grid__list__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}"
+               href="#policy" on-click="policy" decorator="masonryItem">
+                <div class="policy-grid__list__item__party policy-grid__list__item__party--{{party.toLowerCase()}}">{{party}}</div>
+                <p class="policy-grid__list__item__title">{{policy}}</p>
+            </a>
+        {{/policies}}
+    </div>
 </div>
