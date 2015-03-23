@@ -9,16 +9,12 @@
     </div>
 
     <div class="breadcrumb">
-        {{#userAnswers:i}}
-            <a class="breadcrumb__item {{^questionNo == i}}breadcrumb__item--change{{/questionNo}}"
-               href="#" on-click="question:{{i}}">
-                {{answer}}
+        {{#questions:questionI}}
+            <a class="breadcrumb__item {{#questionI == questionNo}}is-current{{/questionI}} {{#!!userAnswers[questionI]}}is-answered{{/userAnswers}}"
+               href="#" on-click="question:{{questionI}}">
+                {{theme}}
             </a>
-        {{/userAnswers}}
-        <a class="breadcrumb__item {{^questionNo == answersCount}}breadcrumb__item--change{{/questionNo}}"
-           href="#" on-click="question:{{answersCount}}">
-            Current question
-        </a>
+        {{/questions}}
     </div>
     {{#currentQuestion}}
         <h2>{{question}}</h2>
@@ -37,9 +33,11 @@
     <div class="policies">
         <div class="tags {{^currentTags}}is-hidden{{/currentTags}}">
             <a class="tags__toggle" href="#">See all</a>
-            {{#currentTags}}
-                <a class="tags__tag" href="#">{{.}}</a>
-            {{/currentTags}}
+            <div class="tags__list">
+                {{#currentTags}}
+                    <a class="tags__list__tag" href="#" on-click="remove-tag">{{.}}</a>
+                {{/currentTags}}
+            </div>
         </div>
 
         <div>

@@ -35,18 +35,22 @@ define([
                 'questions': questions,
                 'questionNo': 0,
                 'userAnswers': [],
-                'userTags': [] // TODO: user selected tags
+                'userTags': {
+                    'added': [],
+                    'removed': []
+                } // TODO: user selected tags
             },
             'computed': {
                 'answersCount': '${userAnswers}.length',
                 'currentQuestion': '${questions}[${questionNo}]',
                 'currentTags': function () {
-                    var userAnswers = this.get('userAnswers');
-                    var tags = userAnswers.map(function (a) { return a.tags; }).reduce(function (a, b) {
-                        return a.concat(b);
-                    });
+                    var removedTags = this.get('userTags.removed');
+                    var tags = this.get('userAnswers')
+                        .map(function (a) { return a.tags; })
+                        .reduce(function (a, b) { return a.concat(b); })
+                        .filter(function (tag) { return removedTags.indexOf(tag) === -1; });
 
-                    return tags.concat(this.get('userTags'));
+                    return tags.concat(this.get('userTags.added'));
                 },
                 'currentPolicies': function () {
                     var currentTags = this.get('currentTags');
@@ -65,8 +69,12 @@ define([
 
         ractive.on('answer', function (evt) {
             var questionNo = this.get('questionNo');
-            this.set('userAnswers.' + questionNo, questions[questionNo].answers[evt.index.answerNo]);
+            this.set('userAnswers.' + questionNo, evt.context);
             this.set('questionNo', this.get('userAnswers').length);
+        });
+
+        ractive.on('remove-tag', function (evt) {
+            this.push('userTags.removed', evt.context);
         });
     }
 
@@ -93,6 +101,7 @@ define([
 
                 return {
                     'question': question.question,
+                    'theme': question.theme,
                     'answers': answers
                 };
             });

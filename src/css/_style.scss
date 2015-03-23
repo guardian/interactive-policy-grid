@@ -84,70 +84,66 @@ p {
 }
 
 .breadcrumb {
-    font-size: 0;
+    @include fs-textSans(4);
     height: ($gs-baseline * 4);
+    line-height: ($gs-baseline * 4);
     border-bottom: 1px solid $c-neutral6;
     margin-bottom: $gs-baseline;
 
     &::before {
-        content: "You've picked";
+        content: "Questions";
         color: $c-neutral2;
-    }
-
-    &.is-hidden {
-        display: block !important; // Override NGW
-        visibility: hidden;
     }
 }
 
 .breadcrumb::before,
 .breadcrumb__item {
-    @include fs-textSans(4);
-    line-height: ($gs-baseline * 4);
     display: inline-block;
-    height: 100%;
-    border-right: 1px solid $c-neutral6;
     padding: 0 $gs-gutter;
 }
 
 .breadcrumb__item {
     position: relative;
+    top: -1px;
     min-width: 130px;
     font-weight: bold;
     text-align: center;
-    box-sizing: border-box;
+    border: 1px solid transparent;
 
-    @include link($c-neutral1);
+    @include link($c-neutral3);
 
-    &::after {
+    &:hover::after {
         position: absolute;
-        content: "Change answer";
+        content: "Choose answer";
         top: -1px;
         left: -1px;
         right: -1px;
         bottom: -1px;
-        border: 1px solid $c-newsmain2;
-        background-color: white;
-    }
-}
-
-.breadcrumb__item:last-child::after {
-    content: "Current question";
-}
-
-.breadcrumb__item--change {
-    color: $c-neutral2;
-
-    &::after {
-        display: none;
-    }
-
-    &:hover::after {
-        display: block;
         background-color: $c-newsmain2;
         color: white;
     }
+
+    &.is-answered {
+        @include link($c-neutral1);
+        border-top: 1px solid $c-neutral3;
+        &:hover::after {
+            content: "Change answer";
+        }
+    }
+
+    &.is-current {
+        @include link($c-neutral1);
+        background-color: white;
+        border-left: 1px solid $c-neutral6;
+        border-right: 1px solid $c-neutral6;
+        border-top: 1px solid $c-newsmain2;
+        border-bottom: 1px solid white;
+        &::after {
+            display: none;
+        }
+    }
 }
+
 
 .answer-list {
     display: inline-block;
@@ -201,12 +197,16 @@ p {
     color: white;
     background-color: darken($c-neutral3, 10%);
     min-height: gs-height(1);
-    line-height: gs-height(1);
-    padding: 0 ($gs-gutter * 2);
+    padding: ($gs-baseline - 4px) ($gs-gutter * 2) 0;
+
+    @media (min-width: gs-span(8)) {
+        line-height: gs-height(1);
+        padding-top: 0;
+    }
 
     &::before {
         content: "Policy tags";
-        display: inline-block;
+        float: left;
         font-weight: bold;
         padding-right: $gs-gutter;
     }
@@ -222,18 +222,30 @@ p {
 }
 
 .tags__toggle {
-    display: inline-block;
+    float: left;
     margin-right: ($gs-gutter * 2);
 
     @include link(white, true);
 }
 
-.tags__tag {
+.tags__list {
+    overflow: hidden;
+    line-height: get-line-height(textSans, 3) + ($gs-baseline / 2 + 2px);
+    padding: 4px 0;
+
+    clear: left;
+    @media (min-width: gs-span(8)) {
+        clear: none;
+    }
+}
+
+.tags__list__tag {
     @include fs-textSans(3, $size-only: true);
+    position: relative;
     display: inline-block;
     background-color: transparent;
     vertical-align: middle;
-    margin-right: ($gs-gutter / 2);
+    margin-right: ($gs-baseline / 2);
     padding: 0 ($gs-gutter / 2);
     border: 1px solid white;
     border-radius: 100px;
@@ -243,7 +255,23 @@ p {
     @include link(white);
 
     &:hover {
+        background-color: $c-newsmain2;
         border-color: $c-newsmain2;
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: ($gs-gutter / 2);
+            margin-top: -7px;
+            width: 10px;
+            height: 10px;
+            border: 2px solid $c-neutral2;
+            border-radius: 100px;
+            background-color: $c-neutral2;
+            background-image: url('../imgs/cross.svg');
+            background-size: contain;
+            box-shadow: -5px 0px 10px 5px $c-newsmain2;
+        }
     }
 
     &:active {
@@ -270,7 +298,8 @@ p {
 }
 
 .policy-grid__title {
-    @include fs-header(4);
+    @include fs-textSans(1);
+    font-size: 20px;
     line-height: 1;
     border-top: 1px solid $c-neutral6;
     border-bottom: 1px solid $c-neutral6;
@@ -285,8 +314,6 @@ p {
 
 .policy-grid__item {
     $gap: $gs-gutter;
-    @include fs-textSans(3);
-    font-size: 20px;
     line-height: 1.2;
     height: 160px;
     box-shadow: ($gap + 1px) 0 0 (-$gap) $c-neutral6, 0 ($gap + 1px) 0 (-$gap) $c-neutral6;
@@ -313,7 +340,8 @@ p {
     }
 }
 
-.party {
+.policy-grid__item__party {
+    @include f-textSans;
     font-size: 13px;
     line-height: 13px;
     display: inline-block;
@@ -335,15 +363,15 @@ p {
     }
 }
 
-@mixin party--color($party, $color) {
-    .party--#{$party}::before {
+@mixin policy-grid__item__party--color($party, $color) {
+    .policy-grid__item__party--#{$party}::before {
         background-color: $color;
     }
 }
 
-@include party--color(conservative, #0087dc);
-@include party--color(labour, #d50000);
-@include party--color(ukip, #efe600);
-@include party--color(ld, #fdbb30);
-@include party--color(pc, #3f8428);
-@include party--color(snp, #fff95d);
+@include policy-grid__item__party--color(conservative, #0087dc);
+@include policy-grid__item__party--color(labour, #d50000);
+@include policy-grid__item__party--color(ukip, #efe600);
+@include policy-grid__item__party--color(ld, #fdbb30);
+@include policy-grid__item__party--color(pc, #3f8428);
+@include policy-grid__item__party--color(snp, #fff95d);
