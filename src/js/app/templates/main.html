@@ -9,26 +9,24 @@
     </div>
 
     <div class="breadcrumb">
-        {{#questions:questionI}}
-            <a class="breadcrumb__item {{#questionI == questionNo}}is-current{{/questionI}} {{#!!userAnswers[questionI]}}is-answered{{/userAnswers}}"
-               href="#" on-click="question:{{questionI}}">
-                {{theme}}
-            </a>
+        {{#questions}}
+            <a class="breadcrumb__item" href="#">{{theme}}</a>
         {{/questions}}
     </div>
-    {{#currentQuestion}}
+
+    {{#questions:questionNo}}
         <h2>{{question}}</h2>
-        <div class="answer-list">
-            {{#answers:answerNo}}
-                <a class="answer-list__item" href="#" on-click="answer">
+        <div class="answer-list {{#!!userAnswers[questionNo]}}is-answered{{/userAnswers}}">
+            {{#answers}}
+                <a class="answer-list__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" href="#answer" on-click="answer">
                     <i class="answer-list__item__icon">
-                        <img src="@@assets@@/imgs/icon.svg" />
+                        <img src="@@assets@@/imgs/icons/pgicon-lowpaid-unemployed.svg" />
                     </i>
                     {{answer}}
                 </a>
             {{/answers}}
         </div>
-    {{/currentQuestion}}
+    {{/questions}}
 
     <div class="policies">
         <div class="tags {{^visibleTags}}is-hidden{{/visibleTags}}">

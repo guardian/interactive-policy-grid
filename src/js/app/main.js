@@ -13,7 +13,7 @@ define([
 ) {
     'use strict';
 
-    var MAX_ANSWERS = 5;
+    var MAX_ANSWERS = 4;
     var SHEET_URL = 'http://interactive.guim.co.uk/spreadsheetdata/1FH1NEYStgczP_B4xPPMr3_DuXHBAipkn2S0zhcFH_LU.json';
 
     Array.prototype.flatMap = function (fn) {
@@ -31,7 +31,6 @@ define([
             'data': {
                 'policies': policies,
                 'questions': questions,
-                'questionNo': 0,
                 'userAnswers': [],
                 'userTags': { 'added': [], 'removed': [] }
             },
@@ -58,7 +57,6 @@ define([
                         return visibleTags.indexOf(tag) === -1;
                     });
                 },
-                'currentQuestion': '${questions}[${questionNo}]',
                 'userPolicies': function () {
                     var visibleTags = this.get('visibleTags');
                     return this.get('policies').filter(function (policy) {
@@ -66,17 +64,12 @@ define([
                             return show || visibleTags.indexOf(tag) !== -1;
                         }, false);
                     });
+                }
             }
         });
 
-        ractive.on('question', function (evt, questionNo) {
-            this.set('questionNo', questionNo);
-        });
-
         ractive.on('answer', function (evt) {
-            var questionNo = this.get('questionNo');
-            this.set('userAnswers.' + questionNo, evt.context);
-            this.set('questionNo', this.get('userAnswers').length);
+            this.set('userAnswers.' + evt.index.questionNo, evt.context);
         });
 
         ractive.on('add-tag', function (evt) {

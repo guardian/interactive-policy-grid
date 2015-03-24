@@ -160,7 +160,7 @@ p {
     vertical-align: top;
     border: 1px solid $c-neutral6;
     width: calc(25% - #{$gs-gutter / 2});
-    height: 240px;
+    height: 260px;
     margin: 0 ($gs-gutter / 2) ($gs-gutter / 2) 0;
     padding: $gs-gutter;
     box-sizing: border-box;
@@ -169,12 +169,17 @@ p {
 
     @include link($c-neutral1);
 
+    .answer-list.is-answered > &,
     .answer-list:hover > & {
-        background-color: $c-neutral7;
+        background-color: $c-neutral6;
+        filter: grey;
+        filter: grayscale(100%);
     }
 
+    &.is-selected,
     &:hover {
         background-color: white !important;
+        filter: none !important;
         box-shadow: 0 0 ($gs-gutter / 2) 0 transparentize($c-neutral7, 0.1);
     }
 }
@@ -184,7 +189,7 @@ p {
     margin: 0 auto $gs-baseline;
     width: 120px;
     border-bottom: 1px solid $c-neutral6;
-    padding-bottom: 28px;
+    padding-bottom: ($gs-baseline * 2);
 
     & > img {
         display: block;
