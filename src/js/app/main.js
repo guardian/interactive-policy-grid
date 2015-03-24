@@ -1,17 +1,15 @@
 define([
     'iframe-messenger',
     'text!templates/main.html',
-    'text!templates/policyGrid.html',
     'ractive',
-    'pegasus',
-    'masonry'
+    'policy-grid',
+    'pegasus'
 ], function(
     iframeMessenger,
     mainTemplate,
-    policyGridTemplate,
     Ractive,
-    pegasus,
-    Masonry
+    PolicyGrid,
+    pegasus
 ) {
     'use strict';
 
@@ -22,50 +20,16 @@ define([
         return this.map(fn).reduce(function (a, b) { return a.concat(b); });
     };
 
-    function parseTags(tagString) {
-        return tagString.split(',')
-            .map(function (tag) { return tag.trim(); })
-            .filter(function (tag) { return tag.length > 0; });
-    }
-
     function app(el, policies, questions) {
-
-        function masonryDecorator(node) {
-            new Masonry(node, {
-                'itemSelector': '.policy-grid__list__item',
-                'columnWidth': '.policy-grid__list__sizer',
-                'transitionDuration': 0
-            });
-
-            return { 'teardown': function () {} };
-        }
-
-        function masonryItemDecorator(node) {
-            var masonry = Masonry.data(node.parentNode);
-            if (masonry) {
-                masonry.addItems(node);
-                masonry.layout();
-
-                return {
-                    'teardown': function () {
-                        masonry.remove(node);
-                        masonry.layout();
-                    }
-                };
-            }
-
-            return { 'teardown': function () {} };
-        }
 
         var ractive = new Ractive({
             'el': el,
             'template': mainTemplate,
             'components': {
-                'policy-grid': Ractive.extend({'template': policyGridTemplate})
+                'policy-grid': PolicyGrid
             },
             'data': {
                 'policies': policies,
-                'policyNo': 0,
                 'questions': questions,
                 'questionNo': 0,
                 'userAnswers': [],
@@ -102,11 +66,6 @@ define([
                             return show || visibleTags.indexOf(tag) !== -1;
                         }, false);
                     });
-                }
-            },
-            'decorators': {
-                'masonry': masonryDecorator,
-                'masonryItem': masonryItemDecorator
             }
         });
 
@@ -127,15 +86,16 @@ define([
         ractive.on('remove-tag', function (evt) {
             this.push('userTags.removed', evt.context);
         });
-
-        ractive.on('policy-grid.policy', function (evt) {
-            this.set('policyNo', evt.context.rowNumber);
-            Masonry.data(evt.node.parentNode).layout();
-        });
     }
 
     function init(el) {
         iframeMessenger.enableAutoResize();
+
+        function parseTags(tagString) {
+            return tagString.split(',')
+                .map(function (tag) { return tag.trim(); })
+                .filter(function (tag) { return tag.length > 0; });
+        }
 
         pegasus(SHEET_URL).then(function (spreadsheet) {
             var policies = spreadsheet.sheets.policies.map(function (policy) {

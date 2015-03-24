@@ -1,6 +1,6 @@
 <div class="policy-grid {{^policies}}is-hidden{{/policies}}">
     <h3 class="policy-grid__title">{{title}} ({{policies.length}})</h3>
-    <div class="policy-grid__list" decorator="masonry">
+    <div class="policy-grid__list">
         <div class="policy-grid__list__sizer"></div>
         {{#policies}}
             <a class="policy-grid__list__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}"
