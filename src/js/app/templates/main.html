@@ -6,20 +6,41 @@
             Sed sed elementum justo, et aliquam lectus. Quisque lacinia, erat sit amet
             fermentum sollicitudin, massa.
         </p>
+        <p class="header__text">
+            <a href="http://www.theguardian.com/profile/seanclarke">Sean Clarke</a>,
+            <a href="http://www.theguardian.com/profile/troy-griggs">Troy Griggs</a> and
+            <a href="http://www.theguardian.com/profile/will-franklin">Will Franklin</a>
+        </p>
+        <p class="header__text">
+            <button on-click="share:twitter" class="share share--twitter"></button>
+            <button on-click="share:facebook" class="share share--facebook"></button>
+            <button on-click="share:email" class="share share--email"></button>
+            <button on-click="share:google" class="share share--google"></button>
+        </p>
     </div>
 
-    <div class="breadcrumb">
-        {{#questions}}
-            <a class="breadcrumb__item" href="#">{{theme}}</a>
-        {{/questions}}
+    <div class="top-bar-container">
+        <div class="top-bar">
+            <span class="top-bar--left">
+                {{#questions:questionNo}}
+                    <a class="top-bar__question {{#currentQuestionNo == questionNo}}is-current{{/currentQuestionNo}}"
+                       href="#">{{questionNo + 1}}</a>
+                {{/questions}}
+            </span>
+            <span class="top-bar--right">
+                {{#tags}}
+                    <a class="top-bar__area button button--secondary button--large" href="#">{{area}}</a>
+                {{/tags}}
+            </span>
+        </div>
     </div>
 
     {{#questions:questionNo}}
-        <h2>{{question}}</h2>
-        <div class="answer-list {{#!!userAnswers[questionNo]}}is-answered{{/userAnswers}}">
+        <h2 class="question">{{question}}</h2>
+        <div class="answers {{#!!userAnswers[questionNo]}}is-answered{{/userAnswers}}">
             {{#answers}}
-                <a class="answer-list__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" href="#answer" on-click="answer">
-                    <i class="answer-list__item__icon">
+                <a class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" href="#answer" on-click="answer">
+                    <i class="answers__item__icon">
                         <img src="@@assets@@/imgs/icons/pgicon-lowpaid-unemployed.svg" />
                     </i>
                     {{answer}}
@@ -29,7 +50,7 @@
     {{/questions}}
 
     <div class="policies">
-        <div class="tags {{^visibleTags}}is-hidden{{/visibleTags}}">
+        <div class="tags is-hidden">
             <a class="tags__toggle" href="#">See all</a>
             <div class="tags__list">
                 {{#visibleTags}}
@@ -44,7 +65,10 @@
         </div>
 
         <div>
-            <policy-grid title="Your policies" policies="{{userPolicies}}" />
+            {{#!!userPolicies}}
+                <policy-grid title="Your policies" policies="{{userPolicies}}" />
+            {{/userPolicies}}
+
             <policy-grid title="All policies" policies="{{policies}}" />
         </div>
     </div>

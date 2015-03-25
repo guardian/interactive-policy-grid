@@ -37,6 +37,7 @@
 }
 
 .policy-grid__list__item {
+    position: relative;
     line-height: 1.2;
     height: 160px;
     box-shadow: ($gs-gutter + 1px) 0 0 (-$gs-gutter) $c-neutral6, 0 ($gs-gutter + 1px) 0 (-$gs-gutter) $c-neutral6;
@@ -44,17 +45,65 @@
     padding: $gs-gutter;
     box-sizing: border-box;
 
-    @include link($c-neutral1, true);
-
     &:hover {
         box-shadow: none;
         border-color: $c-neutral6;
     }
 
     &.is-selected {
+        z-index: 1;
         min-width: 50%;
         height: 320px;
+        box-shadow: none;
         border-color: $c-neutral2;
+        padding-left: gs-span(2);
+
+        .policy-grid__list__item__party {
+            position: absolute;
+            left: $gs-gutter;
+        }
+
+        .policy-grid__list__item__title {
+            font-weight: bold;
+            text-decoration: none !important;
+        }
+
+        .policy-grid__list__item__text {
+            display: block;
+        }
+    }
+}
+
+.policy-grid__list__item__title {
+    font-weight: normal;
+}
+
+.policy-grid__list__item__text {
+    display: none;
+}
+
+.policy-grid__list__item__tags {
+    @include fs-textSans(1);
+    color: $c-neutral3;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    & > a {
+        @include link($c-neutral3, true);
+    }
+}
+
+.policy-grid__list__item__link {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    // This is a horrible hack 
+    &:hover + .policy-grid__list__item__title {
+        text-decoration: underline;
     }
 }
 
@@ -89,7 +138,7 @@
 
 @include policy-grid__list__item__party--color(conservative, #0087dc);
 @include policy-grid__list__item__party--color(labour, #d50000);
-@include policy-grid__list__item__party--color(ukip, #efe600);
+@include policy-grid__list__item__party--color(ukip, #70147A);
 @include policy-grid__list__item__party--color(ld, #fdbb30);
 @include policy-grid__list__item__party--color(pc, #3f8428);
 @include policy-grid__list__item__party--color(snp, #fff95d);

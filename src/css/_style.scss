@@ -1,11 +1,3 @@
-$c-neutral1: map-get($pasteup-palette, neutral-1);
-$c-neutral2: map-get($pasteup-palette, neutral-2);
-$c-neutral3: map-get($pasteup-palette, neutral-3);
-$c-neutral6: map-get($pasteup-palette, neutral-6);
-$c-neutral7: map-get($pasteup-palette, neutral-7);
-$c-neutral8: map-get($pasteup-palette, neutral-8);
-$c-newsmain2: map-get($pasteup-palette, news-main-2);
-
 @mixin link($color, $hover: false) {
     &, &:hover, &:active {
         color: $color;
@@ -21,6 +13,7 @@ $c-newsmain2: map-get($pasteup-palette, news-main-2);
 
 body {
     @include fs-bodyCopy(2);
+    line-height: 1.25;
     color: $c-neutral1;
     margin: 0;
 }
@@ -35,11 +28,8 @@ body {
     display: none;
 }
 
-.container {
+@mixin container--size {
     margin: 0 auto;
-    padding: $gs-gutter;
-    background-color: white;
-    overflow: hidden;
 
     @media (min-width: gs-span(9)) {
         max-width: gs-span(9);
@@ -55,116 +45,184 @@ body {
     }
 }
 
-h1, h2, h3 {
+.container {
+    @include container--size;
+    padding: $gs-gutter;
+    background-color: white;
+    overflow: hidden;
+
+    counter-reset: question;
+}
+
+h1, h2, h3, h4, p {
     margin: 0 0 $gs-baseline;
 }
 
 h1 {
-    @include fs-header(5);
-    margin-bottom: ($gs-baseline * 2);
-    font-size: 44px;
+    @include f-header;
+    margin-bottom: $gs-baseline;
+    font-size: 48px;
 }
 
-h2 {
-    @include fs-header(5);
-    max-width: gs-span(6);
-    padding-left: $gs-gutter;
-}
-
-p {
-    margin: 0 0 $gs-baseline;
-}
+$top-bar-size: ($gs-baseline * 8);
 
 .header {
-    padding-left: $gs-gutter;
     border-bottom: 1px solid $c-neutral3;
+    margin-bottom: $top-bar-size;
 }
 
 .header__text {
     color: $c-neutral2;
-    font-size: 14px;
-    line-height: 1.25;
     max-width: gs-span(6);
+
+    & > a {
+        font-weight: bold;
+    }
 }
 
-.breadcrumb {
-    @include fs-textSans(4);
-    height: ($gs-baseline * 4);
-    line-height: ($gs-baseline * 4);
-    border-bottom: 1px solid $c-neutral6;
-    margin-bottom: ($gs-baseline * 4);
+.share {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 100px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    margin-right: 3px;
 
     &::before {
-        content: "Questions";
-        color: $c-neutral2;
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 32px;
+        height: 32px;
     }
 }
 
-.breadcrumb::before,
-.breadcrumb__item {
+.share--twitter {
+    background-color: #03b3ee;
+    &::before {
+        background-image: url('../imgs/twitter.svg');
+    }
+}
+
+.share--facebook {
+    background-color: #3067a3;
+    &::before {
+        background-image: url('../imgs/facebook.svg');
+    }
+}
+
+.share--email {
+    background-color: #767676;
+    &::before {
+        background-image: url('../imgs/email.svg');
+    }
+}
+
+.share--google {
+    background-color: #e15440;
+    &::before {
+        background-image: url('../imgs/google.svg');
+    }
+}
+
+
+// Stops questions from moving up when top bar becomes fixed
+.top-bar-container {
+    position: relative;
+    top: -$top-bar-size;
+    height: 0;
+
+    &.is-sticky {
+        position: fixed;
+        z-index: 5;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin-top: 0;
+    }
+}
+
+.top-bar {
+    @include container--size;
+    display: table;
+    width: 100%;
+    height: $top-bar-size;
+    border-bottom: 1px solid $c-neutral6;
+    background-color: white;
+}
+
+.top-bar--left {
+    display: table-cell;
+    white-space: nowrap;
+    height: 100%;
+}
+
+.top-bar--right {
+    display: table-cell;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 38px + ($gs-baseline / 2);
+}
+
+.top-bar__question {
     display: inline-block;
     padding: 0 $gs-gutter;
-}
-
-.breadcrumb__item {
-    position: relative;
-    top: -1px;
-    min-width: 130px;
+    box-sizing: border-box;
+    border-right: 1px solid $c-neutral6;
+    width: $top-bar-size;
     font-weight: bold;
     text-align: center;
-    border: 1px solid transparent;
+    font-size: 30px;
+    line-height: $top-bar-size;
 
-    @include link($c-neutral3);
+    @include link($c-neutral1);
 
-    &:hover::after {
-        position: absolute;
-        content: "Choose answer";
-        top: -1px;
-        left: -1px;
-        right: -1px;
-        bottom: -1px;
-        background-color: $c-newsmain2;
-        color: white;
-    }
-
-    &.is-answered {
-        @include link($c-neutral1);
-        border-top: 1px solid $c-neutral3;
-        &:hover::after {
-            content: "Change answer";
-        }
-    }
-
+    &:hover,
     &.is-current {
-        @include link($c-neutral1);
-        background-color: white;
-        border-left: 1px solid $c-neutral6;
-        border-right: 1px solid $c-neutral6;
-        border-top: 1px solid $c-newsmain2;
-        border-bottom: 1px solid white;
-        &::after {
-            display: none;
-        }
+        background-color: $c-newsmain2;
     }
 }
 
-
-.answer-list {
-    margin: 0 $gs-gutter ($gs-baseline * 4);
+.top-bar__area {
+    vertical-align: middle;
+    font-weight: normal;
 }
 
-.answer-list__item {
+.question {
+    @include f-headline;
+    font-size: 40px;
+    position: relative;
+    max-width: gs-span(6);
+    margin-right: $gs-gutter;
+    padding: ($gs-baseline * 4) 0 $gs-baseline 40px;
+
+    &::before {
+        position: absolute;
+        left: 0;
+        counter-increment: question;
+        content: counter(question) ".";
+    }
+}
+
+.answers {
+    margin-right: (-$gs-gutter * 0.5);
+}
+
+.answers__item {
     @include fs-textSans(4);
     font-weight: bold;
+    text-align: center;
     display: inline-block;
     vertical-align: top;
-    border: 1px solid $c-neutral6;
     height: 260px;
     margin: 0 ($gs-gutter / 2) ($gs-gutter / 2) 0;
     padding: $gs-gutter;
+    border: 1px solid $c-neutral6;
     box-sizing: border-box;
-    transition: background-color 0.1s ease-out;
-    text-align: center;
 
     width: calc(50% - #{$gs-gutter / 2});
     @media (min-width: gs-span(12)) {
@@ -173,8 +231,8 @@ p {
 
     @include link($c-neutral1);
 
-    .answer-list.is-answered > &,
-    .answer-list:hover > & {
+    .answers.is-answered > &,
+    .answers:hover > & {
         background-color: $c-neutral6;
         filter: grey;
         filter: grayscale(100%);
@@ -188,7 +246,7 @@ p {
     }
 }
 
-.answer-list__item__icon {
+.answers__item__icon {
     display: block;
     margin: 0 auto $gs-baseline;
     width: 120px;
@@ -222,11 +280,6 @@ p {
         float: left;
         font-weight: bold;
         padding-right: $gs-gutter;
-    }
-
-    &.is-sticky {
-        position: fixed;
-        top: 0;
     }
 }
 

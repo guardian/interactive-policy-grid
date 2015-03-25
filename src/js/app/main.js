@@ -15,12 +15,13 @@ define([
 
     var MAX_ANSWERS = 4;
     var SHEET_URL = 'http://interactive.guim.co.uk/spreadsheetdata/1FH1NEYStgczP_B4xPPMr3_DuXHBAipkn2S0zhcFH_LU.json';
+    var TOPBAR_SIZE = 96; // see .top-bar
 
     Array.prototype.flatMap = function (fn) {
         return this.map(fn).reduce(function (a, b) { return a.concat(b); });
     };
 
-    function app(el, policies, questions) {
+    function app(el, policies, questions, tags) {
 
         var ractive = new Ractive({
             'el': el,
@@ -31,18 +32,11 @@ define([
             'data': {
                 'policies': policies,
                 'questions': questions,
+                'tags': tags,
                 'userAnswers': [],
                 'userTags': { 'added': [], 'removed': [] }
             },
             'computed': {
-                'tags': function () {
-                    // Get the full list of unique tags
-                    return this.get('questions').flatMap(function (question) {
-                        return question.answers.flatMap(function (answer) { return answer.tags; });
-                    }).filter(function (tag, index, tags) {
-                        return tags.indexOf(tag) === index;
-                    });
-                },
                 'visibleTags': function () {
                     var removedTags = this.get('userTags.removed');
                     var tags = this.get('userAnswers')
@@ -79,6 +73,34 @@ define([
         ractive.on('remove-tag', function (evt) {
             this.push('userTags.removed', evt.context);
         });
+
+        document.addEventListener('scroll', (function () {
+            var topbar = ractive.find('.top-bar-container');
+            var topbarX = topbar.offsetTop;
+
+            var questionsX = ractive.findAll('.question').map(function (question) {
+                return question.offsetTop - TOPBAR_SIZE;
+            });
+
+            return function () {
+                var offset = window.pageYOffset;
+                var currentQuestionNo = -1;
+
+                questionsX.forEach(function (questionX, questionNo) {
+                    if (offset > questionX) {
+                        currentQuestionNo = questionNo;
+                    }
+                });
+
+                ractive.set('currentQuestionNo', currentQuestionNo);
+
+                if (offset > topbarX) {
+                    topbar.className = 'top-bar-container is-sticky';
+                } else {
+                    topbar.className = 'top-bar-container';
+                }
+            };
+        })());
     }
 
     function init(el) {
@@ -115,7 +137,18 @@ define([
                 };
             });
 
-            app(el, policies, questions);
+            var tags = spreadsheet.sheets.tags.map(function (tag) {
+                return {
+                    'area': tag.area,
+                    'tags': parseTags(tag.tags)
+                };
+            });
+
+            try {
+                app(el, policies, questions, tags);
+            } catch (e) {
+                console.log(e);
+            }
         });
     }
 
