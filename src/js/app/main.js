@@ -98,10 +98,7 @@ define([
             var questions = ractive.findAll('.question');
 
             function getOffset(el) {
-                if (el === document.body) {
-                    return 0;
-                }
-                return el.offsetTop + getOffset(el.offsetParent);
+                return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
             }
 
             return debounce(function () {
@@ -113,18 +110,12 @@ define([
                         currentQuestionNo = questionNo;
                     }
                 });
-
                 ractive.set('currentQuestionNo', currentQuestionNo);
 
                 if (topbar.className.indexOf('is-sticky') === -1) {
                     topbarX = getOffset(topbar);
                 }
-
-                if (offset > topbarX) {
-                    topbar.className = 'top-bar-container is-sticky';
-                } else {
-                    topbar.className = 'top-bar-container';
-                }
+                topbar.className = offset > topbarX ? 'top-bar-container is-sticky' : 'top-bar-container';
             }, 100);
         })());
     }
