@@ -1,0 +1,37 @@
+@mixin top-bar-size($prop, $n: 1) {
+    #{$prop}: (50px * $n);
+    @media (min-width: gs-span(12)) {
+        #{$prop}: ($gs-baseline * 9 * $n);
+    }
+}
+
+@mixin link($color, $hover: false) {
+    &, &:hover, &:active {
+        color: $color;
+        text-decoration: none;
+    }
+
+    @if $hover == true {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+@mixin container--size {
+    margin: 0 auto;
+
+    @media (min-width: gs-span(9)) {
+        max-width: gs-span(9);
+    }
+    @media (min-width: gs-span(12)) {
+        max-width: gs-span(12);
+    }
+    @media (min-width: gs-span(14)) {
+        max-width: gs-span(14);
+    }
+    @media (min-width: gs-span(16)) {
+        max-width: gs-span(16);
+    }
+}
+

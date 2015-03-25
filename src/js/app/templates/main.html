@@ -27,10 +27,16 @@
                        href="#">{{questionNo + 1}}</a>
                 {{/questions}}
             </span>
-            <span class="top-bar--right">
-                {{#tags}}
-                    <a class="top-bar__area button button--secondary button--large" href="#">{{area}}</a>
+            <span class="top-bar--right top-bar--detailed">
+                {{#tags:i}}
+                    <a class="top-bar__area button button--secondary " href="#">
+                        {{area}}
+                        <span class="top-bar__area__count">0</span>
+                    </a>{{#i == 5}}<br />{{/i}}
                 {{/tags}}
+            </span>
+            <span class="top-bar--right top-bar--simple">
+                12 tags
             </span>
         </div>
     </div>

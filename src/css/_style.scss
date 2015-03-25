@@ -1,74 +1,13 @@
-@mixin link($color, $hover: false) {
-    &, &:hover, &:active {
-        color: $color;
-        text-decoration: none;
-    }
-
-    @if $hover == true {
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-}
-
-body {
-    @include fs-bodyCopy(2);
-    line-height: 1.25;
-    color: $c-neutral1;
-    margin: 0;
-}
-
-.interactive {
-    margin: 0 !important; // Override NGW
-    padding: 0;
-    background-color: $c-neutral8;
-}
-
-.is-hidden {
-    display: none;
-}
-
-@mixin container--size {
-    margin: 0 auto;
-
-    @media (min-width: gs-span(9)) {
-        max-width: gs-span(9);
-    }
-    @media (min-width: gs-span(12)) {
-        max-width: gs-span(12);
-    }
-    @media (min-width: gs-span(14)) {
-        max-width: gs-span(14);
-    }
-    @media (min-width: gs-span(16)) {
-        max-width: gs-span(16);
-    }
-}
-
 .container {
     @include container--size;
     padding: $gs-gutter;
     background-color: white;
-    overflow: hidden;
-
     counter-reset: question;
 }
 
-h1, h2, h3, h4, p {
-    margin: 0 0 $gs-baseline;
-}
-
-h1 {
-    @include f-header;
-    margin-bottom: $gs-baseline;
-    font-size: 48px;
-}
-
-$top-bar-size: ($gs-baseline * 8);
-
 .header {
+    @include top-bar-size(margin-bottom);
     border-bottom: 1px solid $c-neutral3;
-    margin-bottom: $top-bar-size;
 }
 
 .header__text {
@@ -80,59 +19,10 @@ $top-bar-size: ($gs-baseline * 8);
     }
 }
 
-.share {
-    position: relative;
-    width: 32px;
-    height: 32px;
-    border-radius: 100px;
-    border: 0;
-    outline: 0;
-    cursor: pointer;
-    margin-right: 3px;
-
-    &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 32px;
-        height: 32px;
-    }
-}
-
-.share--twitter {
-    background-color: #03b3ee;
-    &::before {
-        background-image: url('../imgs/twitter.svg');
-    }
-}
-
-.share--facebook {
-    background-color: #3067a3;
-    &::before {
-        background-image: url('../imgs/facebook.svg');
-    }
-}
-
-.share--email {
-    background-color: #767676;
-    &::before {
-        background-image: url('../imgs/email.svg');
-    }
-}
-
-.share--google {
-    background-color: #e15440;
-    &::before {
-        background-image: url('../imgs/google.svg');
-    }
-}
-
-
 // Stops questions from moving up when top bar becomes fixed
 .top-bar-container {
+    @include top-bar-size(top, -1);
     position: relative;
-    top: -$top-bar-size;
     height: 0;
 
     &.is-sticky {
@@ -148,36 +38,26 @@ $top-bar-size: ($gs-baseline * 8);
 .top-bar {
     @include container--size;
     display: table;
+    border-spacing: 0;
     width: 100%;
-    height: $top-bar-size;
     border-bottom: 1px solid $c-neutral6;
     background-color: white;
+    @include top-bar-size(line-height);
 }
 
 .top-bar--left {
     display: table-cell;
     white-space: nowrap;
-    height: 100%;
-}
-
-.top-bar--right {
-    display: table-cell;
-    width: 100%;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 38px + ($gs-baseline / 2);
 }
 
 .top-bar__question {
+    @include f-headline;
     display: inline-block;
     padding: 0 $gs-gutter;
     box-sizing: border-box;
     border-right: 1px solid $c-neutral6;
-    width: $top-bar-size;
-    font-weight: bold;
     text-align: center;
-    font-size: 30px;
-    line-height: $top-bar-size;
+    vertical-align: middle;
 
     @include link($c-neutral1);
 
@@ -185,11 +65,51 @@ $top-bar-size: ($gs-baseline * 8);
     &.is-current {
         background-color: $c-newsmain2;
     }
+
+    @include top-bar-size(width);
+    @include top-bar-size(line-height);
+
+    @media (min-width: gs-span(12)) {
+        font-size: 40px;
+    }
+}
+
+.top-bar--right {
+    display: table-cell;
+    width: 100%;
+    vertical-align: middle;
+}
+
+.top-bar--simple {
+    text-align: right;
+    @media (min-width: gs-span(12)) {
+        display: none;
+    }
+}
+
+.top-bar--detailed {
+    text-align: center;
+    line-height: 38px + ($gs-baseline / 2);
+    display: none;
+    @media (min-width: gs-span(12)) {
+        display: table-cell;
+    }
 }
 
 .top-bar__area {
     vertical-align: middle;
     font-weight: normal;
+    margin-right: 5px;
+
+    @media (min-width: gs-span(14)) {
+        height: 38px;
+        line-height: 38px;
+    }
+}
+
+.top-bar__area__count {
+    font-size: 10px;
+    color: $c-neutral3;
 }
 
 .question {
@@ -197,7 +117,6 @@ $top-bar-size: ($gs-baseline * 8);
     font-size: 40px;
     position: relative;
     max-width: gs-span(6);
-    margin-right: $gs-gutter;
     padding: ($gs-baseline * 4) 0 $gs-baseline 40px;
 
     &::before {
@@ -215,16 +134,22 @@ $top-bar-size: ($gs-baseline * 8);
 .answers__item {
     @include fs-textSans(4);
     font-weight: bold;
-    text-align: center;
     display: inline-block;
     vertical-align: top;
-    height: 260px;
     margin: 0 ($gs-gutter / 2) ($gs-gutter / 2) 0;
-    padding: $gs-gutter;
+    padding: 0 $gs-gutter;
     border: 1px solid $c-neutral6;
     box-sizing: border-box;
 
-    width: calc(50% - #{$gs-gutter / 2});
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    @media (min-width: gs-span(7)) {
+        width: calc(50% - #{$gs-gutter / 2});
+        height: 260px;
+        line-height: 1.25;
+        text-align: center;
+    }
     @media (min-width: gs-span(12)) {
         width: calc(25% - #{$gs-gutter / 2});
     }
@@ -248,15 +173,29 @@ $top-bar-size: ($gs-baseline * 8);
 
 .answers__item__icon {
     display: block;
-    margin: 0 auto $gs-baseline;
-    width: 120px;
-    border-bottom: 1px solid $c-neutral6;
-    padding-bottom: ($gs-baseline * 2);
+    width: 50px;
+    height: 100%;
+    float: right;
 
     & > img {
-        display: block;
+        display: inline;
+        vertical-align: middle;
         width: 100%;
     }
+
+    @media (min-width: gs-span(7)) {
+        float: none;
+        width: 120px;
+        height: auto;
+        margin: $gs-gutter auto $gs-baseline;
+        border-bottom: 1px solid $c-neutral6;
+        padding-bottom: ($gs-baseline * 2);
+
+        & > img {
+            display: block;
+        }
+    }
+
 }
 
 .tags {

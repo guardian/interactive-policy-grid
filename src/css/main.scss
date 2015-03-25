@@ -19,5 +19,7 @@ $c-neutral7: map-get($pasteup-palette, neutral-7);
 $c-neutral8: map-get($pasteup-palette, neutral-8);
 $c-newsmain2: map-get($pasteup-palette, news-main-2);
 
+@import 'mixins';
+@import 'common';
 @import 'style';
 @import 'policy-grid';
