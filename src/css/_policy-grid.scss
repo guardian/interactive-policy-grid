@@ -12,14 +12,9 @@
     @include fs-textSans(1);
     font-size: 20px;
     line-height: 1;
-    border-top: 1px solid $c-neutral6;
     border-bottom: 1px solid $c-neutral6;
     padding: ($gs-baseline * 1.5) $gs-gutter;
     margin-bottom: ($gs-baseline * 2);
-
-    .policy-grid:first-child > & {
-        border-top: 0;
-    }
 }
 
 .policy-grid__list__sizer,

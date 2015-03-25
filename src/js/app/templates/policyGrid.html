@@ -9,7 +9,7 @@
                 <h4 class="policy-grid__list__item__title">{{policy}}</h4>
                 <p class="policy-grid__list__item__text">{{policyverbatim}}</p>
                 <span class="policy-grid__list__item__tags">
-                    {{#tags[0]}}
+                    {{#tags}}
                         <a href="#tag">{{.}}</a>{{#if i != tags.length - 1}}{{", "}}{{/if}}
                     {{/tags}}
                 </span>

@@ -49,7 +49,7 @@ define([
     };
 
     function app(el, policies, questions, tags) {
-        var topbarEle, questionEles;
+        var topbarEle, questionEles, policiesEle;
         var ractive = new Ractive({
             'el': el,
             'template': mainTemplate,
@@ -91,14 +91,18 @@ define([
 
         topbarEle = ractive.find('.top-bar');
         questionEles = ractive.findAll('.question');
+        policiesEle = ractive.find('.policies');
 
-        function getQuestionOffset(questionNo) {
-            return getOffset(questionEles[questionNo]) - ractive.find('.top-bar').clientHeight;
+        function getScrollOffset(ele) {
+            return getOffset(ele) - topbarEle.clientHeight;
         }
 
         ractive.on('question', function (evt) {
-            evt.original.preventDefault();
-            scrollTo(getQuestionOffset(evt.index.questionNo));
+            scrollTo(getScrollOffset(questionEles[evt.index.questionNo]));
+        });
+
+        ractive.on('policies', function () {
+            scrollTo(getScrollOffset(policiesEle));
         });
 
         ractive.on('answer', function (evt) {
@@ -114,23 +118,28 @@ define([
         });
 
         document.addEventListener('scroll', (function () {
-            var topbarX, topbar = ractive.find('.top-bar');
+            var topbarX;
 
             return debounce(function () {
                 var offset = window.pageYOffset;
-                var currentQuestionNo = -1;
+                var currentSection = -1;
 
-                questionEles.forEach(function (question, questionNo) {
-                    if (offset >= getQuestionOffset(questionNo)) {
-                        currentQuestionNo = questionNo;
-                    }
-                });
-                ractive.set('currentQuestionNo', currentQuestionNo);
-
-                if (topbar.className.indexOf('is-sticky') === -1) {
-                    topbarX = getOffset(topbar);
+                if (offset >= getScrollOffset(policiesEle)) {
+                    currentSection = questionEles.length;
+                } else {
+                    questionEles.forEach(function (question, questionNo) {
+                        if (offset >= getScrollOffset(question)) {
+                            currentSection = questionNo;
+                        }
+                    });
                 }
-                topbar.className = offset >= topbarX ? 'top-bar is-sticky' : 'top-bar';
+
+                ractive.set('currentSection', currentSection);
+
+                if (topbarEle.className.indexOf('is-sticky') === -1) {
+                    topbarX = getOffset(topbarEle);
+                }
+                topbarEle.className = offset >= topbarX ? 'top-bar is-sticky' : 'top-bar';
             }, 100);
         })());
     }

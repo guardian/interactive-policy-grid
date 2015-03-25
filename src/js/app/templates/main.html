@@ -23,20 +23,14 @@
         <div class="top-bar">
             <span class="top-bar--left">
                 {{#questions:questionNo}}
-                    <a class="top-bar__question {{#currentQuestionNo == questionNo}}is-current{{/currentQuestionNo}}"
-                       href="#" on-click="question">{{questionNo + 1}}</a>
+                    <button class="top-bar__block {{#currentSection == questionNo }}is-current{{/currentSection}}" on-click="question">
+                        {{questionNo + 1}}
+                    </button>
                 {{/questions}}
             </span>
-            <span class="top-bar--right top-bar--detailed">
-                {{#tags:i}}
-                    <a class="top-bar__area button button--secondary " href="#">
-                        {{area}}
-                        <span class="top-bar__area__count">0</span>
-                    </a>{{#i == 5}}<br />{{/i}}
-                {{/tags}}
-            </span>
             <span class="top-bar--right top-bar--simple">
-                12 tags
+                {{userPolicies.length || 0}} policies
+                <button class="top-bar__block top-bar__block--cart {{#currentSection == questions.length}}is-current{{/currentSection}}" on-click="policies"></button>
             </span>
         </div>
     </div>
@@ -70,12 +64,8 @@
             </div>
         </div>
 
-        <div>
-            {{#!!userPolicies}}
-                <policy-grid title="Your policies" policies="{{userPolicies}}" />
-            {{/userPolicies}}
-
-            <policy-grid title="All policies" policies="{{policies}}" />
-        </div>
+        {{#!!userPolicies}}
+            <policy-grid title="Your policies" policies="{{userPolicies}}" />
+        {{/userPolicies}}
     </div>
 </div>
