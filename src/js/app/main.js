@@ -94,7 +94,7 @@ define([
         });
 
         document.addEventListener('scroll', (function () {
-            var topbarX, topbar = ractive.find('.top-bar-container');
+            var topbarX, topbar = ractive.find('.top-bar');
             var questions = ractive.findAll('.question');
 
             function getOffset(el) {
@@ -115,7 +115,7 @@ define([
                 if (topbar.className.indexOf('is-sticky') === -1) {
                     topbarX = getOffset(topbar);
                 }
-                topbar.className = offset > topbarX ? 'top-bar-container is-sticky' : 'top-bar-container';
+                topbar.className = offset > topbarX ? 'top-bar is-sticky' : 'top-bar';
             }, 100);
         })());
     }

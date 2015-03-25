@@ -20,19 +20,10 @@
 }
 
 // Stops questions from moving up when top bar becomes fixed
-.top-bar-container {
+.top-bar-wrapper {
     @include top-bar-size(top, -1);
     position: relative;
     height: 0;
-
-    &.is-sticky {
-        position: fixed;
-        z-index: 5;
-        top: 0;
-        left: 0;
-        right: 0;
-        margin-top: 0;
-    }
 }
 
 .top-bar {
@@ -43,6 +34,14 @@
     border-bottom: 1px solid $c-neutral6;
     background-color: white;
     @include top-bar-size(line-height);
+
+    &.is-sticky {
+        position: fixed;
+        z-index: 5;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
 }
 
 .top-bar--left {
@@ -99,7 +98,7 @@
 .top-bar__area {
     vertical-align: middle;
     font-weight: normal;
-    margin-right: 5px;
+    margin-right: ($gs-baseline / 2);
 
     @media (min-width: gs-span(14)) {
         height: 38px;
@@ -141,6 +140,8 @@
     border: 1px solid $c-neutral6;
     box-sizing: border-box;
 
+    @include link($c-neutral1);
+
     width: 100%;
     height: 80px;
     line-height: 80px;
@@ -154,12 +155,10 @@
         width: calc(25% - #{$gs-gutter / 2});
     }
 
-    @include link($c-neutral1);
-
     .answers.is-answered > &,
     .answers:hover > & {
         background-color: $c-neutral6;
-        filter: grey;
+        filter: grey; // IE9
         filter: grayscale(100%);
     }
 
