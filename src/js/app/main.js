@@ -17,6 +17,25 @@ define([
     var SHEET_URL = 'http://interactive.guim.co.uk/spreadsheetdata/1FH1NEYStgczP_B4xPPMr3_DuXHBAipkn2S0zhcFH_LU.json';
     var TOPBAR_SIZE = 96; // see .top-bar
 
+    function debounce(fn, delay) {
+        var timer, run;
+
+        return function runner() {
+            if (timer) {
+                run = true;
+            } else {
+                fn();
+                timer = setTimeout(function () {
+                    timer = undefined;
+                    if (run) {
+                        run = false;
+                        runner();
+                    }
+                }, delay);
+            }
+        };
+    }
+
     Array.prototype.flatMap = function (fn) {
         return this.map(fn).reduce(function (a, b) { return a.concat(b); });
     };
@@ -78,12 +97,19 @@ define([
             var topbarX, topbar = ractive.find('.top-bar-container');
             var questions = ractive.findAll('.question');
 
-            return function () {
+            function getOffset(el) {
+                if (el === document.body) {
+                    return 0;
+                }
+                return el.offsetTop + getOffset(el.offsetParent);
+            }
+
+            return debounce(function () {
                 var offset = window.pageYOffset;
                 var currentQuestionNo = -1;
 
                 questions.forEach(function (question, questionNo) {
-                    if (offset > question.offsetTop - TOPBAR_SIZE) {
+                    if (offset > getOffset(question)- TOPBAR_SIZE) {
                         currentQuestionNo = questionNo;
                     }
                 });
@@ -91,7 +117,7 @@ define([
                 ractive.set('currentQuestionNo', currentQuestionNo);
 
                 if (topbar.className.indexOf('is-sticky') === -1) {
-                    topbarX = topbar.offsetTop;
+                    topbarX = getOffset(topbar);
                 }
 
                 if (offset > topbarX) {
@@ -99,7 +125,7 @@ define([
                 } else {
                     topbar.className = 'top-bar-container';
                 }
-            };
+            }, 100);
         })());
     }
 
