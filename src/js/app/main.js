@@ -15,7 +15,6 @@ define([
 
     var MAX_ANSWERS = 4;
     var SHEET_URL = 'http://interactive.guim.co.uk/spreadsheetdata/1FH1NEYStgczP_B4xPPMr3_DuXHBAipkn2S0zhcFH_LU.json';
-    var TOPBAR_SIZE = 96; // see .top-bar
 
     function debounce(fn, delay) {
         var timer, run;
@@ -36,12 +35,21 @@ define([
         };
     }
 
+    function getOffset(el) {
+        return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
+    }
+
+    // TODO: add animation
+    function scrollTo(y) {
+        window.scrollTo(0, y);
+    }
+
     Array.prototype.flatMap = function (fn) {
         return this.map(fn).reduce(function (a, b) { return a.concat(b); });
     };
 
     function app(el, policies, questions, tags) {
-
+        var topbarEle, questionEles;
         var ractive = new Ractive({
             'el': el,
             'template': mainTemplate,
@@ -81,6 +89,18 @@ define([
             }
         });
 
+        topbarEle = ractive.find('.top-bar');
+        questionEles = ractive.findAll('.question');
+
+        function getQuestionOffset(questionNo) {
+            return getOffset(questionEles[questionNo]) - ractive.find('.top-bar').clientHeight;
+        }
+
+        ractive.on('question', function (evt) {
+            evt.original.preventDefault();
+            scrollTo(getQuestionOffset(evt.index.questionNo));
+        });
+
         ractive.on('answer', function (evt) {
             this.set('userAnswers.' + evt.index.questionNo, evt.context);
         });
@@ -95,18 +115,13 @@ define([
 
         document.addEventListener('scroll', (function () {
             var topbarX, topbar = ractive.find('.top-bar');
-            var questions = ractive.findAll('.question');
-
-            function getOffset(el) {
-                return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
-            }
 
             return debounce(function () {
                 var offset = window.pageYOffset;
                 var currentQuestionNo = -1;
 
-                questions.forEach(function (question, questionNo) {
-                    if (offset > getOffset(question)- TOPBAR_SIZE) {
+                questionEles.forEach(function (question, questionNo) {
+                    if (offset >= getQuestionOffset(questionNo)) {
                         currentQuestionNo = questionNo;
                     }
                 });
@@ -115,7 +130,7 @@ define([
                 if (topbar.className.indexOf('is-sticky') === -1) {
                     topbarX = getOffset(topbar);
                 }
-                topbar.className = offset > topbarX ? 'top-bar is-sticky' : 'top-bar';
+                topbar.className = offset >= topbarX ? 'top-bar is-sticky' : 'top-bar';
             }, 100);
         })());
     }

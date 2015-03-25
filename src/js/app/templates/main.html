@@ -24,7 +24,7 @@
             <span class="top-bar--left">
                 {{#questions:questionNo}}
                     <a class="top-bar__question {{#currentQuestionNo == questionNo}}is-current{{/currentQuestionNo}}"
-                       href="#">{{questionNo + 1}}</a>
+                       href="#" on-click="question">{{questionNo + 1}}</a>
                 {{/questions}}
             </span>
             <span class="top-bar--right top-bar--detailed">
@@ -42,7 +42,7 @@
     </div>
 
     {{#questions:questionNo}}
-        <h2 class="question">{{question}}</h2>
+        <h2 class="question" id="question-{{questionNo}}">{{question}}</h2>
         <div class="answers {{#!!userAnswers[questionNo]}}is-answered{{/userAnswers}}">
             {{#answers}}
                 <a class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" href="#answer" on-click="answer">
