@@ -75,24 +75,24 @@ define([
         });
 
         document.addEventListener('scroll', (function () {
-            var topbar = ractive.find('.top-bar-container');
-            var topbarX = topbar.offsetTop;
-
-            var questionsX = ractive.findAll('.question').map(function (question) {
-                return question.offsetTop - TOPBAR_SIZE;
-            });
+            var topbarX, topbar = ractive.find('.top-bar-container');
+            var questions = ractive.findAll('.question');
 
             return function () {
                 var offset = window.pageYOffset;
                 var currentQuestionNo = -1;
 
-                questionsX.forEach(function (questionX, questionNo) {
-                    if (offset > questionX) {
+                questions.forEach(function (question, questionNo) {
+                    if (offset > question.offsetTop - TOPBAR_SIZE) {
                         currentQuestionNo = questionNo;
                     }
                 });
 
                 ractive.set('currentQuestionNo', currentQuestionNo);
+
+                if (topbar.className.indexOf('is-sticky') === -1) {
+                    topbarX = topbar.offsetTop;
+                }
 
                 if (offset > topbarX) {
                     topbar.className = 'top-bar-container is-sticky';
