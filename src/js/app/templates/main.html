@@ -36,7 +36,7 @@
     </div>
 
     {{#questions:questionNo}}
-        <h2 class="question" id="question-{{questionNo}}">{{question}}</h2>
+        <h2 class="question headline" id="question-{{questionNo}}">{{question}}</h2>
         <div class="answers {{#!!userAnswers[questionNo]}}is-answered{{/userAnswers}}">
             {{#answers}}
                 <button class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" on-click="answer">

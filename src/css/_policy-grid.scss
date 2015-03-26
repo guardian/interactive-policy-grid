@@ -1,7 +1,4 @@
 .policy-grid__title {
-    @include f-headline;
-    font-size: 26px;
-    padding: 0 $gs-gutter $gs-baseline;
     border-bottom: 1px solid $c-neutral6;
 }
 

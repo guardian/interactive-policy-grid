@@ -22,6 +22,18 @@
     }
 }
 
+.headline {
+    @include f-headline;
+    font-size: 26px;
+    padding-top: ($gs-baseline * 2);
+    padding-bottom: $gs-baseline;
+
+    @media (min-width: $breakpoint1) {
+        font-size: 40px;
+        padding-top: ($gs-baseline * 4);
+    }
+}
+
 // Stops questions from moving up when top bar becomes fixed
 .top-bar-wrapper {
     @include top-bar-size(top, -1);
@@ -91,15 +103,11 @@
 }
 
 .question {
-    @include f-headline;
-    font-size: 26px;
     position: relative;
+    padding-left: 27px;
     max-width: gs-span(6);
-    padding: ($gs-baseline * 2) 0 $gs-baseline 27px;
 
     @media (min-width: $breakpoint1) {
-        font-size: 40px;
-        padding-top: ($gs-baseline * 4);
         padding-left: 37px;
     }
 
@@ -114,10 +122,8 @@
 .policies {
     position: relative;
     border-top: 1px solid $c-neutral3;
-    padding-top: ($gs-baseline * 2);
     margin-top: ($gs-baseline * 2);
     @media (min-width: $breakpoint1) {
-        padding-top: ($gs-baseline * 4);
         margin-top: ($gs-baseline * 4);
     }
 }
