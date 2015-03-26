@@ -126,14 +126,9 @@
     text-transform: uppercase;
     position: relative;
     z-index: 1;
+
     & > a {
-        &, &:hover, &:active {
-            text-decoration: none;
-            color: $c-neutral3;
-        }
-        &:hover {
-            text-decoration: underline;
-        }
+        color: inherit;
     }
 }
 

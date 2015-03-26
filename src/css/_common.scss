@@ -52,6 +52,14 @@ h1 {
     }
 }
 
+a {
+    color: map-get($pasteup-palette, guardian-brand);
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 .share {
     position: relative;
     width: 32px;
