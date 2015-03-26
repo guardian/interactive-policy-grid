@@ -78,6 +78,7 @@
 
 .policy-grid {
     overflow: hidden;
+    clear: both;
 }
 
 .policy-grid__sizer,
@@ -154,7 +155,6 @@
     display: inline-block;
     font-weight: bold;
     color: #666;
-    border-radius: 4px;
     background-color: $c-neutral7;
     padding: 6px 8px 5px;
 

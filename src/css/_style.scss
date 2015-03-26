@@ -150,3 +150,82 @@ h2 {
         content: counter(question) ".";
     }
 }
+
+$font-size: 12px;
+
+.filters {
+    @include f-textSans;
+    line-height: 2;
+    margin-top: $gs-baseline;
+    margin-bottom: ($gs-baseline * 2);
+    text-align: center;
+}
+
+.filters--left {
+    float: left;
+    text-align: left;
+}
+
+.filters--right {
+    float: right;
+    text-align: right;
+}
+
+.filter {
+    display: inline;
+    font-size: ($font-size * 2);
+    line-height: 1;
+    text-transform: capitalize;
+    border-bottom: 2px solid $c-neutral3;
+    margin-right: ($gs-gutter * 2);
+
+    &::before {
+        content: "";
+    }
+
+    &:hover {
+        border-bottom-color: $c-neutral1;
+    }
+}
+
+.filter__title,
+.filter__button {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: $font-size;
+    line-height: 2;
+    height: ($font-size * 2);
+    margin-top: -1px;
+}
+
+.filter__title {
+    padding: 0 10px;
+    background-color: $c-neutral3;
+    color: white;
+    font-weight: bold;
+
+    .filter:hover > & {
+        background-color: $c-neutral1;
+    }
+}
+
+.filter__button {
+    color: $c-neutral3;
+    padding: 0 8px;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: none;
+        background-color: $c-newsmain2;
+        color: white;
+    }
+
+    &.is-selected {
+        background-color: $c-neutral3;
+        color: $c-neutral1;
+    }
+
+    & > input {
+        display: none;
+    }
+}

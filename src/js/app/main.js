@@ -61,6 +61,12 @@ define([
                 'policies': policies,
                 'questions': questions,
                 'tags': tags,
+                'parties': ['Labour', 'SNP', 'Green', 'Ukip', 'Lib Dem', 'Conservatives'].map(function (party) {
+                    return {
+                        'party': party,
+                        'only': false
+                    };
+                }),
                 'userAnswers': []
             },
             'computed': {
@@ -74,6 +80,11 @@ define([
                             return show || visibleTags.indexOf(tag) !== -1;
                         }, false);
                     });
+                },
+                'allPolicies': function () {
+                    var parties = this.get('parties');
+                    //var allParties = !parties.reduce(function (only, party) { return only || party.only; }, false);
+                    return this.get('policies');
                 }
             }
         });

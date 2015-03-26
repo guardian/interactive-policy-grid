@@ -34,7 +34,7 @@
                 <button class="top-bar__block top-bar__block--cart {{#currentSection == questions.length}}is-current{{/currentSection}}" on-click="policies"></button>
             </span>
             <span class="top-bar--left explore-mode policy-title policy-title--top-bar">
-                <h2 class="policy-title__title">{{policies.length}} policies</h2>
+                <h2 class="policy-title__title">{{allPolicies.length}} policies</h2>
                 <span class="policy-title__share">
                     <span class="policy-title__share__text">Share your policies</span>
                     <button on-click="share:twitter" class="share share--twitter"></button>
@@ -88,6 +88,27 @@
     </div>
 
     <div class="explore-mode">
-        <policy-grid policies="{{policies}}" />
+        <div class="filters">
+            {{#tags}}
+                <span class="filter">
+                    <span class="filter__title">{{area}}</span>
+                    {{#tags}}
+                        <label class="filter__button">
+                            <input type="checkbox" /> {{this}}
+                        </label>
+                    {{/tags}}
+            {{/tags}}
+        </div>
+        <div class="filters filters--right">
+            <span class="filter">
+                <span class="filter__title">Party</span>
+                {{#parties}}
+                    <label class="filter__button {{#only}}is-selected{{/only}}">
+                        <input type="checkbox" checked="{{only}}" /> {{party}}
+                    </label>
+                {{/parties}}
+            </span>
+        </div>
+        <policy-grid policies="{{allPolicies}}" />
     </div>
 </div>
