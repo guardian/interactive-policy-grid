@@ -96,9 +96,9 @@
     background: url('../imgs/cart.svg') no-repeat center;
     border-left: 1px solid $c-neutral6;
     border-right: 0;
-    margin-left: ($gs-gutter / 2);
+    margin-left: ($gs-gutter / 4);
     @media (min-width: $breakpoint1) {
-        margin-left: $gs-gutter;
+        margin-left: ($gs-gutter / 2);
     }
 }
 
@@ -116,14 +116,5 @@
         left: 0;
         counter-increment: question;
         content: counter(question) ".";
-    }
-}
-
-.policies {
-    position: relative;
-    border-top: 1px solid $c-neutral3;
-    margin-top: ($gs-baseline * 2);
-    @media (min-width: $breakpoint1) {
-        margin-top: ($gs-baseline * 4);
     }
 }

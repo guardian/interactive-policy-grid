@@ -49,7 +49,7 @@ define([
     };
 
     function app(el, policies, questions, tags) {
-        var topbarEle, questionEles, policiesEle;
+        var topbarEle, questionEles, policyGridEle;
         var ractive = new Ractive({
             'el': el,
             'template': mainTemplate,
@@ -79,7 +79,7 @@ define([
 
         topbarEle = ractive.find('.top-bar');
         questionEles = ractive.findAll('.question');
-        policiesEle = ractive.find('.policies');
+        policyGridEle = ractive.find('.policy-grid');
 
         function getScrollOffset(ele) {
             return getOffset(ele) - topbarEle.clientHeight;
@@ -90,7 +90,7 @@ define([
         });
 
         ractive.on('policies', function () {
-            scrollTo(getScrollOffset(policiesEle));
+            scrollTo(getScrollOffset(policyGridEle));
         });
 
         ractive.on('answer', function (evt) {
@@ -104,7 +104,7 @@ define([
                 var offset = window.pageYOffset;
                 var currentSection = -1;
 
-                if (offset >= getScrollOffset(policiesEle)) {
+                if (offset >= getScrollOffset(policyGridEle)) {
                     currentSection = questionEles.length;
                 } else {
                     questionEles.forEach(function (question, questionNo) {
