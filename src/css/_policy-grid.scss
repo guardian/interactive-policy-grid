@@ -1,9 +1,7 @@
 .policy-grid__title {
     @include f-textSans;
     font-size: 20px;
-    border-bottom: 1px solid $c-neutral6;
-    padding: ($gs-baseline * 1.5) $gs-gutter;
-    margin-bottom: ($gs-baseline * 2);
+    padding: 0 $gs-gutter;
 }
 
 .policy-grid__list__sizer,
@@ -31,29 +29,6 @@
     &:hover {
         box-shadow: none;
         border-color: $c-neutral6;
-    }
-
-    &.is-selected {
-        z-index: 1;
-        min-width: 50%;
-        height: 320px;
-        box-shadow: none;
-        border-color: $c-neutral2;
-        padding-left: gs-span(2);
-
-        .policy-grid__list__item__party {
-            position: absolute;
-            left: $gs-gutter;
-        }
-
-        .policy-grid__list__item__title {
-            font-weight: bold;
-            text-decoration: none !important;
-        }
-
-        .policy-grid__list__item__text {
-            display: block;
-        }
     }
 }
 
@@ -129,3 +104,26 @@
 @include policy-grid__list__item__party--color(ld, #fdbb30);
 @include policy-grid__list__item__party--color(pc, #3f8428);
 @include policy-grid__list__item__party--color(snp, #fff95d);
+
+.policy-grid__list__item.is-selected {
+    z-index: 1;
+    min-width: 50%;
+    height: auto;
+    box-shadow: none;
+    border-color: $c-neutral2;
+    padding-left: gs-span(2);
+
+    .policy-grid__list__item__party {
+        position: absolute;
+        left: $gs-gutter;
+    }
+
+    .policy-grid__list__item__title {
+        font-weight: bold;
+        text-decoration: none !important;
+    }
+
+    .policy-grid__list__item__text {
+        display: block;
+    }
+}
