@@ -80,7 +80,7 @@ define([
 
         topbarEle = ractive.find('.top-bar');
         questionEles = ractive.findAll('.question');
-        policyGridEle = ractive.find('.policy-grid-title');
+        policyGridEle = ractive.find('.policy-title--grid');
 
         function getScrollOffset(ele) {
             return getOffset(ele) - topbarEle.clientHeight;
