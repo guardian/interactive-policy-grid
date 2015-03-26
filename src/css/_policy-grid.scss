@@ -1,7 +1,8 @@
 .policy-grid__title {
-    @include f-textSans;
-    font-size: 20px;
-    padding: 0 $gs-gutter;
+    @include f-headline;
+    font-size: 26px;
+    padding: 0 $gs-gutter $gs-baseline;
+    border-bottom: 1px solid $c-neutral6;
 }
 
 .policy-grid__list__sizer,
@@ -22,9 +23,9 @@
     position: relative;
     height: 160px;
     border: 2px solid transparent;
-    border-bottom-color: $c-neutral6;
     padding: ($gs-gutter / 2);
     box-sizing: border-box;
+    box-shadow: 0 1px 0 0 $c-neutral6;
 
     @media (min-width: $breakpoint1) {
         padding: $gs-gutter;
