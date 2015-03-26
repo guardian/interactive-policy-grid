@@ -1,4 +1,22 @@
-.policy-grid-title {
+.policy-title__title {
+    border-right: 1px solid $c-neutral6;
+    padding-right: $gs-gutter;
+}
+
+.policy-title__share {
+    padding-left: $gs-gutter;
+    font-size: 18px;
+}
+
+.policy-title__share__text {
+    display: none;
+    padding-right: 3px;
+    @media (min-width: $breakpoint2) {
+        display: inline;
+    }
+}
+
+.policy-title--grid {
     display: table;
     width: 100%;
     border-spacing: 0;
@@ -8,28 +26,20 @@
     @media (min-width: $breakpoint1) {
         margin-top: ($gs-baseline * 4);
     }
+
 }
 
-.policy-grid-title__title,
-.policy-grid-title__share,
-.policy-grid-title__all {
+.policy-title--grid__all,
+.policy-title--grid > .policy-title__title,
+.policy-title--grid > .policy-title__share {
     display: table-cell;
     vertical-align: middle;
     white-space: nowrap;
 }
 
-.policy-grid-title__title {
-    border-right: 1px solid $c-neutral6;
-    padding-right: $gs-gutter;
-}
-
-.policy-grid-title__share,
-.policy-grid-title__all {
+.policy-title--grid__all {
     padding-left: $gs-gutter;
     font-size: 18px;
-}
-
-.policy-grid-title__all {
     width: 100%;
     text-align: right;
 
@@ -42,12 +52,9 @@
     }
 }
 
-.policy-grid-title__share__text {
-    display: none;
-    padding-right: 3px;
-    @media (min-width: $breakpoint2) {
-        display: inline;
-    }
+.policy-title--top-bar > .policy-title__title {
+    display: inline;
+    vertical-align: middle;
 }
 
 .policy-grid-empty {

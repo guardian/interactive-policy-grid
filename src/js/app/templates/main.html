@@ -33,8 +33,18 @@
                 {{userPolicies.length || 0}} policies
                 <button class="top-bar__block top-bar__block--cart {{#currentSection == questions.length}}is-current{{/currentSection}}" on-click="policies"></button>
             </span>
-            <span class="top-bar--left explore-mode">
-                Text here
+            <span class="top-bar--left explore-mode policy-title policy-title--top-bar">
+                <h2 class="policy-title__title">{{policies.length}} policies</h2>
+                <span class="policy-title__share">
+                    <span class="policy-title__share__text">Share your policies</span>
+                    <button on-click="share:twitter" class="share share--twitter"></button>
+                    <button on-click="share:facebook" class="share share--facebook"></button>
+                    <button on-click="share:email" class="share share--email"></button>
+                    <button on-click="share:google" class="share share--google"></button>
+                </span>
+            </span>
+            <span class="top-bar--right explore-mode">
+                <a class="back-to-top" href="#explore">Change filters</a>
             </span>
         </div>
     </div>
@@ -54,18 +64,18 @@
             </div>
         {{/questions}}
 
-        <h2 class="policy-grid-title headline">
-            <span class="policy-grid-title__title">
+        <h2 class="policy-title policy-title--grid headline">
+            <span class="policy-title__title">
                 {{userPolicies.length || 0}} policies
             </span>
-            <span class="policy-grid-title__share">
-                <span class="policy-grid-title__share__text">Share your policies</span>
+            <span class="policy-title__share">
+                <span class="policy-title__share__text">Share your policies</span>
                 <button on-click="share:twitter" class="share share--twitter"></button>
                 <button on-click="share:facebook" class="share share--facebook"></button>
                 <button on-click="share:email" class="share share--email"></button>
                 <button on-click="share:google" class="share share--google"></button>
             </span>
-            <span class="policy-grid-title__all">
+            <span class="policy-title--grid__all">
                 <a href="#explore">View all policies &raquo;</a>
             </span>
         </h2>

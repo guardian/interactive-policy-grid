@@ -36,14 +36,19 @@
     margin-top: -($gs-baseline / 2);
 }
 
-.headline {
+h2 {
     @include f-headline;
     font-size: 26px;
+    @media (min-width: $breakpoint1) {
+        font-size: 40px;
+    }
+}
+
+.headline {
     padding-top: ($gs-baseline * 2);
     padding-bottom: $gs-baseline;
 
     @media (min-width: $breakpoint1) {
-        font-size: 40px;
         padding-top: ($gs-baseline * 4);
     }
 }
@@ -113,6 +118,13 @@
     margin-left: ($gs-gutter / 4);
     @media (min-width: $breakpoint1) {
         margin-left: ($gs-gutter / 2);
+    }
+}
+
+.back-to-top {
+    display: none;
+    .is-sticky & {
+        display: inline-block;
     }
 }
 
