@@ -33,6 +33,7 @@ define([
             });
 
             this.on('policy', function (evt) {
+                evt.original.preventDefault();
                 this.set('policyNo', evt.context.rowNumber);
                 this.masonry.layout();
             });

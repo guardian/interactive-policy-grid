@@ -1,11 +1,17 @@
 .policy-title__title {
     border-right: 1px solid $c-neutral6;
-    padding-right: $gs-gutter;
+    padding-right: ($gs-gutter / 2);
+    @media (min-width: $breakpoint1) {
+        padding-right: $gs-gutter;
+    }
 }
 
 .policy-title__share {
-    padding-left: $gs-gutter;
     font-size: 18px;
+    padding-left: ($gs-gutter / 2);
+    @media (min-width: $breakpoint1) {
+        padding-left: $gs-gutter;
+    }
 }
 
 .policy-title__share__text {
