@@ -69,6 +69,11 @@
                 <a href="#explore">View all policies &raquo;</a>
             </span>
         </h2>
+        {{^userPolicies}}
+        <div class="policy-grid-empty">
+            <span>You have no policies, try answering the questions above to create your personalised policy grid.</span>
+        </div>
+        {{/userPolicies}}
     </div>
     <policy-grid title="Your policies" policies="{{#if mode == 'explore'}}{{policies}}{{else}}{{userPolicies}}{{/if}}" />
 </div>
