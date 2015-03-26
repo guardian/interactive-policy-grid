@@ -1,3 +1,27 @@
+@mixin container--size {
+    margin: 0 auto;
+
+    @media (min-width: gs-span(9)) {
+        max-width: gs-span(9);
+    }
+    @media (min-width: gs-span(12)) {
+        max-width: gs-span(12);
+    }
+    @media (min-width: gs-span(14)) {
+        max-width: gs-span(14);
+    }
+    @media (min-width: gs-span(16)) {
+        max-width: gs-span(16);
+    }
+}
+
+@mixin button--link {
+    background-color: white;
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+}
+
 body {
     @include fs-bodyCopy(2);
     line-height: 1.25;

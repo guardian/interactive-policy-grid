@@ -39,31 +39,17 @@
         <h2 class="question" id="question-{{questionNo}}">{{question}}</h2>
         <div class="answers {{#!!userAnswers[questionNo]}}is-answered{{/userAnswers}}">
             {{#answers}}
-                <a class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" href="#answer" on-click="answer">
+                <button class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" on-click="answer">
                     <i class="answers__item__icon">
                         <img src="@@assets@@/imgs/icons/pgicon-lowpaid-unemployed.svg" />
                     </i>
-                    {{answer}}
-                </a>
+                    <span class="answers__item__text">{{answer}}</span>
+                </button>
             {{/answers}}
         </div>
     {{/questions}}
 
     <div class="policies">
-        <div class="tags is-hidden">
-            <a class="tags__toggle" href="#">See all</a>
-            <div class="tags__list">
-                {{#visibleTags}}
-                    <a class="tags__list__tag" href="#tag" on-click="remove-tag">{{.}}</a>
-                {{/visibleTags}}
-                <span class="tags__list--hidden">
-                    {{#hiddenTags}}
-                        <a class="tags__list__tag" href="#tag" on-click="add-tag">{{.}}</a>
-                    {{/hiddenTags}}
-                </span>
-            </div>
-        </div>
-
         {{#!!userPolicies}}
             <policy-grid title="Your policies" policies="{{userPolicies}}" />
         {{/userPolicies}}

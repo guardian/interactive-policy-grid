@@ -19,7 +19,11 @@ $c-neutral7: map-get($pasteup-palette, neutral-7);
 $c-neutral8: map-get($pasteup-palette, neutral-8);
 $c-newsmain2: map-get($pasteup-palette, news-main-2);
 
+$breakpoint1: gs-span(8);
+$breakpoint2: gs-span(12);
+
 @import 'mixins';
 @import 'common';
 @import 'style';
+@import 'answers';
 @import 'policy-grid';

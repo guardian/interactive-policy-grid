@@ -1,8 +1,11 @@
 .container {
     @include container--size;
-    padding: $gs-gutter;
     background-color: white;
     counter-reset: question;
+    padding: ($gs-gutter / 2);
+    @media (min-width: $breakpoint2) {
+        padding: $gs-gutter;
+    }
 }
 
 .header {
@@ -58,18 +61,10 @@
 
 .top-bar__block {
     @include f-headline;
+    @include button--link;
     display: inline-block;
-    padding: 0 $gs-gutter;
-    box-sizing: border-box;
-    border: 0;
     border-right: 1px solid $c-neutral6;
-    text-align: center;
     vertical-align: top;
-    background-color: white;
-    cursor: pointer;
-    outline: 0;
-
-    @include link($c-neutral1);
 
     &:hover,
     &.is-current {
@@ -79,9 +74,7 @@
     @include top-bar-size(width);
     @include top-bar-size(height);
 
-    @media (min-width: gs-span(12)) {
-        font-size: 40px;
-    }
+        font-size: 40px; // TODO
 }
 
 .top-bar__block--cart {
@@ -103,167 +96,6 @@
         left: 0;
         counter-increment: question;
         content: counter(question) ".";
-    }
-}
-
-.answers {
-    margin-right: (-$gs-gutter * 0.5);
-}
-
-.answers__item {
-    @include fs-textSans(4);
-    font-weight: bold;
-    display: inline-block;
-    vertical-align: top;
-    margin: 0 ($gs-gutter / 2) ($gs-gutter / 2) 0;
-    padding: 0 $gs-gutter;
-    border: 1px solid $c-neutral6;
-    box-sizing: border-box;
-
-    @include link($c-neutral1);
-
-    width: 100%;
-    height: 80px;
-    line-height: 80px;
-    @media (min-width: gs-span(7)) {
-        width: calc(50% - #{$gs-gutter / 2});
-        height: 260px;
-        line-height: 1.25;
-        text-align: center;
-    }
-    @media (min-width: gs-span(12)) {
-        width: calc(25% - #{$gs-gutter / 2});
-    }
-
-    .answers.is-answered > &,
-    .answers:hover > & {
-        background-color: $c-neutral6;
-        filter: grey; // IE9
-        filter: grayscale(100%);
-    }
-
-    &.is-selected,
-    &:hover {
-        background-color: white !important;
-        filter: none !important;
-        box-shadow: 0 0 ($gs-gutter / 2) 0 transparentize($c-neutral7, 0.1);
-    }
-}
-
-.answers__item__icon {
-    display: block;
-    width: 50px;
-    height: 100%;
-    float: right;
-
-    & > img {
-        display: inline;
-        vertical-align: middle;
-        width: 100%;
-    }
-
-    @media (min-width: gs-span(7)) {
-        float: none;
-        width: 120px;
-        height: auto;
-        margin: $gs-gutter auto $gs-baseline;
-        border-bottom: 1px solid $c-neutral6;
-        padding-bottom: ($gs-baseline * 2);
-
-        & > img {
-            display: block;
-        }
-    }
-
-}
-
-.tags {
-    @include fs-textSans(3);
-    position: absolute;
-    top: -1px; // hide the policy-grid border
-    left: (-$gs-gutter * 1.5);
-    right: (-$gs-gutter * 1.5);
-    color: white;
-    background-color: darken($c-neutral3, 10%);
-    min-height: gs-height(1);
-    padding: ($gs-baseline - 4px) ($gs-gutter * 2) 0;
-
-    @media (min-width: gs-span(8)) {
-        line-height: gs-height(1);
-        padding-top: 0;
-    }
-
-    &::before {
-        content: "Policy tags";
-        float: left;
-        font-weight: bold;
-        padding-right: $gs-gutter;
-    }
-}
-
-.tags__toggle {
-    float: left;
-    margin-right: ($gs-gutter * 2);
-
-    @include link(white, true);
-}
-
-.tags__list {
-    overflow: hidden;
-    line-height: get-line-height(textSans, 3) + ($gs-baseline / 2 + 2px);
-    padding: 4px 0;
-
-    clear: left;
-    @media (min-width: gs-span(8)) {
-        clear: none;
-    }
-}
-
-.tags__list--hidden {
-    opacity: 0.5;
-}
-
-.tags__list__tag {
-    @include fs-textSans(3, $size-only: true);
-    position: relative;
-    display: inline-block;
-    background-color: transparent;
-    vertical-align: middle;
-    margin-right: ($gs-baseline / 2);
-    padding: 0 ($gs-gutter / 2);
-    border: 1px solid white;
-    border-radius: 100px;
-
-    transition: border-color 0.1s ease-out;
-
-    @include link(white);
-
-    &:hover {
-        border-color: $c-newsmain2;
-        background-color: $c-newsmain2;
-        &::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            right: ($gs-gutter / 2);
-            margin-top: -7px;
-            width: 10px;
-            height: 10px;
-            border: 2px solid $c-neutral2;
-            border-radius: 100px;
-            background-color: $c-neutral2;
-            background-image: url('../imgs/cross.svg');
-            background-size: contain;
-            box-shadow: -5px 0px 5px $c-newsmain2, 0 0 0 2px $c-newsmain2;
-        }
-    }
-
-    &:active {
-        border-color: $c-neutral2;
-        background-color: $c-neutral2;
-        &::after {
-            box-shadow: -5px 0px 5px $c-neutral2, 0 0 0 2px $c-neutral2;
-        }
     }
 }
 

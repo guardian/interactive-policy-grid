@@ -1,17 +1,6 @@
-.policy-grid {
-    overflow: hidden;
-    clear: left;
-    margin: 0 (-$gs-gutter / 2) ($gs-baseline * 4);
-
-    &:last-child {
-        margin-bottom: 0;
-    }
-}
-
 .policy-grid__title {
-    @include fs-textSans(1);
+    @include f-textSans;
     font-size: 20px;
-    line-height: 1;
     border-bottom: 1px solid $c-neutral6;
     padding: ($gs-baseline * 1.5) $gs-gutter;
     margin-bottom: ($gs-baseline * 2);
@@ -19,21 +8,20 @@
 
 .policy-grid__list__sizer,
 .policy-grid__list__item {
-    @mixin policy--cols($cols, $start) {
-        @media (min-width: gs-span($start)) {
-            width: (100% / $cols);
-        }
+    width: 100%;
+    @media (min-width: $breakpoint1) {
+        width: 50%;
     }
-
-    @include policy--cols(1, 1);
-    @include policy--cols(2, 7);
-    @include policy--cols(3, 12);
-    @include policy--cols(4, 14);
+    @media (min-width: $breakpoint2) {
+        width: 33%;
+    }
+    @media (min-width: gs-span(14)) {
+        width: 25%;
+    }
 }
 
 .policy-grid__list__item {
     position: relative;
-    line-height: 1.2;
     height: 160px;
     box-shadow: ($gs-gutter + 1px) 0 0 (-$gs-gutter) $c-neutral6, 0 ($gs-gutter + 1px) 0 (-$gs-gutter) $c-neutral6;
     border: 2px solid transparent;
@@ -84,7 +72,13 @@
     position: relative;
     z-index: 1;
     & > a {
-        @include link($c-neutral3, true);
+        &, &:hover, &:active {
+            text-decoration: none;
+            color: $c-neutral3;
+        }
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
 
@@ -105,14 +99,12 @@
 .policy-grid__list__item__party {
     @include f-textSans;
     font-size: 13px;
-    line-height: 13px;
     display: inline-block;
     font-weight: bold;
     color: #666;
     border-radius: 4px;
     background-color: $c-neutral7;
     padding: 6px 8px 5px;
-    margin-bottom: $gs-baseline;
 
     &::before {
         content: "";

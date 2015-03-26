@@ -60,23 +60,11 @@ define([
                 'policies': policies,
                 'questions': questions,
                 'tags': tags,
-                'userAnswers': [],
-                'userTags': { 'added': [], 'removed': [] }
+                'userAnswers': []
             },
             'computed': {
                 'visibleTags': function () {
-                    var removedTags = this.get('userTags.removed');
-                    var tags = this.get('userAnswers')
-                        .flatMap(function (answer) { return answer.tags; })
-                        .filter(function (tag) { return removedTags.indexOf(tag) === -1; });
-
-                    return tags.concat(this.get('userTags.added'));
-                },
-                'hiddenTags': function () {
-                    var visibleTags = this.get('visibleTags');
-                    return this.get('tags').filter(function (tag) {
-                        return visibleTags.indexOf(tag) === -1;
-                    });
+                    return this.get('userAnswers').flatMap(function (answer) { return answer.tags; });
                 },
                 'userPolicies': function () {
                     var visibleTags = this.get('visibleTags');
@@ -107,14 +95,6 @@ define([
 
         ractive.on('answer', function (evt) {
             this.set('userAnswers.' + evt.index.questionNo, evt.context);
-        });
-
-        ractive.on('add-tag', function (evt) {
-            this.push('userTags.added', evt.context);
-        });
-
-        ractive.on('remove-tag', function (evt) {
-            this.push('userTags.removed', evt.context);
         });
 
         document.addEventListener('scroll', (function () {
