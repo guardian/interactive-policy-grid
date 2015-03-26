@@ -1,6 +1,6 @@
 .answers {
     @media (min-width: $breakpoint1) {
-        margin-right: (-$gs-gutter * 0.5);
+        margin: 0 (-$gs-gutter * 0.5) (-$gs-gutter * 0.5) 0;
     }
 }
 

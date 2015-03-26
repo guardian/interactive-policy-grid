@@ -6,6 +6,13 @@
     @media (min-width: $breakpoint2) {
         padding: $gs-gutter;
     }
+
+    &.is-explore .basic-mode {
+        display: none;
+    }
+    &.is-basic .explore-mode {
+        display: none;
+    }
 }
 
 .header {

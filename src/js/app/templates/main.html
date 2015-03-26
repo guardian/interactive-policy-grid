@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container {{#if mode == 'explore'}}is-explore{{else}}is-basic{{/if}}">
     <div class="header">
         <h1>Will their policies work for you?</h1>
         <p class="header__text">
@@ -22,24 +22,24 @@
 
     <div class="top-bar-wrapper">
         <div class="top-bar">
-            {{#if mode == 'explore' }}
-            {{else}}
-                <span class="top-bar--left">
-                    {{#questions:questionNo}}
-                        <button class="top-bar__block {{#currentSection == questionNo }}is-current{{/currentSection}}" on-click="question">
-                            {{questionNo + 1}}
-                        </button>
-                    {{/questions}}
-                </span>
-                <span class="top-bar--right top-bar--simple">
-                    {{userPolicies.length || 0}} policies
-                    <button class="top-bar__block top-bar__block--cart {{#currentSection == questions.length}}is-current{{/currentSection}}" on-click="policies"></button>
-                </span>
-            {{/if}}
+            <span class="top-bar--left basic-mode">
+                {{#questions:questionNo}}
+                    <button class="top-bar__block {{#currentSection == questionNo }}is-current{{/currentSection}}" on-click="question">
+                        {{questionNo + 1}}
+                    </button>
+                {{/questions}}
+            </span>
+            <span class="top-bar--right top-bar--simple basic-mode">
+                {{userPolicies.length || 0}} policies
+                <button class="top-bar__block top-bar__block--cart {{#currentSection == questions.length}}is-current{{/currentSection}}" on-click="policies"></button>
+            </span>
+            <span class="top-bar--left explore-mode">
+                Text here
+            </span>
         </div>
     </div>
 
-    <div {{#mode == 'explore'}}class="is-hidden"{{/mode}}>
+    <div class="basic-mode">
         {{#questions:questionNo}}
             <h2 class="question headline" id="question-{{questionNo}}">{{question}}</h2>
             <div class="answers {{#!!userAnswers[questionNo]}}is-answered{{/userAnswers}}">
@@ -59,7 +59,7 @@
                 {{userPolicies.length || 0}} policies
             </span>
             <span class="policy-grid-title__share">
-                <span class="policy-grid-title__share__text">Share the policies that matter to you</span>
+                <span class="policy-grid-title__share__text">Share your policies</span>
                 <button on-click="share:twitter" class="share share--twitter"></button>
                 <button on-click="share:facebook" class="share share--facebook"></button>
                 <button on-click="share:email" class="share share--email"></button>
@@ -74,6 +74,10 @@
             <span>You have no policies, try answering the questions above to create your personalised policy grid.</span>
         </div>
         {{/userPolicies}}
+        <policy-grid policies="{{userPolicies}}" />
     </div>
-    <policy-grid title="Your policies" policies="{{#if mode == 'explore'}}{{policies}}{{else}}{{userPolicies}}{{/if}}" />
+
+    <div class="explore-mode">
+        <policy-grid policies="{{policies}}" />
+    </div>
 </div>
