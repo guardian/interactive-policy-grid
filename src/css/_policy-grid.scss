@@ -21,10 +21,16 @@
 .policy-grid__list__item {
     position: relative;
     height: 160px;
-    box-shadow: ($gs-gutter + 1px) 0 0 (-$gs-gutter) $c-neutral6, 0 ($gs-gutter + 1px) 0 (-$gs-gutter) $c-neutral6;
     border: 2px solid transparent;
-    padding: $gs-gutter;
+    border-bottom-color: $c-neutral6;
+    padding: ($gs-gutter / 2);
     box-sizing: border-box;
+
+    @media (min-width: $breakpoint1) {
+        padding: $gs-gutter;
+        border-bottom-color: transparent;
+        box-shadow: ($gs-gutter + 1px) 0 0 (-$gs-gutter) $c-neutral6, 0 ($gs-gutter + 1px) 0 (-$gs-gutter) $c-neutral6;
+    }
 
     &:hover {
         box-shadow: none;
@@ -106,16 +112,21 @@
 @include policy-grid__list__item__party--color(snp, #fff95d);
 
 .policy-grid__list__item.is-selected {
+    $breakpoint-min: gs-span(7);
+
     z-index: 1;
-    min-width: 50%;
     height: auto;
     box-shadow: none;
     border-color: $c-neutral2;
-    padding-left: gs-span(2);
 
     .policy-grid__list__item__party {
-        position: absolute;
-        left: $gs-gutter;
+        @media (min-width: $breakpoint-min) {
+            position: absolute;
+            left: ($gs-gutter / 2);
+        }
+        @media (min-width: $breakpoint1) {
+            left: $gs-gutter;
+        }
     }
 
     .policy-grid__list__item__title {
@@ -125,5 +136,20 @@
 
     .policy-grid__list__item__text {
         display: block;
+    }
+
+    @media (min-width: $breakpoint-min) {
+        padding-left: gs-span(2);
+    }
+
+    @media (min-width: $breakpoint1) {
+        width: 100%;
+        height: 320px;
+    }
+    @media (min-width: $breakpoint2) {
+        width: 66%;
+    }
+    @media (min-width: gs-span(14)) {
+        width: 50%;
     }
 }
