@@ -1,17 +1,57 @@
-.policy-grid {
+.policy-grid-title {
+    display: table;
+    width: 100%;
+    border-spacing: 0;
     border-top: 1px solid $c-neutral3;
+    border-bottom: 1px solid $c-neutral6;
     margin-top: ($gs-baseline * 2);
     @media (min-width: $breakpoint1) {
         margin-top: ($gs-baseline * 4);
     }
 }
 
-.policy-grid__title {
-    border-bottom: 1px solid $c-neutral6;
+.policy-grid-title__title,
+.policy-grid-title__share,
+.policy-grid-title__all {
+    display: table-cell;
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
-.policy-grid__list__sizer,
-.policy-grid__list__item {
+.policy-grid-title__title {
+    border-right: 1px solid $c-neutral6;
+    padding-right: $gs-gutter;
+}
+
+.policy-grid-title__share,
+.policy-grid-title__all {
+    padding-left: $gs-gutter;
+    font-size: 18px;
+}
+
+.policy-grid-title__all {
+    width: 100%;
+    text-align: right;
+
+    & > a {
+        color: map-get($pasteup-palette, guardian-brand);
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.policy-grid-title__share__text {
+    display: none;
+    padding-right: 3px;
+    @media (min-width: $breakpoint2) {
+        display: inline;
+    }
+}
+
+.policy-grid__sizer,
+.policy-grid__item {
     width: 100%;
     @media (min-width: $breakpoint1) {
         width: 50%;
@@ -24,7 +64,7 @@
     }
 }
 
-.policy-grid__list__item {
+.policy-grid__item {
     position: relative;
     height: 160px;
     border: 2px solid transparent;
@@ -44,15 +84,15 @@
     }
 }
 
-.policy-grid__list__item__title {
+.policy-grid__item__title {
     font-weight: normal;
 }
 
-.policy-grid__list__item__text {
+.policy-grid__item__text {
     display: none;
 }
 
-.policy-grid__list__item__tags {
+.policy-grid__item__tags {
     @include fs-textSans(1);
     color: $c-neutral3;
     text-transform: uppercase;
@@ -69,7 +109,7 @@
     }
 }
 
-.policy-grid__list__item__link {
+.policy-grid__item__link {
     position: absolute;
     z-index: 0;
     top: 0;
@@ -78,12 +118,12 @@
     bottom: 0;
 
     // This is a horrible hack 
-    &:hover + .policy-grid__list__item__title {
+    &:hover + .policy-grid__item__title {
         text-decoration: underline;
     }
 }
 
-.policy-grid__list__item__party {
+.policy-grid__item__party {
     @include f-textSans;
     font-size: 13px;
     display: inline-block;
@@ -104,20 +144,20 @@
     }
 }
 
-@mixin policy-grid__list__item__party--color($party, $color) {
-    .policy-grid__list__item__party--#{$party}::before {
+@mixin policy-grid__item__party--color($party, $color) {
+    .policy-grid__item__party--#{$party}::before {
         background-color: $color;
     }
 }
 
-@include policy-grid__list__item__party--color(conservative, #0087dc);
-@include policy-grid__list__item__party--color(labour, #d50000);
-@include policy-grid__list__item__party--color(ukip, #70147A);
-@include policy-grid__list__item__party--color(ld, #fdbb30);
-@include policy-grid__list__item__party--color(pc, #3f8428);
-@include policy-grid__list__item__party--color(snp, #fff95d);
+@include policy-grid__item__party--color(conservative, #0087dc);
+@include policy-grid__item__party--color(labour, #d50000);
+@include policy-grid__item__party--color(ukip, #70147A);
+@include policy-grid__item__party--color(ld, #fdbb30);
+@include policy-grid__item__party--color(pc, #3f8428);
+@include policy-grid__item__party--color(snp, #fff95d);
 
-.policy-grid__list__item.is-selected {
+.policy-grid__item.is-selected {
     $breakpoint-min: gs-span(7);
 
     z-index: 1;
@@ -125,7 +165,7 @@
     box-shadow: none;
     border-color: $c-neutral2;
 
-    .policy-grid__list__item__party {
+    .policy-grid__item__party {
         @media (min-width: $breakpoint-min) {
             position: absolute;
             left: ($gs-gutter / 2);
@@ -135,12 +175,12 @@
         }
     }
 
-    .policy-grid__list__item__title {
+    .policy-grid__item__title {
         font-weight: bold;
         text-decoration: none !important;
     }
 
-    .policy-grid__list__item__text {
+    .policy-grid__item__text {
         display: block;
     }
 

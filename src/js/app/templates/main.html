@@ -21,33 +21,53 @@
 
     <div class="top-bar-wrapper">
         <div class="top-bar">
-            <span class="top-bar--left">
-                {{#questions:questionNo}}
-                    <button class="top-bar__block {{#currentSection == questionNo }}is-current{{/currentSection}}" on-click="question">
-                        {{questionNo + 1}}
-                    </button>
-                {{/questions}}
-            </span>
-            <span class="top-bar--right top-bar--simple">
-                {{userPolicies.length || 0}} policies
-                <button class="top-bar__block top-bar__block--cart {{#currentSection == questions.length}}is-current{{/currentSection}}" on-click="policies"></button>
-            </span>
+            {{#if mode == 'explore' }}
+            {{else}}
+                <span class="top-bar--left">
+                    {{#questions:questionNo}}
+                        <button class="top-bar__block {{#currentSection == questionNo }}is-current{{/currentSection}}" on-click="question">
+                            {{questionNo + 1}}
+                        </button>
+                    {{/questions}}
+                </span>
+                <span class="top-bar--right top-bar--simple">
+                    {{userPolicies.length || 0}} policies
+                    <button class="top-bar__block top-bar__block--cart {{#currentSection == questions.length}}is-current{{/currentSection}}" on-click="policies"></button>
+                </span>
+            {{/if}}
         </div>
     </div>
 
-    {{#questions:questionNo}}
-        <h2 class="question headline" id="question-{{questionNo}}">{{question}}</h2>
-        <div class="answers {{#!!userAnswers[questionNo]}}is-answered{{/userAnswers}}">
-            {{#answers}}
-                <button class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" on-click="answer">
-                    <i class="answers__item__icon">
-                        <img src="@@assets@@/imgs/icons/pgicon-lowpaid-unemployed.svg" />
-                    </i>
-                    <span class="answers__item__text">{{answer}}</span>
-                </button>
-            {{/answers}}
-        </div>
-    {{/questions}}
+    <div {{#mode == 'explore'}}class="is-hidden"{{/mode}}>
+        {{#questions:questionNo}}
+            <h2 class="question headline" id="question-{{questionNo}}">{{question}}</h2>
+            <div class="answers {{#!!userAnswers[questionNo]}}is-answered{{/userAnswers}}">
+                {{#answers}}
+                    <button class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" on-click="answer">
+                        <i class="answers__item__icon">
+                            <img src="@@assets@@/imgs/icons/pgicon-lowpaid-unemployed.svg" />
+                        </i>
+                        <span class="answers__item__text">{{answer}}</span>
+                    </button>
+                {{/answers}}
+            </div>
+        {{/questions}}
 
-    <policy-grid title="Your policies" policies="{{userPolicies}}" />
+        <h2 class="policy-grid-title headline">
+            <span class="policy-grid-title__title">
+                {{userPolicies.length || 0}} policies
+            </span>
+            <span class="policy-grid-title__share">
+                <span class="policy-grid-title__share__text">Share the policies that matter to you</span>
+                <button on-click="share:twitter" class="share share--twitter"></button>
+                <button on-click="share:facebook" class="share share--facebook"></button>
+                <button on-click="share:email" class="share share--email"></button>
+                <button on-click="share:google" class="share share--google"></button>
+            </span>
+            <span class="policy-grid-title__all">
+                <a href="#explore">View all policies &raquo;</a>
+            </span>
+        </h2>
+    </div>
+    <policy-grid title="Your policies" policies="{{#if mode == 'explore'}}{{policies}}{{else}}{{userPolicies}}{{/if}}" />
 </div>

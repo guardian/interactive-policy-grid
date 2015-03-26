@@ -1,19 +1,16 @@
 <div class="policy-grid">
-    <h3 class="policy-grid__title headline">{{title}} ({{policies.length || 0}})</h3>
-    <div class="policy-grid__list">
-        <div class="policy-grid__list__sizer"></div>
-        {{#policies}}
-            <div class="policy-grid__list__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}" decorator="masonryItem">
-                <p class="policy-grid__list__item__party policy-grid__list__item__party--{{party.toLowerCase()}}">{{party}}</p>
-                <a class="policy-grid__list__item__link" href="#policy" on-click="policy"></a>
-                <h4 class="policy-grid__list__item__title">{{policy}}</h4>
-                <p class="policy-grid__list__item__text">{{policyverbatim}}</p>
-                <span class="policy-grid__list__item__tags">
-                    {{#tags}}
-                        <a href="#tag">{{.}}</a>{{#if i != tags.length - 1}}{{", "}}{{/if}}
-                    {{/tags}}
-                </span>
-            </div>
-        {{/policies}}
-    </div>
+    <div class="policy-grid__sizer"></div>
+    {{#policies}}
+        <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}" decorator="masonryItem">
+            <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
+            <a class="policy-grid__item__link" href="#policy" on-click="policy"></a>
+            <h4 class="policy-grid__item__title">{{policy}}</h4>
+            <p class="policy-grid__item__text">{{policyverbatim}}</p>
+            <span class="policy-grid__item__tags">
+                {{#tags}}
+                    <a href="#tag">{{.}}</a>{{#if i != tags.length - 1}}{{", "}}{{/if}}
+                {{/tags}}
+            </span>
+        </div>
+    {{/policies}}
 </div>

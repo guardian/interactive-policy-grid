@@ -52,10 +52,6 @@ h1 {
     }
 }
 
-h3 {
-    line-height: 1.25; // Override NGW
-}
-
 .share {
     position: relative;
     width: 32px;
@@ -65,6 +61,7 @@ h3 {
     outline: 0;
     cursor: pointer;
     margin-right: 3px;
+    vertical-align: middle;
 
     &::before {
         content: "";

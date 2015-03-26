@@ -57,6 +57,7 @@ define([
                 'policy-grid': PolicyGrid
             },
             'data': {
+                'mode': window.location.hash === '#explore' ? 'explore' : 'basic',
                 'policies': policies,
                 'questions': questions,
                 'tags': tags,
@@ -79,7 +80,7 @@ define([
 
         topbarEle = ractive.find('.top-bar');
         questionEles = ractive.findAll('.question');
-        policyGridEle = ractive.find('.policy-grid');
+        policyGridEle = ractive.find('.policy-grid-title');
 
         function getScrollOffset(ele) {
             return getOffset(ele) - topbarEle.clientHeight;
@@ -122,6 +123,10 @@ define([
                 topbarEle.className = offset >= topbarX ? 'top-bar is-sticky' : 'top-bar';
             }, 100);
         })());
+
+        window.addEventListener('hashchange', function () {
+            ractive.set('mode', window.location.hash === '#explore' ? 'explore' : 'basic');
+        });
     }
 
     function init(el) {

@@ -26,9 +26,9 @@ define([
             'masonryItem': masonryItemDecorator
         },
         'oncomplete': function () {
-            this.masonry = new Masonry(this.find('.policy-grid__list'), {
-                'itemSelector': '.policy-grid__list__item',
-                'columnWidth': '.policy-grid__list__sizer',
+            this.masonry = new Masonry(this.find('.policy-grid'), {
+                'itemSelector': '.policy-grid__item',
+                'columnWidth': '.policy-grid__sizer',
                 'transitionDuration': 0
             });
 
