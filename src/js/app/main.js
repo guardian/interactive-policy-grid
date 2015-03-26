@@ -177,7 +177,12 @@ define([
             var tags = spreadsheet.sheets.tags.map(function (tag) {
                 return {
                     'area': tag.area,
-                    'tags': parseTags(tag.tags)
+                    'tags': parseTags(tag.tags).map(function (tag) {
+                        return {
+                            'tag': tag,
+                            'only': false
+                        };
+                    })
                 };
             });
 

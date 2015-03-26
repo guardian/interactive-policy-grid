@@ -217,7 +217,7 @@ $font-size: 12px;
     &:hover {
         text-decoration: none;
         background-color: $c-newsmain2;
-        color: white;
+        color: white !important;
     }
 
     &.is-selected {
@@ -227,5 +227,9 @@ $font-size: 12px;
 
     & > input {
         display: none;
+    }
+
+    .filter:hover > & {
+        color: $c-neutral1;
     }
 }

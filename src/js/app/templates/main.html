@@ -93,8 +93,8 @@
                 <span class="filter">
                     <span class="filter__title">{{area}}</span>
                     {{#tags}}
-                        <label class="filter__button">
-                            <input type="checkbox" /> {{this}}
+                        <label class="filter__button {{#only}}is-selected{{/only}}">
+                            <input type="checkbox" checked="{{only}}" /> {{tag}}
                         </label>
                     {{/tags}}
             {{/tags}}
