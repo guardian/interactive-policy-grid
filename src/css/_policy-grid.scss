@@ -42,14 +42,6 @@
     font-size: 18px;
     width: 100%;
     text-align: right;
-
-    & > a {
-        color: map-get($pasteup-palette, guardian-brand);
-        text-decoration: none;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
 }
 
 .policy-title--top-bar > .policy-title__title {
