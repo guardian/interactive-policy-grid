@@ -102,7 +102,13 @@ h2 {
         background-color: lighten($c-newsmain2, 15%);
     }
 
+    // Mega hacky way of having one more breakpoint for width (only here)
+    @media (min-width: gs-span(5)) {
+        width: 48px;
+    }
     @include top-bar-size(width);
+    width: 42px;
+
     @include top-bar-size(height);
 
     font-size: 26px;
