@@ -38,7 +38,11 @@
     &:hover {
         background-color: white !important;
         filter: none !important;
-        box-shadow: 0 0 ($gs-gutter / 2) 0 transparentize($c-neutral7, 0.1);
+        box-shadow: 0 0 10px 5px transparentize($c-neutral6, 0.3);
+    }
+
+    &.is-selected {
+        border-color: $c-neutral3;
     }
 }
 
