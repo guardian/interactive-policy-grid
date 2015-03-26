@@ -11,8 +11,10 @@
 .header {
     @include top-bar-size(margin-bottom);
     border-bottom: 1px solid $c-neutral3;
+    padding-bottom: ($gs-baseline * 2);
 }
 
+.header__date,
 .header__text {
     color: $c-neutral2;
     max-width: gs-span(6);
@@ -20,6 +22,11 @@
     & > a {
         font-weight: bold;
     }
+}
+
+.header__date {
+    @include fs-textSans(1);
+    margin-top: -($gs-baseline / 2);
 }
 
 .headline {
