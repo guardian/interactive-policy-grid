@@ -106,6 +106,7 @@ define([
         });
 
         ractive.on('answer', function (evt) {
+            evt.original.preventDefault();
             this.set('userAnswers.' + evt.index.questionNo, evt.context);
         });
 

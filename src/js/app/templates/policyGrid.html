@@ -6,13 +6,14 @@
             {{#rowNumber == policyNo}}
                 <p>{{policyverbatim}}</p>
             {{/rowNumber}}
-            <span class="policy-grid__item__tags explore-mode">
-                {{#tags}}
-                    <a href="#tag">{{.}}</a>{{#if i != tags.length - 1}}{{", "}}{{/if}}
+            <a class="policy-grid__item__link" href="#policy" title="Read more about this policy" on-click="policy"></a>
+            <p class="policy-grid__item__toggle-selected">Read</p>
+            <p class="policy-grid__item__tags explore-mode">
+                {{#tags:i}}
+                    {{.}}{{#if i != tags.length - 1}}{{", "}}{{/if}}
                 {{/tags}}
-            </span>
-            <a class="policy-grid__item__link" href="#policy" on-click="policy"></a>
-            <a class="policy-grid__item__toggle">Read</a>
+            </p>
+            <a class="policy-grid__item__toggle-bucket explore-mode" href="#" title="Add to policy bucket"></a>
         </div>
     {{/policies}}
 </div>

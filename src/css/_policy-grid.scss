@@ -138,23 +138,6 @@
     @include fs-textSans(1);
     color: $c-neutral3;
     text-transform: uppercase;
-    position: relative;
-    z-index: 1;
-
-    & > a {
-        color: inherit;
-    }
-}
-
-.policy-grid__item__toggle {
-    @include fs-textSans(1);
-    display: none;
-    text-transform: uppercase;
-    text-decoration: underline;
-
-    &::after {
-        content: " more";
-    }
 }
 
 .policy-grid__item__link {
@@ -166,7 +149,47 @@
     bottom: 0;
 
     // This is a horrible hack 
-    &:hover + .policy-grid__item__toggle {
+    &:hover + .policy-grid__item__toggle-selected {
+        visibility: visible;
+    }
+}
+
+.policy-grid__item__toggle-selected {
+    @include fs-textSans(1);
+    visibility: hidden;
+    text-transform: uppercase;
+    text-decoration: underline;
+    color: map-get($pasteup-palette, guardian-brand);
+
+    &::after {
+        content: " more";
+    }
+}
+
+.policy-grid__item__toggle-bucket {
+    @include f-textSans;
+    position: absolute;
+    top: $gs-gutter;
+    right: $gs-gutter;
+    width: 26px;
+    line-height: 26px;
+    background-color: $c-neutral3;
+    border-radius: 100px;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+
+    &:hover {
+        background-color: $c-newsmain2;
+        text-decoration: none;
+    }
+
+    &::before {
+        content: "+";
+    }
+
+    display: none;
+    .policy-grid__item:hover > & {
         display: block;
     }
 }
@@ -227,7 +250,7 @@
         font-weight: bold;
     }
 
-    .policy-grid__item__toggle::after {
+    .policy-grid__item__toggle-selected::after {
         content: " less";
     }
 

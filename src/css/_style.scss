@@ -8,10 +8,10 @@
     }
 
     &.is-explore .basic-mode {
-        display: none;
+        display: none !important;
     }
     &.is-basic .explore-mode {
-        display: none;
+        display: none !important;
     }
 }
 
