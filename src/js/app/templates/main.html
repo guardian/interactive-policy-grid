@@ -24,14 +24,15 @@
         <div class="top-bar">
             <span class="top-bar--left basic-mode">
                 {{#questions:questionNo}}
-                    <button class="top-bar__block {{#currentSection == questionNo }}is-current{{/currentSection}}" on-click="question">
+                    <button class="top-bar__block {{#currentSection == questionNo}}is-current{{/currentSection}}" on-click="question">
                         {{questionNo + 1}}
                     </button>
                 {{/questions}}
             </span>
-            <span class="top-bar--right top-bar--simple basic-mode">
-                {{userPolicies.length || 0}} policies
-                <button class="top-bar__block top-bar__block--cart {{#currentSection == questions.length}}is-current{{/currentSection}}" on-click="policies"></button>
+            <span class="top-bar--right basic-mode">
+                <button class="top-bar__block top-bar__block--policies {{#currentSection == questions.length}}is-current{{/currentSection}}" on-click="policies">
+                    {{userPolicies.length || 0}} policies
+                </button>
             </span>
             <span class="top-bar--left explore-mode policy-title policy-title--top-bar">
                 <h2 class="policy-title__title">{{allPolicies.length}} policies</h2>

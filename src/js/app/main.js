@@ -3,7 +3,8 @@ define([
     'text!templates/main.html',
     'ractive',
     'policy-grid',
-    'pegasus'
+    'pegasus',
+    'classList' // polyfill for IE9
 ], function(
     iframeMessenger,
     mainTemplate,
@@ -108,6 +109,18 @@ define([
         ractive.on('answer', function (evt) {
             evt.original.preventDefault();
             this.set('userAnswers.' + evt.index.questionNo, evt.context);
+        });
+
+        ractive.observe('userPolicies', function () {
+            var el = ractive.find('.top-bar__block--policies');
+            el.classList.add('is-flash');
+            setTimeout(function () {
+                el.classList.remove('is-flash');
+            }, 300);
+
+        }, {
+            'init': false,
+            'defer': true
         });
 
         document.addEventListener('scroll', (function () {

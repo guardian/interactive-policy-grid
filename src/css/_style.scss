@@ -81,6 +81,11 @@ h2 {
 .top-bar--left {
     display: table-cell;
     white-space: nowrap;
+
+    font-size: 26px;
+    @media (min-width: $breakpoint1) {
+        font-size: 40px;
+    }
 }
 
 .top-bar--right {
@@ -88,6 +93,7 @@ h2 {
     text-align: right;
     width: 100%;
     vertical-align: middle;
+    font-size: 18px;
 }
 
 .top-bar__block {
@@ -96,34 +102,45 @@ h2 {
     display: inline-block;
     border-right: 1px solid $c-neutral6;
     vertical-align: top;
+    font-size: inherit;
 
     &:hover,
     &.is-current {
         background-color: lighten($c-newsmain2, 15%);
     }
 
-    // Mega hacky way of having one more breakpoint for width (only here)
-    @media (min-width: gs-span(5)) {
-        width: 48px;
-    }
     @include top-bar-size(width);
-    width: 42px;
-
     @include top-bar-size(height);
+}
 
-    font-size: 26px;
-    @media (min-width: $breakpoint1) {
-        font-size: 40px;
+@keyframes policies-flash {
+    0% {
+        background-color: white;
+    }
+
+    50% {
+        background-color: $c-newsmain2;
+    }
+
+    100% {
+        background-color: white;
     }
 }
 
-.top-bar__block--cart {
-    background: url('../imgs/cart.svg') no-repeat center;
-    border-left: 1px solid $c-neutral6;
+.top-bar__block--policies {
     border-right: 0;
-    margin-left: ($gs-gutter / 4);
+    border-left: 1px solid $c-neutral6;
+    width: auto;
+    padding: 0 ($gs-gutter / 2);
     @media (min-width: $breakpoint1) {
-        margin-left: ($gs-gutter / 2);
+        padding: 0 $gs-gutter;
+    }
+    @media (min-width: $breakpoint2) {
+        padding: 0 ($gs-gutter * 2);
+    }
+
+    &.is-flash {
+        animation: policies-flash 0.4s;
     }
 }
 
@@ -135,7 +152,7 @@ h2 {
 
     font-size: 0;
     @media (min-width: $breakpoint1) {
-        font-size: 18px;
+        font-size: inherit;
     }
 }
 
