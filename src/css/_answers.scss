@@ -13,9 +13,9 @@
 }
 
 .answers__item {
-    @include fs-textSans(4);
+    @include f-textSans;
     @include button--link;
-    font-weight: bold;
+    font-size: 16px;
     text-align: left;
     display: inline-block;
     vertical-align: top;
@@ -27,6 +27,7 @@
     width: 100%;
     height: 80px;
     @media (min-width: $breakpoint1) {
+        font-size: 20px;
         width: calc(50% - #{$gs-gutter / 2});
         height: 300px;
         text-align: center;
@@ -43,11 +44,13 @@
 
     .answers.is-answered > & {
         background-color: $c-neutral8;
+        color: $c-neutral3;
     }
 
     &.is-selected,
     &:hover {
         background-color: white !important;
+        color: $c-neutral1 !important;
         filter: none !important;
         box-shadow: 0 0 10px 5px transparentize($c-neutral6, 0.3);
     }
@@ -73,7 +76,7 @@
         padding-bottom: ($gs-baseline * 2);
 
         & > img {
-            width: 180px;
+            width: 160px;
         }
     }
 
