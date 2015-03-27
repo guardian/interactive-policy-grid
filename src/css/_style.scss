@@ -132,6 +132,11 @@ h2 {
     .is-sticky & {
         display: inline-block;
     }
+
+    font-size: 0;
+    @media (min-width: $breakpoint1) {
+        font-size: 18px;
+    }
 }
 
 .question {
