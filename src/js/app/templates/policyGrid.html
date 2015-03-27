@@ -2,14 +2,17 @@
     {{#policies}}
         <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}">
             <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
-            <a class="policy-grid__item__link" href="#policy" on-click="policy"></a>
             <h4 class="policy-grid__item__title">{{policy}}</h4>
-            <p class="policy-grid__item__text">{{policyverbatim}}</p>
+            {{#rowNumber == policyNo}}
+                <p>{{policyverbatim}}</p>
+            {{/rowNumber}}
             <span class="policy-grid__item__tags explore-mode">
                 {{#tags}}
                     <a href="#tag">{{.}}</a>{{#if i != tags.length - 1}}{{", "}}{{/if}}
                 {{/tags}}
             </span>
+            <a class="policy-grid__item__link" href="#policy" on-click="policy"></a>
+            <a class="policy-grid__item__toggle">Read</a>
         </div>
     {{/policies}}
 </div>

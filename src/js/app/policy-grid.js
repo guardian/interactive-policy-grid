@@ -12,8 +12,9 @@ define([
         },
         'oncomplete': function () {
             this.on('policy', function (evt) {
+                var policy = evt.context.rowNumber;
+                this.set('policyNo', policy === this.get('policyNo') ? -1 : policy);
                 evt.original.preventDefault();
-                this.set('policyNo', evt.context.rowNumber);
             });
         }
     });
