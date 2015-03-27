@@ -162,7 +162,8 @@ define([
                     if (question[s]) {
                         answers[i] = {
                             'answer': question[s],
-                            'tags': parseTags(question[s + 'tags'])
+                            'tags': parseTags(question[s + 'tags']),
+                            'img': question[s + 'image']
                         };
                     }
                 }

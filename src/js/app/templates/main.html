@@ -55,9 +55,7 @@
             <div class="answers {{#userAnswers[questionNo]}}is-answered{{/userAnswers}}">
                 {{#answers}}
                     <button class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" on-click="answer">
-                        <i class="answers__item__icon">
-                            <img src="@@assets@@/imgs/icons/pgicon-lowpaid-unemployed.svg" />
-                        </i>
+                        <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{img}}.svg" /></i>
                         <span class="answers__item__text">{{answer}}</span>
                     </button>
                 {{/answers}}
