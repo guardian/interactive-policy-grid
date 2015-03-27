@@ -65,11 +65,12 @@
 .answers__item__icon {
     float: right;
     margin-top: -$gs-baseline;
+    margin: -$gs-baseline -10px 0 0;
     padding-left: ($gs-gutter / 2);
 
     & > img {
         vertical-align: middle;
-        width: 50px;
+        width: 62px;
     }
 
     @media (min-width: $breakpoint1) {
@@ -80,7 +81,7 @@
         padding: 0 0 $gs-baseline;
 
         & > img {
-            width: 160px;
+            width: 185px;
         }
     }
 
