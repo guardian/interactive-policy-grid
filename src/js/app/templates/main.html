@@ -50,6 +50,7 @@
     </div>
 
     <div class="basic-mode">
+        <div>
         {{#questions:questionNo}}
             <h2 class="question headline" id="question-{{questionNo}}">{{question}}</h2>
             <div class="answers {{#userAnswers[questionNo]}}is-answered{{/userAnswers}}">
@@ -61,6 +62,7 @@
                 {{/answers}}
             </div>
         {{/questions}}
+        </div>
 
         <h2 class="policy-title policy-title--grid headline">
             <span class="policy-title__title">
