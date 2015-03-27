@@ -5,7 +5,7 @@
             <a class="policy-grid__item__link" href="#policy" on-click="policy"></a>
             <h4 class="policy-grid__item__title">{{policy}}</h4>
             <p class="policy-grid__item__text">{{policyverbatim}}</p>
-            <span class="policy-grid__item__tags">
+            <span class="policy-grid__item__tags explore-mode">
                 {{#tags}}
                     <a href="#tag">{{.}}</a>{{#if i != tags.length - 1}}{{", "}}{{/if}}
                 {{/tags}}
