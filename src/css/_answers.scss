@@ -69,6 +69,7 @@
     padding-left: ($gs-gutter / 2);
 
     & > img {
+        display: inline;
         vertical-align: middle;
         width: 62px;
     }

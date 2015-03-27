@@ -64,7 +64,6 @@ h2 {
     @include container--size;
     display: table;
     border-spacing: 0;
-    width: 100%;
     border-bottom: 1px solid $c-neutral6;
     background-color: white;
     @include top-bar-size(line-height);
@@ -103,10 +102,11 @@ h2 {
     border-right: 1px solid $c-neutral6;
     vertical-align: top;
     font-size: inherit;
+    color: $c-neutral3;
 
     &:hover,
     &.is-current {
-        background-color: lighten($c-newsmain2, 15%);
+        color: $c-neutral1;
     }
 
     @include top-bar-size(width);
@@ -115,19 +115,20 @@ h2 {
 
 @keyframes policies-flash {
     0% {
-        background-color: white;
+        color: inherit;
     }
 
     50% {
-        background-color: $c-newsmain2;
+        color: $c-newsmain2;
     }
 
     100% {
-        background-color: white;
+        color: inherit;
     }
 }
 
 .top-bar__block--policies {
+    color: inherit;
     border-right: 0;
     border-left: 1px solid $c-neutral6;
     width: auto;
