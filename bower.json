@@ -23,8 +23,7 @@
     "pegasus": "0.2.1",
     "ractive": "0.6.1",
     "requirejs-plugins": "1.0.3",
-    "text": "2.0.10",
-    "masonry": "~3.2.2"
+    "text": "2.0.10"
   },
   "overrides": {
     "pegasus": {

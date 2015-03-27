@@ -1,7 +1,6 @@
 <div class="policy-grid">
-    <div class="policy-grid__sizer"></div>
     {{#policies}}
-        <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}" decorator="masonryItem">
+        <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}">
             <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
             <a class="policy-grid__item__link" href="#policy" on-click="policy"></a>
             <h4 class="policy-grid__item__title">{{policy}}</h4>

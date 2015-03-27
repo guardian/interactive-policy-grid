@@ -81,20 +81,6 @@
     clear: both;
 }
 
-.policy-grid__sizer,
-.policy-grid__item {
-    width: 100%;
-    @media (min-width: $breakpoint1) {
-        width: 50%;
-    }
-    @media (min-width: $breakpoint2) {
-        width: 33%;
-    }
-    @media (min-width: gs-span(14)) {
-        width: 25%;
-    }
-}
-
 .policy-grid__item {
     position: relative;
     height: 160px;
@@ -102,11 +88,21 @@
     padding: ($gs-gutter / 2);
     box-sizing: border-box;
     box-shadow: 0 1px 0 0 $c-neutral6;
+    float: left;
+
+    width: 100%;
 
     @media (min-width: $breakpoint1) {
+        width: 50%;
         padding: $gs-gutter;
         border-bottom-color: transparent;
         box-shadow: ($gs-gutter + 1px) 0 0 (-$gs-gutter) $c-neutral6, 0 ($gs-gutter + 1px) 0 (-$gs-gutter) $c-neutral6;
+    }
+    @media (min-width: $breakpoint2) {
+        width: 33%;
+    }
+    @media (min-width: gs-span(14)) {
+        width: 25%;
     }
 
     &:hover {
