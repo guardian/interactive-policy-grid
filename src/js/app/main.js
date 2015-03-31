@@ -1,32 +1,31 @@
 define([
     'iframe-messenger',
+    'pegasus',
     'text!templates/main.html',
     'ractive',
     'policy-grid',
-    'rvc!components/sticky-bar',
-    'pegasus',
-    'classList' // polyfill for IE9
+    'rvc!components/sticky-bar'
 ], function(
     iframeMessenger,
+    pegasus,
     mainTemplate,
     Ractive,
     PolicyGrid,
-    StickyBar,
-    pegasus
+    StickyBar
 ) {
     'use strict';
 
     var MAX_ANSWERS = 4;
     var SHEET_URL = 'http://interactive.guim.co.uk/spreadsheetdata/1FH1NEYStgczP_B4xPPMr3_DuXHBAipkn2S0zhcFH_LU.json';
 
+    Array.prototype.flatMap = function (fn) {
+        return this.map(fn).reduce(function (a, b) { return a.concat(b); });
+    };
+
     // TODO: add animation
     function scrollTo(y) {
         window.scrollTo(0, y);
     }
-
-    Array.prototype.flatMap = function (fn) {
-        return this.map(fn).reduce(function (a, b) { return a.concat(b); });
-    };
 
     function getOffset(el) {
         return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
@@ -67,8 +66,6 @@ define([
                     });
                 },
                 'allPolicies': function () {
-                    var parties = this.get('parties');
-                    //var allParties = !parties.reduce(function (only, party) { return only || party.only; }, false);
                     return this.get('policies');
                 }
             }
@@ -97,14 +94,11 @@ define([
 
         ractive.observe('userPolicies', function () {
             var el = ractive.find('.top-bar__block--policies');
-            el.classList.add('is-flash');
+            el.className += ' is-flash';
             setTimeout(function () {
-                el.classList.remove('is-flash');
+                el.className = el.className.replace(/is-flash/g, '');
             }, 300);
 
-        }, {
-            'init': false,
-            'defer': true
         });
 
         document.addEventListener('scroll', function () {
