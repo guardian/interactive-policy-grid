@@ -1,5 +1,5 @@
 .container {
-    @include container--size;
+    @include container--width;
     background-color: white;
     counter-reset: question;
     padding: ($gs-gutter / 2);
@@ -16,7 +16,6 @@
 }
 
 .header {
-    @include top-bar-size(margin-bottom);
     border-bottom: 1px solid $c-neutral3;
     padding-bottom: ($gs-baseline * 2);
 }
@@ -53,30 +52,6 @@ h2 {
     }
 }
 
-// Stops questions from moving up when top bar becomes fixed
-.top-bar-wrapper {
-    @include top-bar-size(top, -1);
-    position: relative;
-    height: 0;
-}
-
-.top-bar {
-    @include container--size;
-    display: table;
-    border-spacing: 0;
-    border-bottom: 1px solid $c-neutral6;
-    background-color: white;
-    @include top-bar-size(line-height);
-
-    &.is-sticky {
-        position: fixed;
-        z-index: 5;
-        top: 0;
-        left: 0;
-        right: 0;
-    }
-}
-
 .top-bar--left {
     display: table-cell;
     white-space: nowrap;
@@ -109,8 +84,8 @@ h2 {
         color: $c-neutral1;
     }
 
-    @include top-bar-size(width);
-    @include top-bar-size(height);
+    @include sticky-bar--height(width);
+    @include sticky-bar--height(height);
 }
 
 @keyframes policies-flash {
@@ -155,6 +130,11 @@ h2 {
     @media (min-width: $breakpoint1) {
         font-size: inherit;
     }
+}
+
+.questions {
+    @include sticky-bar--height(padding-top);
+    position: relative;
 }
 
 .question {

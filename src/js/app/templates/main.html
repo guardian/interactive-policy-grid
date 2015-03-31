@@ -20,49 +20,34 @@
         </p>
     </div>
 
-    <div class="top-bar-wrapper">
-        <div class="top-bar">
-            <span class="top-bar--left basic-mode">
-                {{#questions:questionNo}}
-                    <button class="top-bar__block {{#currentSection == questionNo}}is-current{{/currentSection}}" on-click="question">
-                        {{questionNo + 1}}
-                    </button>
-                {{/questions}}
-            </span>
-            <span class="top-bar--right basic-mode">
-                <button class="top-bar__block top-bar__block--policies {{#currentSection == questions.length}}is-current{{/currentSection}}" on-click="policies">
-                    {{userPolicies.length || 0}} policies
-                </button>
-            </span>
-            <span class="top-bar--left explore-mode policy-title policy-title--top-bar">
-                <h2 class="policy-title__title">{{allPolicies.length}} policies</h2>
-                <span class="policy-title__share">
-                    <span class="policy-title__share__text">Share your policies</span>
-                    <button on-click="share:twitter" class="share share--twitter"></button>
-                    <button on-click="share:facebook" class="share share--facebook"></button>
-                    <button on-click="share:email" class="share share--email"></button>
-                    <button on-click="share:google" class="share share--google"></button>
-                </span>
-            </span>
-            <span class="top-bar--right explore-mode">
-                <a class="back-to-top" href="#explore">Change filters</a>
-            </span>
-        </div>
-    </div>
-
     <div class="basic-mode">
-        <div>
-        {{#questions:questionNo}}
-            <h2 class="question headline" id="question-{{questionNo}}">{{question}}</h2>
-            <div class="answers {{#userAnswers[questionNo]}}is-answered{{/userAnswers}}">
-                {{#answers}}
-                    <a class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" href="#" on-click="answer">
-                        <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{img}}.svg" /></i>
-                        <span class="answers__item__text">{{answer}}</span>
-                    </a>
-                {{/answers}}
-            </div>
-        {{/questions}}
+        <div class="questions">
+            <sticky-bar>
+                <span class="top-bar--left">
+                    {{#questions:questionNo}}
+                        <button class="top-bar__block {{#currentSection == questionNo}}is-current{{/currentSection}}" on-click="question">
+                            {{questionNo + 1}}
+                        </button>
+                    {{/questions}}
+                </span>
+                <span class="top-bar--right">
+                    <button class="top-bar__block top-bar__block--policies {{#currentSection == questions.length}}is-current{{/currentSection}}" on-click="policies">
+                        {{userPolicies.length || 0}} policies
+                    </button>
+                </span>
+            </sticky-bar>
+
+            {{#questions:questionNo}}
+                <h2 class="question headline" id="question-{{questionNo}}">{{question}}</h2>
+                <div class="answers {{#userAnswers[questionNo]}}is-answered{{/userAnswers}}">
+                    {{#answers}}
+                        <a class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" href="#" on-click="answer">
+                            <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{img}}.svg" /></i>
+                            <span class="answers__item__text">{{answer}}</span>
+                        </a>
+                    {{/answers}}
+                </div>
+            {{/questions}}
         </div>
 
         <h2 class="policy-title policy-title--grid headline">
@@ -88,7 +73,23 @@
         <policy-grid policies="{{userPolicies}}" />
     </div>
 
-    <div class="explore-mode">
+    <div class="explore-mode" style="position: relative">
+        <sticky-bar>
+            <span class="top-bar--left explore-mode policy-title policy-title--top-bar">
+                <h2 class="policy-title__title">{{allPolicies.length}} policies</h2>
+                <span class="policy-title__share">
+                    <span class="policy-title__share__text">Share your policies</span>
+                    <button on-click="share:twitter" class="share share--twitter"></button>
+                    <button on-click="share:facebook" class="share share--facebook"></button>
+                    <button on-click="share:email" class="share share--email"></button>
+                    <button on-click="share:google" class="share share--google"></button>
+                </span>
+            </span>
+            <span class="top-bar--right explore-mode">
+                <a class="back-to-top" href="#explore">Change filters</a>
+            </span>
+        </sticky-bar>
+
         <div class="filters">
             {{#tags}}
                 <span class="filter">

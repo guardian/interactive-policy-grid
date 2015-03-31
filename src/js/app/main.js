@@ -3,6 +3,7 @@ define([
     'text!templates/main.html',
     'ractive',
     'policy-grid',
+    'rvc!components/sticky-bar',
     'pegasus',
     'classList' // polyfill for IE9
 ], function(
@@ -10,35 +11,13 @@ define([
     mainTemplate,
     Ractive,
     PolicyGrid,
+    StickyBar,
     pegasus
 ) {
     'use strict';
 
     var MAX_ANSWERS = 4;
     var SHEET_URL = 'http://interactive.guim.co.uk/spreadsheetdata/1FH1NEYStgczP_B4xPPMr3_DuXHBAipkn2S0zhcFH_LU.json';
-
-    function debounce(fn, delay) {
-        var timer, run;
-
-        return function runner() {
-            if (timer) {
-                run = true;
-            } else {
-                fn();
-                timer = setTimeout(function () {
-                    timer = undefined;
-                    if (run) {
-                        run = false;
-                        runner();
-                    }
-                }, delay);
-            }
-        };
-    }
-
-    function getOffset(el) {
-        return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
-    }
 
     // TODO: add animation
     function scrollTo(y) {
@@ -49,13 +28,18 @@ define([
         return this.map(fn).reduce(function (a, b) { return a.concat(b); });
     };
 
+    function getOffset(el) {
+        return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
+    }
+
     function app(el, policies, questions, tags) {
-        var topbarEle, questionEles, policyGridEle;
+        var topbar, questionEles, policyGridEle;
         var ractive = new Ractive({
             'el': el,
             'template': mainTemplate,
             'components': {
-                'policy-grid': PolicyGrid
+                'policy-grid': PolicyGrid,
+                'sticky-bar': StickyBar
             },
             'data': {
                 'mode': window.location.hash === '#explore' ? 'explore' : 'basic',
@@ -90,12 +74,12 @@ define([
             }
         });
 
-        topbarEle = ractive.find('.top-bar');
+        topbar = ractive.findComponent('sticky-bar');
         questionEles = ractive.findAll('.question');
         policyGridEle = ractive.find('.policy-title--grid');
 
         function getScrollOffset(ele) {
-            return getOffset(ele) - topbarEle.clientHeight;
+            return getOffset(ele) - topbar.el.clientHeight;
         }
 
         ractive.on('question', function (evt) {
@@ -123,31 +107,22 @@ define([
             'defer': true
         });
 
-        document.addEventListener('scroll', (function () {
-            var topbarX;
+        document.addEventListener('scroll', function () {
+            var offset = window.pageYOffset;
+            var currentSection = -1;
 
-            return debounce(function () {
-                var offset = window.pageYOffset;
-                var currentSection = -1;
+            if (offset >= getScrollOffset(policyGridEle)) {
+                currentSection = questionEles.length;
+            } else {
+                questionEles.forEach(function (question, questionNo) {
+                    if (offset >= getScrollOffset(question)) {
+                        currentSection = questionNo;
+                    }
+                });
+            }
 
-                if (offset >= getScrollOffset(policyGridEle)) {
-                    currentSection = questionEles.length;
-                } else {
-                    questionEles.forEach(function (question, questionNo) {
-                        if (offset >= getScrollOffset(question)) {
-                            currentSection = questionNo;
-                        }
-                    });
-                }
-
-                ractive.set('currentSection', currentSection);
-
-                if (topbarEle.className.indexOf('is-sticky') === -1) {
-                    topbarX = getOffset(topbarEle);
-                }
-                topbarEle.className = offset >= topbarX ? 'top-bar is-sticky' : 'top-bar';
-            }, 100);
-        })());
+            ractive.set('currentSection', currentSection);
+        });
 
         window.addEventListener('hashchange', function () {
             ractive.set('mode', window.location.hash === '#explore' ? 'explore' : 'basic');

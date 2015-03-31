@@ -1,4 +1,4 @@
-@mixin top-bar-size($prop, $n: 1) {
+@mixin sticky-bar--height($prop, $n: 1) {
     $size: $gs-baseline * $n;
     #{$prop}: ($size * 4);
     @media (min-width: $breakpoint1) {
@@ -7,4 +7,12 @@
     @media (min-width: $breakpoint2) {
         #{$prop}: ($size * 9);
     }
+}
+
+.sticky-bar {
+    @include container--width;
+    @include sticky-bar--height(height);
+
+    background-color: white;
+    border-bottom: 1px solid $c-neutral6;
 }

@@ -89,7 +89,8 @@ module.exports = function(grunt) {
           'src/**/*.js',
           'src/boot.js',
           'src/**/*.json',
-          'src/js/app/templates/*.html'
+          'src/js/app/templates/*.html',
+          'src/js/app/components/*.html'
         ],
         tasks: ['jshint', 'requirejs', 'replace:local'],
         options: {

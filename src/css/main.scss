@@ -22,8 +22,8 @@ $c-newsmain2: map-get($pasteup-palette, news-main-2);
 $breakpoint1: gs-span(8);
 $breakpoint2: gs-span(12);
 
-@import 'mixins';
 @import 'common';
+@import 'sticky-bar';
 @import 'style';
 @import 'answers';
 @import 'policy-grid';

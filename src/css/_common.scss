@@ -1,4 +1,4 @@
-@mixin container--size {
+@mixin container--width {
     margin: 0 auto;
 
     @media (min-width: gs-span(9)) {
