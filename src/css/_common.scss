@@ -60,6 +60,10 @@ a {
     }
 }
 
+figure img {
+    display: inline; // Override NGW
+}
+
 .share {
     position: relative;
     width: 32px;
