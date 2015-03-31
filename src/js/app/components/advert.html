@@ -82,7 +82,7 @@
                         var scrollBottom = scrollTop + parentEle.clientHeight - window.innerHeight;
                         parentEle.className = scrollY < scrollTop && scrollY > scrollBottom  ? 'is-in-view' : '';
                         timer = undefined;
-                    }, 200);
+                    }, 100);
                 }
             });
         }

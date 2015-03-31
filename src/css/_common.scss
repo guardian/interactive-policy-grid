@@ -112,6 +112,7 @@ a {
 .back-to-top {
     display: inline-block;
     vertical-align: middle;
+    color: $c-neutral1;
 
     &::after {
         content: "";
@@ -120,7 +121,7 @@ a {
         width: 38px;
         height: 38px;
         background: url('../imgs/top.svg') no-repeat center;
-        border: 1px solid map-get($pasteup-palette, guardian-brand);
+        border: 1px solid $c-neutral1;
         border-radius: 100px;
         margin-left: ($gs-gutter / 2);
     }
