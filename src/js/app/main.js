@@ -3,7 +3,7 @@ define([
     'pegasus',
     'text!templates/main.html',
     'ractive',
-    'policy-grid',
+    'rvc!components/policy-grid',
     'rvc!components/sticky-bar'
 ], function(
     iframeMessenger,
@@ -76,7 +76,7 @@ define([
         policyGridEle = ractive.find('.policy-title--grid');
 
         function getScrollOffset(ele) {
-            return getOffset(ele) - topbar.el.clientHeight;
+            return getOffset(ele) - topbar.el.clientHeight; // TODO
         }
 
         ractive.on('question', function (evt) {
