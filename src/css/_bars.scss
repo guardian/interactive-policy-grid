@@ -48,7 +48,7 @@
     @include sticky-bar--height(width);
 
     &:hover,
-    &.is-selected {
+    &.is-current {
         color: inherit;
         text-decoration: none;
     }

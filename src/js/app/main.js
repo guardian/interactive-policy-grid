@@ -34,7 +34,7 @@ define([
     }
 
     function app(el, policies, questions, tags) {
-        var topbar, questionEles, policyGridEle;
+        var questionEles, policyGridEle;
         var ractive = new Ractive({
             'el': el,
             'template': mainTemplate,
@@ -74,12 +74,11 @@ define([
             }
         });
 
-        topbar = ractive.findComponent('sticky-bar');
-        questionEles = ractive.findAll('.question');
-        policyGridEle = ractive.find('.policy-title--grid');
+        questionEles = ractive.findAll('.questions__item');
+        policyGridEle = ractive.find('.policy-grid');
 
         function getScrollOffset(ele) {
-            return getOffset(ele) - topbar.el.clientHeight; // TODO
+            return getOffset(ele);// TODO
         }
 
         ractive.on('question', function (evt) {
@@ -104,13 +103,12 @@ define([
 
         }, {'init': false});
 
+        // TODO: debounce
         document.addEventListener('scroll', function () {
             var offset = window.pageYOffset;
             var currentSection = -1;
 
-            if (offset >= getScrollOffset(policyGridEle)) {
-                currentSection = questionEles.length;
-            } else {
+            if (offset < getScrollOffset(policyGridEle)) {
                 questionEles.forEach(function (question, questionNo) {
                     if (offset >= getScrollOffset(question)) {
                         currentSection = questionNo;
