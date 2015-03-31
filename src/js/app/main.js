@@ -3,6 +3,7 @@ define([
     'pegasus',
     'text!templates/main.html',
     'ractive',
+    'rvc!components/advert',
     'rvc!components/policy-grid',
     'rvc!components/sticky-bar'
 ], function(
@@ -10,6 +11,7 @@ define([
     pegasus,
     mainTemplate,
     Ractive,
+    Advert,
     PolicyGrid,
     StickyBar
 ) {
@@ -37,6 +39,7 @@ define([
             'el': el,
             'template': mainTemplate,
             'components': {
+                'advert': Advert,
                 'policy-grid': PolicyGrid,
                 'sticky-bar': StickyBar
             },
@@ -93,13 +96,13 @@ define([
         });
 
         ractive.observe('userPolicies', function () {
-            var el = ractive.find('.top-bar__block--policies');
-            el.className += ' is-flash';
+            var el = ractive.find('.question-bar__summary__link__count');
+            el.className += ' do-animation';
             setTimeout(function () {
-                el.className = el.className.replace(/is-flash/g, '');
+                el.className = el.className.replace(/do-animation/g, '').trim();
             }, 300);
 
-        });
+        }, {'init': false});
 
         document.addEventListener('scroll', function () {
             var offset = window.pageYOffset;

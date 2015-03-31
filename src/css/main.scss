@@ -23,7 +23,7 @@ $breakpoint1: gs-span(8);
 $breakpoint2: gs-span(12);
 
 @import 'common';
-@import 'sticky-bar';
+@import 'bars';
+@import 'policy-grid';
 @import 'style';
 @import 'answers';
-@import 'policy-grid';

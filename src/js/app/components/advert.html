@@ -1,0 +1,90 @@
+<div class="ad">
+    <div class="ad__answer ad__answer--one">
+        <i class="ad__answer__icon"><img src="@@assets@@/imgs/icons/status-fulltime-parent.svg" /></i>
+        Yes, I'm a full-time parent
+    </div>
+    <div class="ad__answer ad__answer--two">
+        <i class="ad__answer__icon"><img src="@@assets@@/imgs/icons/transport-public.svg" /></i>
+        Public transport
+    </div>
+    <div class="ad__answer ad__answer--three">
+        <i class="ad__answer__icon"><img src="@@assets@@/imgs/icons/status-retired.svg" /></i>
+        Retired
+    </div>
+</div>
+
+<style>
+    .ad__answer {
+        position: relative;
+        display: inline-block;
+        background-color: white;
+        width: 200px;
+        height: 260px;
+        border: 1px solid #bdbdbd;
+        padding: 10px 20px 0;
+        @include f-textSans;
+        font-size: 20px;
+        text-align: center;
+        transition: transform 0.2s linear;
+    }
+
+    .ad__answer--one {
+        transform: rotate(-20deg);
+        margin-right: -50px;
+    }
+    .is-in-view > .ad__answer--one {
+        transform: rotate(-5deg);
+    }
+
+    .ad__answer--two {
+        transform: rotate(-4deg);
+        z-index: 1;
+        margin-right: -100px;
+        bottom: 40px;
+    }
+    .is-in-view > .ad__answer--two {
+        transform: rotate(-1deg);
+    }
+
+    .ad__answer--three {
+        transform: rotate(7deg);
+    }
+    .is-in-view > .ad__answer--three {
+        transform: rotate(2deg);
+    }
+
+    .ad__answer__icon {
+        display: block;
+        margin: 0 0 12px;
+        padding: 0 0 12px;
+        border-bottom: 1px solid #eaeaea;
+    }
+    .ad__answer__icon > img {
+        width: 185px;
+    }
+</style>
+
+<script>
+    function getOffset(el) {
+        return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
+    }
+
+    component.exports = {
+        'onrender': function () {
+            var parentEle = this.find('.ad');
+            var timer;
+
+            document.addEventListener('scroll', function () {
+                if (!timer) {
+                    timer = setTimeout(function () {
+                        var scrollY = window.pageYOffset;
+                        var scrollTop = getOffset(parentEle);
+                        var scrollBottom = scrollTop + parentEle.clientHeight - window.innerHeight;
+                        parentEle.className = scrollY < scrollTop && scrollY > scrollBottom  ? 'is-in-view' : '';
+                        timer = undefined;
+                    }, 200);
+                }
+            });
+        }
+    };
+</script>

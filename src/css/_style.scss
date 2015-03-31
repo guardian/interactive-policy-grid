@@ -1,7 +1,6 @@
 .container {
     @include container--width;
     background-color: white;
-    counter-reset: question;
     padding: ($gs-gutter / 2);
     @media (min-width: $breakpoint2) {
         padding: $gs-gutter;
@@ -16,7 +15,9 @@
 }
 
 .header {
-    border-bottom: 1px solid $c-neutral3;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid $c-neutral1;
     padding-bottom: ($gs-baseline * 2);
 }
 
@@ -33,6 +34,13 @@
 .header__date {
     @include fs-textSans(1);
     margin-top: -($gs-baseline / 2);
+}
+
+.header__advert {
+    position: absolute;
+    bottom: 0;
+    right: 30px;
+    height: 150px;
 }
 
 h2 {
@@ -70,56 +78,6 @@ h2 {
     font-size: 18px;
 }
 
-.top-bar__block {
-    @include f-headline;
-    @include button--link;
-    display: inline-block;
-    border-right: 1px solid $c-neutral6;
-    vertical-align: top;
-    font-size: inherit;
-    color: $c-neutral3;
-
-    &:hover,
-    &.is-current {
-        color: $c-neutral1;
-    }
-
-    @include sticky-bar--height(width);
-    @include sticky-bar--height(height);
-}
-
-@keyframes policies-flash {
-    0% {
-        color: inherit;
-    }
-
-    50% {
-        color: $c-newsmain2;
-    }
-
-    100% {
-        color: inherit;
-    }
-}
-
-.top-bar__block--policies {
-    color: inherit;
-    border-right: 0;
-    border-left: 1px solid $c-neutral6;
-    width: auto;
-    padding: 0 ($gs-gutter / 2);
-    @media (min-width: $breakpoint1) {
-        padding: 0 $gs-gutter;
-    }
-    @media (min-width: $breakpoint2) {
-        padding: 0 ($gs-gutter * 2);
-    }
-
-    &.is-flash {
-        animation: policies-flash 0.4s;
-    }
-}
-
 .back-to-top {
     display: none;
     .is-sticky & {
@@ -133,11 +91,13 @@ h2 {
 }
 
 .questions {
-    @include sticky-bar--height(padding-top);
     position: relative;
+    counter-reset: question;
+    padding-bottom: ($gs-baseline * 4);
+    border-bottom: 1px solid $c-neutral1;
 }
 
-.question {
+.questions__item {
     position: relative;
     padding-left: 27px;
     max-width: gs-span(6);
@@ -235,4 +195,33 @@ $font-size: 12px;
     .filter:hover > & {
         color: $c-neutral1;
     }
+}
+
+.btq {
+    margin: 0 auto;
+    max-width: gs-span(12);
+    height: 300px;
+    cursor: pointer;
+    padding-top: ($gs-baseline * 4);
+
+    &:hover a {
+        text-decoration: underline;
+    }
+}
+
+.btq__title,
+.btq__subtitle {
+    @include f-header;
+    font-size: 35px;
+}
+
+.btq__subtitle {
+    margin-top: -$gs-baseline;
+    color: $c-neutral3;
+}
+
+.btq__advert {
+    float: left;
+    margin-right: 30px;
+    margin-top: -60px;
 }

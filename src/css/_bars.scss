@@ -1,0 +1,83 @@
+@mixin sticky-bar--height($prop, $n: 1) {
+    $size: $gs-baseline * $n;
+    #{$prop}: ($size * 4);
+    @media (min-width: $breakpoint1) {
+        #{$prop}: ($size * 7);
+    }
+    @media (min-width: $breakpoint2) {
+        #{$prop}: ($size * 9);
+    }
+}
+
+.sticky-bar {
+    @include container--width;
+    @include sticky-bar--height(height);
+    @include sticky-bar--height(line-height);
+
+    background-color: white;
+    border-bottom: 1px solid $c-neutral6;
+    display: table;
+    border-spacing: 0;
+}
+
+.sticky-bar-spacing {
+    @include sticky-bar--height(padding-top);
+}
+
+.question-bar {
+}
+
+.question-bar__list {
+    @include button--link;
+    display: table-cell;
+    vertical-align: top;
+    vertical-align: top;
+    white-space: nowrap;
+    @include f-headline;
+    font-size: 26px;
+    @media (min-width: $breakpoint1) {
+        font-size: 40px;
+    }
+}
+
+.question-bar__list__item {
+    display: inline-block;
+    border-right: 1px solid $c-neutral6;
+    text-align: center;
+    color: $c-neutral3;
+    @include sticky-bar--height(width);
+
+    &:hover,
+    &.is-selected {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+.question-bar__summary {
+    display: table-cell;
+    width: 100%;
+    text-align: right;
+}
+
+.question-bar__summary__link {
+    display: inline-block;
+    color: $c-neutral1;
+}
+
+@keyframes flash {
+    0%   { color: $c-neutral1; }
+    50%  { color: $c-newsmain2; }
+    100% { color: $c-neutral1; }
+}
+
+.question-bar__summary__link__count {
+    font-weight: bold;
+
+    &.do-animation {
+        animation: flash 0.3s ease-out;
+    }
+}
+
+.policy-bar {
+}

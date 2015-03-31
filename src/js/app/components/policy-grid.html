@@ -1,4 +1,21 @@
-<div class="policy-grid">
+<div class="policy-grid sticky-bar-spacing">
+    <sticky-bar>
+        <span class="top-bar--left policy-title policy-title--top-bar">
+            <h2 class="policy-title__title">{{policies.length || 0}} policies</h2>
+            <span class="policy-title__share">
+                <span class="policy-title__share__text">Share your policies</span>
+                <button on-click="share:twitter" class="share share--twitter"></button>
+                <button on-click="share:facebook" class="share share--facebook"></button>
+                <button on-click="share:email" class="share share--email"></button>
+                <button on-click="share:google" class="share share--google"></button>
+            </span>
+        </span>
+        <span class="top-bar--right">
+            <a class="back-to-top" href="#explore">Change filters</a>
+        </span>
+    </sticky-bar>
+
+    <div>
     {{#policies}}
         <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}">
             <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
@@ -16,6 +33,7 @@
             <a class="policy-grid__item__toggle-bucket explore-mode" href="#" title="Add to policy bucket"></a>
         </div>
     {{/policies}}
+    </div>
 </div>
 
 <script>
