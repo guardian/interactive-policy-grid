@@ -15,7 +15,7 @@
         </span>
     </sticky-bar>
 
-    <div>
+    <div class="policy-grid__list {{#policyNo != -1}}has-selected{{/policyNo}}">
     {{#policies}}
         <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}">
             <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
@@ -39,7 +39,7 @@
 <script>
     component.exports = {
         'data': {
-            'policyNo': 0
+            'policyNo': -1
         },
         'onrender': function () {
             this.on('policy', function (evt) {

@@ -59,10 +59,14 @@
 
 .policy-grid {
     position: relative;
-    overflow: hidden;
     clear: both;
-    padding-bottom: 160px;
     border-bottom: 1px solid $c-neutral1;
+}
+
+.policy-grid__list {
+    overflow: hidden;
+    padding-bottom: 160px;
+    margin-top: ($gs-baseline * 4);
 }
 
 .policy-grid__item {
@@ -111,6 +115,10 @@
         box-shadow: none;
         border-color: $c-neutral6;
     }
+
+    .has-selected > & {
+        opacity: 0.2;
+    }
 }
 
 .policy-grid__item__title {
@@ -134,6 +142,7 @@
     // This is a horrible hack 
     &:hover + .policy-grid__item__toggle-selected {
         opacity: 1;
+        text-decoration: underline;
     }
 }
 
@@ -141,7 +150,6 @@
     @include fs-textSans(1);
     opacity: 0;
     text-transform: uppercase;
-    text-decoration: underline;
     color: map-get($pasteup-palette, guardian-brand);
 
     transition: opacity 0.1s ease-out;
@@ -236,8 +244,15 @@
         font-weight: bold;
     }
 
-    .policy-grid__item__toggle-selected::after {
-        content: " less";
+    .policy-grid__item__toggle-selected {
+        opacity: 1;
+        &::after {
+            content: " less";
+        }
+    }
+
+    .policy-grid__item__toggle-bucket {
+        opacity: 1;
     }
 
     @media (min-width: $breakpoint-min) {
@@ -246,5 +261,9 @@
 
     @media (min-width: $breakpoint1) {
         margin-bottom: -160px;
+    }
+
+    .has-selected > & {
+        opacity: 1;
     }
 }
