@@ -116,8 +116,9 @@
         border-color: $c-neutral6;
     }
 
+    transition: opacity 0.1s linear;
     .has-selected > & {
-        opacity: 0.2;
+        opacity: 0.5;
     }
 }
 

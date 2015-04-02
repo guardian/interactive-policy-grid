@@ -135,7 +135,7 @@ define([
 
         pegasus(SHEET_URL).then(function (spreadsheet) {
             var policies = spreadsheet.sheets.policies.map(function (policy) {
-                policy.tags = parseTags(policy.willtags); // TODO
+                policy.tags = parseTags(policy.willtags); // TODO: use main tags
                 return policy;
             });
 

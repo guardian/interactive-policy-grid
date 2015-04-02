@@ -40,7 +40,7 @@
 
             {{#questions:questionNo}}
                 <h2 class="questions__item headline" id="question-{{questionNo}}">{{question}}</h2>
-                <div class="answers {{#userAnswers[questionNo]}}is-answered{{/userAnswers}}">
+                <div class="answers {{#userAnswers[questionNo]}}has-answer{{/userAnswers}}">
                     {{#answers}}
                         <a class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" href="#" on-click="answer">
                             <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{img}}.svg" /></i>
@@ -54,7 +54,7 @@
         <policy-grid policies="{{userPolicies}}" topText="Back to questions" />
     </div>
 
-    <div class="explore-mode" style="position: relative">
+    <div class="explore-mode">
         <div class="filters">
             {{#tags}}
                 <span class="filter">
