@@ -64,6 +64,10 @@ figure img {
     display: inline; // Override NGW
 }
 
+.is-immersive .l-footer {
+    display: block;
+}
+
 .share {
     position: relative;
     width: 32px;
