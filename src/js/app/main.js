@@ -5,7 +5,8 @@ define([
     'ractive',
     'rvc!components/advert',
     'rvc!components/policy-grid',
-    'rvc!components/sticky-bar'
+    'rvc!components/sticky-bar',
+    'rvc!components/footer'
 ], function(
     iframeMessenger,
     pegasus,
@@ -13,7 +14,8 @@ define([
     Ractive,
     Advert,
     PolicyGrid,
-    StickyBar
+    StickyBar,
+    Footer
 ) {
     'use strict';
 
@@ -41,7 +43,8 @@ define([
             'components': {
                 'advert': Advert,
                 'policy-grid': PolicyGrid,
-                'sticky-bar': StickyBar
+                'sticky-bar': StickyBar,
+                'footer-bar': Footer
             },
             'data': {
                 'mode': window.location.hash === '#explore' ? 'explore' : 'basic',
