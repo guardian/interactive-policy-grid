@@ -24,17 +24,8 @@ define([
         return this.map(fn).reduce(function (a, b) { return a.concat(b); });
     };
 
-    // TODO: add animation
-    function scrollTo(y) {
-        window.scrollTo(0, y);
-    }
-
-    function getOffset(el) {
-        return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
-    }
-
     function app(el, policies, questions, tags) {
-        var questionEles, policyGridEle;
+        var questionBarEle, questionEles, policyGridEle;
         var ractive = new Ractive({
             'el': el,
             'template': mainTemplate,
@@ -69,29 +60,65 @@ define([
                     });
                 },
                 'allPolicies': function () {
-                    return this.get('policies');
+                    return this.get('policies'); // TODO: add filtering
                 }
             }
         });
 
+        questionBarEle = ractive.find('.question-bar');
         questionEles = ractive.findAll('.questions__item');
         policyGridEle = ractive.find('.policy-grid');
 
-        function getScrollOffset(ele) {
-            return getOffset(ele);// TODO
+        function getOffset(el) {
+            console.log(questionBarEle.clientHeight);
+            return el ? el.offsetTop + getOffset(el.offsetParent) : -questionBarEle.clientHeight;
         }
 
+        var scrollTo = (function () {
+            var scrollTimer, interval = 20;
+
+            return function (ele) {
+                var remaining = 500;
+                var step = (getOffset(ele) - window.pageYOffset) * (interval / remaining);
+
+                if (scrollTimer) {
+                    clearInterval(scrollTimer);
+                }
+
+                scrollTimer = setInterval(function () {
+                    window.scrollTo(0, window.pageYOffset + step);
+                    remaining -= interval;
+                    if (remaining === 0) {
+                        clearInterval(scrollTimer);
+                        scrollTimer = undefined;
+                    }
+                }, interval);
+            };
+        })();
+
         ractive.on('question', function (evt) {
-            scrollTo(getScrollOffset(questionEles[evt.index.questionNo]));
+            scrollTo(evt.index.questionNo);
+            evt.original.preventDefault();
         });
 
-        ractive.on('policies', function () {
-            scrollTo(getScrollOffset(policyGridEle));
+        ractive.on('policies', function (evt) {
+            scrollTo(policyGridEle);
+            evt.original.preventDefault();
         });
 
         ractive.on('answer', function (evt) {
+            var questionNo = evt.index.questionNo;
+            this.set('userAnswers.' + questionNo, evt.context);
+
+            if (questionNo === questionEles.length) {
+                console.log('here');
+                console.log(policyGridEle);
+                scrollTo(policyGridEle);
+            } else {
+                scrollTo(questionEles[questionNo + 1]);
+            }
+
             evt.original.preventDefault();
-            this.set('userAnswers.' + evt.index.questionNo, evt.context);
         });
 
         ractive.observe('userPolicies', function () {
@@ -108,9 +135,9 @@ define([
             var offset = window.pageYOffset;
             var currentSection = -1;
 
-            if (offset < getScrollOffset(policyGridEle)) {
+            if (offset < getOffset(policyGridEle)) {
                 questionEles.forEach(function (question, questionNo) {
-                    if (offset >= getScrollOffset(question)) {
+                    if (offset >= getOffset(question)) {
                         currentSection = questionNo;
                     }
                 });
