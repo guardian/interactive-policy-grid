@@ -36,7 +36,6 @@ define([
             },
             'data': {
                 'mode': window.location.hash === '#explore' ? 'explore' : 'basic',
-                'policies': policies,
                 'questions': questions,
                 'tags': tags,
                 'parties': ['Labour', 'SNP', 'Green', 'Ukip', 'Lib Dem', 'Conservatives'].map(function (party) {
@@ -48,19 +47,19 @@ define([
                 'userAnswers': []
             },
             'computed': {
-                'visibleTags': function () {
-                    return this.get('userAnswers').flatMap(function (answer) { return answer.tags; });
+                'partyFilterActive': function () {
+                    return this.get('parties').reduce(function (only, party) { return only || party.only; }, false);
+                },
+                'policies': function () {
+                    return policies; // TODO: add filtering
                 },
                 'userPolicies': function () {
-                    var visibleTags = this.get('visibleTags');
+                    var userTags = this.get('userAnswers').flatMap(function (answer) { return answer.tags; });
                     return this.get('policies').filter(function (policy) {
                         return policy.tags.reduce(function (show, tag) {
-                            return show || visibleTags.indexOf(tag) !== -1;
+                            return show || userTags.indexOf(tag) !== -1;
                         }, false);
                     });
-                },
-                'allPolicies': function () {
-                    return this.get('policies'); // TODO: add filtering
                 }
             }
         });
