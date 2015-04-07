@@ -2,8 +2,11 @@
     position: relative;
     clear: both;
     overflow: hidden;
-    padding-bottom: 160px;
-    margin-top: ($gs-baseline * 4);
+    @media (min-width: $breakpoint1) {
+        &.has-selected {
+            padding-bottom: 160px;
+        }
+    }
 }
 
 .policy-grid__item {

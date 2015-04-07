@@ -34,7 +34,7 @@
                 </h2>
                 <span class="sticky-bar__right">
                     <a class="policy-summary" href="#" on-click="policies">
-                        {{userPolicies.length || 0}} policies
+                        {{userPolicyCount}} policies
                     </a>
                 </span>
             </sticky-bar>
@@ -52,10 +52,10 @@
             {{/questions}}
         </div>
 
-        <div class="sticky-bar-container">
+        <div class="js-policy-grid sticky-bar-container">
             <sticky-bar>
                 <span class="sticky-bar__left">
-                    <h2 class="policy-title">{{userPolicies.length || 0}} policies</h2><span class="policy-share">
+                    <h2 class="policy-title">{{userPolicyCount}} policies</h2><span class="policy-share">
                         <span class="policy-share__text">Share your policies</span>
                         <button on-click="share:twitter" class="share share--twitter"></button>
                         <button on-click="share:facebook" class="share share--facebook"></button>
@@ -67,10 +67,12 @@
                     <a class="back-to-top" href="#" on-click="question:0">Back to questions</a>
                 </span>
             </sticky-bar>
-            {{#areas}}
-                <h2 class="headline">{{area}}</h2>
-                <policy-grid />
-            {{/areas}}
+            {{#userGrids}}
+                {{#answer}}
+                    <h3 class="headline">You said {{answer}}</h3>
+                    <policy-grid policies="{{policies}}" />
+                {{/answer}}
+            {{/userGrids}}
         </div>
 
         <a class="cta" href="#" on-click="mode:explore">
@@ -84,7 +86,7 @@
         <div class="sticky-bar-container">
             <sticky-bar>
                 <span class="sticky-bar__left">
-                    <h2 class="policy-title">{{userPolicies.length || 0}} policies</h2><span class="policy-share">
+                    <h2 class="policy-title">{{policies.length}} policies</h2><span class="policy-share">
                         <span class="policy-share__text">Share your policies</span>
                         <button on-click="share:twitter" class="share share--twitter"></button>
                         <button on-click="share:facebook" class="share share--facebook"></button>
@@ -93,10 +95,13 @@
                     </span>
                 </span>
                 <span class="sticky-bar__right">
-                    blah
+                    Party filters here
                 </span>
             </sticky-bar>
-            <policy-grid policies="{{policies}}" />
+            {{#areaPolicies}}
+                <h3 class="headline">{{area.area}}</h3>
+                <policy-grid policies="{{policies}}" />
+            {{/areaPolicies}}
         </div>
 
         <a class="cta" href="#" on-click="mode:basic">

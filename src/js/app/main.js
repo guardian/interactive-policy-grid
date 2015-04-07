@@ -20,10 +20,6 @@ define([
     var MAX_ANSWERS = 4;
     var SHEET_URL = 'http://interactive.guim.co.uk/spreadsheetdata/1FH1NEYStgczP_B4xPPMr3_DuXHBAipkn2S0zhcFH_LU.json';
 
-    Array.prototype.flatMap = function (fn) {
-        return this.map(fn).reduce(function (a, b) { return a.concat(b); });
-    };
-
     function getOffset(el) {
         return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
     }
@@ -51,6 +47,12 @@ define([
             }, interval);
         };
     })();
+
+    function intersection(a, b) {
+        return a.filter(function (aa) {
+            return b.indexOf(aa) !== -1;
+        });
+    }
 
     function app(el, policies, questions, areas) {
         var questionBarEle, questionEles, policyGridEle;
@@ -83,20 +85,39 @@ define([
                 'policies': function () {
                     return policies; // TODO: add party filtering
                 },
-                'userPolicies': function () {
-                    var userTags = this.get('userAnswers').flatMap(function (answer) { return answer.tags; });
-                    return this.get('policies').filter(function (policy) {
-                        return policy.tags.reduce(function (show, tag) {
-                            return show || userTags.indexOf(tag) !== -1;
-                        }, false);
+                'areaPolicies': function () {
+                    var policies = this.get('policies');
+                    return this.get('areas').map(function (area) {
+                        return {
+                            'area': area,
+                            'policies': policies.filter(function(policy) {
+                                return intersection(area.tags, policy.tags).length > 0;
+                            })
+                        };
                     });
+                },
+                'userGrids': function () {
+                    var policies = this.get('policies');
+                    return this.get('userAnswers').map(function (answer) {
+                        return {
+                            'answer': answer,
+                            'policies': policies.filter(function (policy) {
+                                return intersection(answer.tags, policy.tags).length > 0;
+                            })
+                        };
+                    });
+                },
+                'userPolicyCount': function () {
+                    return this.get('userGrids').reduce(function (len, grid) {
+                        return len + grid.policies.length;
+                    }, 0);
                 }
             }
         });
 
         questionBarEle = ractive.find('.js-question-bar');
         questionEles = ractive.findAll('.question');
-        policyGridEle = ractive.find('.policy-grid');
+        policyGridEle = ractive.find('.js-policy-grid');
 
         function getQuestionOffset(questionNo) {
             return getOffset(questionEles[questionNo]) - questionBarEle.clientHeight;
@@ -132,6 +153,8 @@ define([
                 this.animate('modeOpacity', 0).then(function () {
                     ractive.animate('modeOpacity', 1);
                     ractive.set('mode', mode);
+                    closePolicyGrids();
+                    window.scrollTo(0, 0); // without animation
                 });
             }
             evt.original.preventDefault();
@@ -147,11 +170,6 @@ define([
             }
             evt.original.preventDefault();
         });
-
-        ractive.observe('mode', function () {
-            closePolicyGrids();
-            window.scrollTo(0, 0);
-        }, {'init': false, 'defer': true});
 
         ractive.observe('userPolicies', function () {
             var el = ractive.find('.policy-summary');
@@ -197,13 +215,6 @@ define([
 
             var policies = spreadsheet.sheets.policies.map(function (policy) {
                 policy.tags = parseTags(policy.tags);
-                policy.areas = areas.filter(function (area) {
-                    // filter for areas where there is overlap between policy tags and area tags
-                    var commonTags = area.tags.filter(function (tag) {
-                        return policy.tags.indexOf(tag) !== -1;
-                    });
-                    return commonTags.length > 0;
-                }).map (function (area) { return area.area; });
                 return policy;
             });
 
