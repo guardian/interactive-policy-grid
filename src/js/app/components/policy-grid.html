@@ -1,6 +1,6 @@
 <div class="policy-grid sticky-bar-spacing">
     <sticky-bar>
-        <span class="top-bar--left policy-title policy-title--top-bar">
+        <span class="top-bar--left policy-title">
             <h2 class="policy-title__title">{{policies.length || 0}} policies</h2>
             <span class="policy-title__share">
                 <span class="policy-title__share__text">Share your policies</span>
@@ -23,12 +23,11 @@
             {{/rowNumber}}
             <a class="policy-grid__item__link" href="#policy" title="Read more about this policy" on-click="policy"></a>
             <p class="policy-grid__item__toggle-selected">Read</p>
-            <p class="policy-grid__item__tags explore-mode">
-                {{#tags:i}}
-                    {{.}}{{#if i != tags.length - 1}}{{", "}}{{/if}}
-                {{/tags}}
+            <p class="policy-grid__item__tags">
+                {{#areas:i}}
+                    {{.}}{{#if i != areas.length - 1}}{{", "}}{{/if}}
+                {{/areas}}
             </p>
-            <a class="policy-grid__item__toggle-bucket explore-mode" href="#" title="Add to policy bucket"></a>
         </div>
     {{/policies}}
     </div>

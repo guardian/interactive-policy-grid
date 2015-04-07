@@ -1,4 +1,4 @@
-<div class="container {{#if mode == 'explore'}}is-explore{{else}}is-basic{{/if}}">
+<div class="container">
     <div class="header">
         <h1>Will their policies work for you?</h1>
         <p class="header__text">
@@ -21,7 +21,7 @@
         <div class="header__advert"><advert /></div>
     </div>
 
-    <div class="basic-mode">
+    <div class="mode {{#mode == 'basic'}}is-active{{/mode}}" style="opacity: {{modeOpacity}}">
         <div class="questions sticky-bar-spacing">
             <sticky-bar class="question-bar">
                 <span class="question-bar__list">
@@ -55,21 +55,20 @@
         <policy-grid policies="{{userPolicies}}">
             <a class="back-to-top" href="#" on-click="question:0">Back to questions</a>
         </policy-grid>
-
-        <div class="btq">
-            <h3 class="btq__title">Not what you wanted?</h3>
-            <h3 class="btq__subtitle">Have a look at the policies</h3>
-            <a href="#explore">Explore the policies &raquo;</a>
-        </div>
+        <a class="cta" href="#" on-click="mode:explore">
+            <h3 class="cta__title">Not what you wanted?</h3>
+            <h3 class="cta__subtitle">Have a look at the policies</h3>
+            <span class="cta__link">Explore the policies &raquo;</span>
+        </a>
     </div>
 
-    <div class="explore-mode">
+    <div class="mode {{#mode == 'explore'}}is-active{{/mode}}" style="opacity: {{modeOpacity}}">
         <policy-grid policies="{{policies}}" topText="Change filters" />
-        <div class="btq">
-            <div class="btq__advert"><advert /></div>
-            <h3 class="btq__title">Still can't decide?</h3>
-            <h3 class="btq__subtitle">Let us help build your policy profile</h3>
-            <a href="#">Answer the questions &raquo;</a>
-        </div>
+        <a class="cta" href="#" on-click="mode:basic">
+            <div class="cta__advert"><advert /></div>
+            <h3 class="cta__title">Still can't decide?</h3>
+            <h3 class="cta__subtitle">Let us help build your policy profile</h3>
+            <span class="cta__link">Answer the questions &raquo;</span>
+        </a>
     </div>
 </div>

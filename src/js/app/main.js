@@ -52,7 +52,7 @@ define([
         };
     })();
 
-    function app(el, policies, questions, tags) {
+    function app(el, policies, questions, areas) {
         var questionBarEle, questionEles, policyGridEle;
         var ractive = new Ractive({
             'el': el,
@@ -64,9 +64,10 @@ define([
             },
             'data': {
                 'mode': window.location.hash === '#explore' ? 'explore' : 'basic',
+                'modeOpacity': 1,
                 'questions': questions,
-                'tags': tags,
-                'parties': ['Labour', 'SNP', 'Green', 'Ukip', 'Lib Dem', 'Conservatives'].map(function (party) {
+                'areas': areas,
+                'parties': ['Labour', 'SNP', 'Green', 'UKIP', 'LD', 'Conservatives'].map(function (party) {
                     return {
                         'party': party,
                         'only': false
@@ -79,7 +80,18 @@ define([
                     return this.get('parties').reduce(function (only, party) { return only || party.only; }, false);
                 },
                 'policies': function () {
-                    return policies; // TODO: add filtering
+                    return policies; // TODO: add party filtering
+                },
+                'areaPolicies': function () {
+                    var areaPolicies = {};
+                    this.get('policies').forEach(function (policy) {
+                        var area = policy.areas[0];
+                        if (!areaPolicies[area]) {
+                            areaPolicies[area] = [];
+                        }
+                        areaPolicies[area].push(policy);
+                    });
+                    return areaPolicies;
                 },
                 'userPolicies': function () {
                     var userTags = this.get('userAnswers').flatMap(function (answer) { return answer.tags; });
@@ -118,6 +130,16 @@ define([
             evt.original.preventDefault();
         });
 
+        ractive.on('mode', function (evt, mode) {
+            if (mode !== this.get('mode')) {
+                this.animate('modeOpacity', 0).then(function () {
+                    ractive.animate('modeOpacity', 1);
+                    ractive.set('mode', mode);
+                });
+            }
+            evt.original.preventDefault();
+        });
+
         ractive.on('answer', function (evt) {
             var questionNo = evt.index.questionNo;
             this.set('userAnswers.' + questionNo, evt.context);
@@ -129,13 +151,16 @@ define([
             evt.original.preventDefault();
         });
 
+        ractive.observe('mode', function () {
+            window.scrollTo(0, 0);
+        }, {'init': false, 'defer': true});
+
         ractive.observe('userPolicies', function () {
             var el = ractive.find('.question-bar__summary__link__count');
             el.className += ' do-animation';
             setTimeout(function () {
                 el.className = el.className.replace(/do-animation/g, '').trim();
             }, 300);
-
         }, {'init': false});
 
         // TODO: debounce
@@ -153,10 +178,6 @@ define([
 
             ractive.set('currentSection', currentSection);
         });
-
-        window.addEventListener('hashchange', function () {
-            ractive.set('mode', window.location.hash === '#explore' ? 'explore' : 'basic');
-        });
     }
 
     function init(el) {
@@ -169,8 +190,22 @@ define([
         }
 
         pegasus(SHEET_URL).then(function (spreadsheet) {
+            var areas = spreadsheet.sheets.areas.map(function (area) {
+                return {
+                    'area': area.area,
+                    'tags': parseTags(area.tags)
+                };
+            });
+
             var policies = spreadsheet.sheets.policies.map(function (policy) {
-                policy.tags = parseTags(policy.willtags); // TODO: use main tags
+                policy.tags = parseTags(policy.tags);
+                policy.areas = areas.filter(function (area) {
+                    // filter for areas where there is overlap between policy tags and area tags
+                    var commonTags = area.tags.filter(function (tag) {
+                        return policy.tags.indexOf(tag) !== -1;
+                    });
+                    return commonTags.length > 0;
+                }).map (function (area) { return area.area; });
                 return policy;
             });
 
@@ -194,15 +229,8 @@ define([
                 };
             });
 
-            var tags = spreadsheet.sheets.tags.map(function (tag) {
-                return {
-                    'area': tag.area,
-                    'tags': parseTags(tag.tags)
-                };
-            });
-
             try {
-                app(el, policies, questions, tags);
+                app(el, policies, questions, areas);
             } catch (e) {
                 console.log(e);
             }
