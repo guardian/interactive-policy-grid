@@ -70,27 +70,28 @@ define([
         policyGridEle = ractive.find('.policy-grid');
 
         function getOffset(el) {
-            console.log(questionBarEle.clientHeight);
             return el ? el.offsetTop + getOffset(el.offsetParent) : -questionBarEle.clientHeight;
         }
 
         var scrollTo = (function () {
-            var scrollTimer, interval = 20;
+            var scrollTimer, interval = 15, total = 300;
 
             return function (ele) {
-                var remaining = 500;
-                var step = (getOffset(ele) - window.pageYOffset) * (interval / remaining);
+                var start = window.pageYOffset;
+                var distance = getOffset(ele) - start;
+                var elapsed = 0;
 
                 if (scrollTimer) {
                     clearInterval(scrollTimer);
                 }
 
                 scrollTimer = setInterval(function () {
-                    window.scrollTo(0, window.pageYOffset + step);
-                    remaining -= interval;
-                    if (remaining === 0) {
+                    window.scrollTo(0, Math.floor(start + distance * (elapsed / total)));
+                    if (elapsed === total) {
                         clearInterval(scrollTimer);
                         scrollTimer = undefined;
+                    } else {
+                        elapsed += interval;
                     }
                 }, interval);
             };
