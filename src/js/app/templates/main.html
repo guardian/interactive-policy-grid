@@ -64,27 +64,6 @@
     </div>
 
     <div class="explore-mode">
-        <div class="filters">
-            {{#tags}}
-                <span class="filter">
-                    <span class="filter__title">{{area}}</span>
-                    {{#tags}}
-                        <label class="filter__button {{#only}}is-selected{{/only}}">
-                            <input type="checkbox" checked="{{only}}" /> {{tag}}
-                        </label>
-                    {{/tags}}
-            {{/tags}}
-        </div>
-        <div class="filters filters--right">
-            <span class="filter">
-                <span class="filter__title">Party</span>
-                {{#parties}}
-                    <label class="filter__button {{#only}}is-selected{{/only}}">
-                        <input type="checkbox" checked="{{only}}" /> {{party}}
-                    </label>
-                {{/parties}}
-            </span>
-        </div>
         <policy-grid policies="{{policies}}" topText="Change filters" />
         <div class="btq">
             <div class="btq__advert"><advert /></div>
