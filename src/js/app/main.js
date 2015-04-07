@@ -24,6 +24,34 @@ define([
         return this.map(fn).reduce(function (a, b) { return a.concat(b); });
     };
 
+    function getOffset(el) {
+        return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
+    }
+
+    var scrollTo = (function () {
+        var scrollTimer, interval = 15, total = 300;
+
+        return function (end) {
+            var start = window.pageYOffset;
+            var distance = end - start;
+            var elapsed = 0;
+
+            if (scrollTimer) {
+                clearInterval(scrollTimer);
+            }
+
+            scrollTimer = setInterval(function () {
+                window.scrollTo(0, Math.floor(start + distance * (elapsed / total)));
+                if (elapsed === total) {
+                    clearInterval(scrollTimer);
+                    scrollTimer = undefined;
+                } else {
+                    elapsed += interval;
+                }
+            }, interval);
+        };
+    })();
+
     function app(el, policies, questions, tags) {
         var questionBarEle, questionEles, policyGridEle;
         var ractive = new Ractive({
@@ -68,48 +96,36 @@ define([
         questionEles = ractive.findAll('.questions__item');
         policyGridEle = ractive.find('.policy-grid');
 
-        function getOffset(el) {
-            return el ? el.offsetTop + getOffset(el.offsetParent) : -questionBarEle.clientHeight;
+        function getQuestionOffset(questionNo) {
+            return getOffset(questionEles[questionNo]) - questionBarEle.clientHeight;
         }
 
-        var scrollTo = (function () {
-            var scrollTimer, interval = 15, total = 300;
+        function gotoQuestion(questionNo) {
+            scrollTo(getQuestionOffset(questionNo));
+        }
 
-            return function (ele) {
-                var start = window.pageYOffset;
-                var distance = getOffset(ele) - start;
-                var elapsed = 0;
+        function gotoPolicyGrid() {
+            scrollTo(getOffset(policyGridEle));
+        }
 
-                if (scrollTimer) {
-                    clearInterval(scrollTimer);
-                }
-
-                scrollTimer = setInterval(function () {
-                    window.scrollTo(0, Math.floor(start + distance * (elapsed / total)));
-                    if (elapsed === total) {
-                        clearInterval(scrollTimer);
-                        scrollTimer = undefined;
-                    } else {
-                        elapsed += interval;
-                    }
-                }, interval);
-            };
-        })();
-
-        ractive.on('*.question', function (evt) {
-            scrollTo(questionEles[evt.index.questionNo]);
+        ractive.on('question', function (evt, questionNo) {
+            gotoQuestion(questionNo);
             evt.original.preventDefault();
         });
 
-        ractive.on('*.policies', function (evt) {
-            scrollTo(policyGridEle);
+        ractive.on('policies', function (evt) {
+            gotoPolicyGrid();
             evt.original.preventDefault();
         });
 
         ractive.on('answer', function (evt) {
             var questionNo = evt.index.questionNo;
             this.set('userAnswers.' + questionNo, evt.context);
-            scrollTo(questionNo === questionEles.length - 1 ? policyGridEle : questionEles[questionNo + 1]);
+            if (questionNo === questionEles.length - 1) {
+                gotoPolicyGrid();
+            } else {
+                gotoQuestion(questionNo + 1);
+            }
             evt.original.preventDefault();
         });
 
@@ -129,7 +145,7 @@ define([
 
             if (offset < getOffset(policyGridEle)) {
                 questionEles.forEach(function (question, questionNo) {
-                    if (offset >= getOffset(question)) {
+                    if (offset >= getQuestionOffset(questionNo)) {
                         currentSection = questionNo;
                     }
                 });

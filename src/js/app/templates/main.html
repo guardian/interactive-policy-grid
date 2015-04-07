@@ -26,7 +26,8 @@
             <sticky-bar class="question-bar">
                 <span class="question-bar__list">
                     {{#questions:questionNo}}
-                        <a class="question-bar__list__item {{#currentSection == questionNo}}is-current{{/currentSection}}" href="#" on-click="question">
+                        <a class="question-bar__list__item {{#currentSection == questionNo}}is-current{{/currentSection}}"
+                           href="#" on-click="question:{{questionNo}}">
                             {{questionNo + 1}}
                         </a>
                     {{/questions}}
@@ -39,7 +40,7 @@
             </sticky-bar>
 
             {{#questions:questionNo}}
-                <h2 class="questions__item headline" id="question-{{questionNo}}">{{question}}</h2>
+                <h2 class="questions__item headline">{{question}}</h2>
                 <div class="answers {{#userAnswers[questionNo]}}has-answer{{/userAnswers}}">
                     {{#answers}}
                         <a class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" href="#" on-click="answer">
@@ -51,7 +52,15 @@
             {{/questions}}
         </div>
 
-        <policy-grid policies="{{userPolicies}}" topText="Back to questions" />
+        <policy-grid policies="{{userPolicies}}">
+            <a class="back-to-top" href="#" on-click="question:0">Back to questions</a>
+        </policy-grid>
+
+        <div class="btq">
+            <h3 class="btq__title">Not what you wanted?</h3>
+            <h3 class="btq__subtitle">Have a look at the policies</h3>
+            <a href="#explore">Explore the policies &raquo;</a>
+        </div>
     </div>
 
     <div class="explore-mode">

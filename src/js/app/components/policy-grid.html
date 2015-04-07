@@ -10,9 +10,7 @@
                 <button on-click="share:google" class="share share--google"></button>
             </span>
         </span>
-        <span class="top-bar--right">
-            <a class="back-to-top" href="#explore">{{topText}}</a>
-        </span>
+        <span class="top-bar--right">{{yield}}</span>
     </sticky-bar>
 
     <div class="policy-grid__list {{#policyNo != -1}}has-selected{{/policyNo}}">
