@@ -27,7 +27,7 @@
             {{#rowNumber == policyNo}}
                 <p>{{policyverbatim}}</p>
             {{/rowNumber}}
-            <a class="policy-grid__item__link" href="#policy" title="Read more about this policy" on-click="policy"></a>
+            <a class="policy-grid__item__link" href="#policy" title="Read more about this policy" on-click="open"></a>
             <p class="policy-grid__item__toggle-selected">Read</p>
             <p class="policy-grid__item__tags">
                 {{#areas:i}}
@@ -45,10 +45,14 @@
             'policyNo': -1
         },
         'onrender': function () {
-            this.on('policy', function (evt) {
+            this.on('open', function (evt) {
                 var policy = evt.context.rowNumber;
                 this.set('policyNo', policy === this.get('policyNo') ? -1 : policy);
                 evt.original.preventDefault();
+            });
+
+            this.on('close', function () {
+                this.set('policyNo', '-1');
             });
         }
     };

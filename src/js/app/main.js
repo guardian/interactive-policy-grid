@@ -54,6 +54,7 @@ define([
 
     function app(el, policies, questions, areas) {
         var questionBarEle, questionEles, policyGridEle;
+
         var ractive = new Ractive({
             'el': el,
             'template': mainTemplate,
@@ -120,8 +121,15 @@ define([
             scrollTo(getOffset(policyGridEle));
         }
 
+        function closePolicyGrids() {
+            ractive.findAllComponents('policy-grid').forEach(function (grid) {
+                grid.fire('close');
+            });
+        }
+
         ractive.on('question', function (evt, questionNo) {
             gotoQuestion(questionNo);
+            closePolicyGrids();
             evt.original.preventDefault();
         });
 
@@ -152,6 +160,7 @@ define([
         });
 
         ractive.observe('mode', function () {
+            closePolicyGrids();
             window.scrollTo(0, 0);
         }, {'init': false, 'defer': true});
 

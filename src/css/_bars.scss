@@ -24,9 +24,6 @@
     @include sticky-bar--height(padding-top);
 }
 
-.question-bar {
-}
-
 .question-bar__list {
     @include button--link;
     display: table-cell;
