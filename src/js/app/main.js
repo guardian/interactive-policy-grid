@@ -96,12 +96,12 @@ define([
             };
         })();
 
-        ractive.on('question', function (evt) {
-            scrollTo(evt.index.questionNo);
+        ractive.on('*.question', function (evt) {
+            scrollTo(questionEles[evt.index.questionNo]);
             evt.original.preventDefault();
         });
 
-        ractive.on('policies', function (evt) {
+        ractive.on('*.policies', function (evt) {
             scrollTo(policyGridEle);
             evt.original.preventDefault();
         });
@@ -109,15 +109,7 @@ define([
         ractive.on('answer', function (evt) {
             var questionNo = evt.index.questionNo;
             this.set('userAnswers.' + questionNo, evt.context);
-
-            if (questionNo === questionEles.length) {
-                console.log('here');
-                console.log(policyGridEle);
-                scrollTo(policyGridEle);
-            } else {
-                scrollTo(questionEles[questionNo + 1]);
-            }
-
+            scrollTo(questionNo === questionEles.length - 1 ? policyGridEle : questionEles[questionNo + 1]);
             evt.original.preventDefault();
         });
 
