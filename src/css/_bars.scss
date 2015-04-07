@@ -9,6 +9,13 @@
     }
 }
 
+.sticky-bar-container {
+    @include sticky-bar--height(padding-top);
+    position: relative;
+    padding-bottom: ($gs-baseline * 4);
+    border-bottom: 1px solid $c-neutral1;
+}
+
 .sticky-bar__inner {
     @include container--width;
     @include sticky-bar--height(height);
@@ -20,24 +27,46 @@
     border-spacing: 0;
 }
 
-.sticky-bar-spacing {
-    @include sticky-bar--height(padding-top);
-}
-
-.question-bar__list {
+.sticky-bar__left {
     @include button--link;
     display: table-cell;
     vertical-align: top;
     vertical-align: top;
     white-space: nowrap;
-    @include f-headline;
-    font-size: 26px;
+}
+
+.sticky-bar__right {
+    display: table-cell;
+    width: 100%;
+    text-align: right;
+}
+
+.policy-title,
+.policy-share {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.policy-title {
+    border-right: 1px solid $c-neutral6;
+    margin: 0 ($gs-gutter / 2) 0 0;
+    padding-right: ($gs-gutter / 2);
     @media (min-width: $breakpoint1) {
-        font-size: 40px;
+        padding-right: $gs-gutter;
+        margin-right: $gs-gutter;
     }
 }
 
-.question-bar__list__item {
+.policy-share__text {
+    font-size: 18px;
+    padding-right: 10px;
+    display: none;
+    @media (min-width: $breakpoint2) {
+        display: inline;
+    }
+}
+
+.question-no {
     display: inline-block;
     border-right: 1px solid $c-neutral6;
     text-align: center;
@@ -52,31 +81,19 @@
     }
 }
 
-.question-bar__summary {
-    display: table-cell;
-    width: 100%;
-    text-align: right;
-}
-
-.question-bar__summary__link {
-    display: inline-block;
-    color: $c-neutral1;
-    outline: 0;
-}
-
 @keyframes flash {
     0%   { color: $c-neutral1; }
     50%  { color: $c-newsmain2; }
     100% { color: $c-neutral1; }
 }
 
-.question-bar__summary__link__count {
+.policy-summary {
+    display: inline-block;
+    color: $c-neutral1;
+    outline: 0;
     font-weight: bold;
 
     &.do-animation {
         animation: flash 0.3s ease-out;
     }
-}
-
-.policy-bar {
 }

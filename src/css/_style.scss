@@ -1,11 +1,11 @@
 .container {
     @include container--width;
     background-color: white;
+    counter-reset: question;
     padding: ($gs-gutter / 2);
     @media (min-width: $breakpoint2) {
         padding: $gs-gutter;
     }
-
 }
 
 .mode {
@@ -91,14 +91,7 @@ h2 {
     }
 }
 
-.questions {
-    position: relative;
-    counter-reset: question;
-    padding-bottom: ($gs-baseline * 4);
-    border-bottom: 1px solid $c-neutral1;
-}
-
-.questions__item {
+.question {
     position: relative;
     padding-left: 27px;
     max-width: gs-span(6);

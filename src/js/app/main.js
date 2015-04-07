@@ -83,17 +83,6 @@ define([
                 'policies': function () {
                     return policies; // TODO: add party filtering
                 },
-                'areaPolicies': function () {
-                    var areaPolicies = {};
-                    this.get('policies').forEach(function (policy) {
-                        var area = policy.areas[0];
-                        if (!areaPolicies[area]) {
-                            areaPolicies[area] = [];
-                        }
-                        areaPolicies[area].push(policy);
-                    });
-                    return areaPolicies;
-                },
                 'userPolicies': function () {
                     var userTags = this.get('userAnswers').flatMap(function (answer) { return answer.tags; });
                     return this.get('policies').filter(function (policy) {
@@ -105,8 +94,8 @@ define([
             }
         });
 
-        questionBarEle = ractive.find('.question-bar');
-        questionEles = ractive.findAll('.questions__item');
+        questionBarEle = ractive.find('.js-question-bar');
+        questionEles = ractive.findAll('.question');
         policyGridEle = ractive.find('.policy-grid');
 
         function getQuestionOffset(questionNo) {
@@ -128,8 +117,8 @@ define([
         }
 
         ractive.on('question', function (evt, questionNo) {
-            gotoQuestion(questionNo);
             closePolicyGrids();
+            gotoQuestion(questionNo);
             evt.original.preventDefault();
         });
 
@@ -165,7 +154,7 @@ define([
         }, {'init': false, 'defer': true});
 
         ractive.observe('userPolicies', function () {
-            var el = ractive.find('.question-bar__summary__link__count');
+            var el = ractive.find('.policy-summary');
             el.className += ' do-animation';
             setTimeout(function () {
                 el.className = el.className.replace(/do-animation/g, '').trim();

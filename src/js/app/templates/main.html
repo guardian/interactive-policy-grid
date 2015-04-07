@@ -22,25 +22,25 @@
     </div>
 
     <div class="mode {{#mode == 'basic'}}is-active{{/mode}}" style="opacity: {{modeOpacity}}">
-        <div class="questions sticky-bar-spacing">
-            <sticky-bar class="question-bar">
-                <span class="question-bar__list">
+        <div class="sticky-bar-container">
+            <sticky-bar class="js-question-bar">
+                <h2 class="sticky-bar__left">
                     {{#questions:questionNo}}
-                        <a class="question-bar__list__item {{#currentSection == questionNo}}is-current{{/currentSection}}"
+                        <a class="question-no {{#currentSection == questionNo}}is-current{{/currentSection}}"
                            href="#" on-click="question:{{questionNo}}">
                             {{questionNo + 1}}
                         </a>
                     {{/questions}}
-                </span>
-                <span class="question-bar__summary">
-                    <a class="question-bar__summary__link" href="#" on-click="policies">
-                        View your <span class="question-bar__summary__link__count">{{userPolicies.length || 0}} policies</span>
+                </h2>
+                <span class="sticky-bar__right">
+                    <a class="policy-summary" href="#" on-click="policies">
+                        {{userPolicies.length || 0}} policies
                     </a>
                 </span>
             </sticky-bar>
 
             {{#questions:questionNo}}
-                <h2 class="questions__item headline">{{question}}</h2>
+                <h2 class="question headline">{{question}}</h2>
                 <div class="answers {{#userAnswers[questionNo]}}has-answer{{/userAnswers}}">
                     {{#answers}}
                         <a class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" href="#" on-click="answer">
@@ -52,9 +52,27 @@
             {{/questions}}
         </div>
 
-        <policy-grid policies="{{userPolicies}}">
-            <a class="back-to-top" href="#" on-click="question:0">Back to questions</a>
-        </policy-grid>
+        <div class="sticky-bar-container">
+            <sticky-bar>
+                <span class="sticky-bar__left">
+                    <h2 class="policy-title">{{userPolicies.length || 0}} policies</h2><span class="policy-share">
+                        <span class="policy-share__text">Share your policies</span>
+                        <button on-click="share:twitter" class="share share--twitter"></button>
+                        <button on-click="share:facebook" class="share share--facebook"></button>
+                        <button on-click="share:email" class="share share--email"></button>
+                        <button on-click="share:google" class="share share--google"></button>
+                    </span>
+                </span>
+                <span class="sticky-bar__right">
+                    <a class="back-to-top" href="#" on-click="question:0">Back to questions</a>
+                </span>
+            </sticky-bar>
+            {{#areas}}
+                <h2 class="headline">{{area}}</h2>
+                <policy-grid />
+            {{/areas}}
+        </div>
+
         <a class="cta" href="#" on-click="mode:explore">
             <h3 class="cta__title">Not what you wanted?</h3>
             <h3 class="cta__subtitle">Have a look at the policies</h3>
@@ -63,7 +81,24 @@
     </div>
 
     <div class="mode {{#mode == 'explore'}}is-active{{/mode}}" style="opacity: {{modeOpacity}}">
-        <policy-grid policies="{{policies}}" topText="Change filters" />
+        <div class="sticky-bar-container">
+            <sticky-bar>
+                <span class="sticky-bar__left">
+                    <h2 class="policy-title">{{userPolicies.length || 0}} policies</h2><span class="policy-share">
+                        <span class="policy-share__text">Share your policies</span>
+                        <button on-click="share:twitter" class="share share--twitter"></button>
+                        <button on-click="share:facebook" class="share share--facebook"></button>
+                        <button on-click="share:email" class="share share--email"></button>
+                        <button on-click="share:google" class="share share--google"></button>
+                    </span>
+                </span>
+                <span class="sticky-bar__right">
+                    blah
+                </span>
+            </sticky-bar>
+            <policy-grid policies="{{policies}}" />
+        </div>
+
         <a class="cta" href="#" on-click="mode:basic">
             <div class="cta__advert"><advert /></div>
             <h3 class="cta__title">Still can't decide?</h3>

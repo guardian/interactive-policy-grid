@@ -1,36 +1,6 @@
-.policy-title__title {
-    display: inline;
-    vertical-align: middle;
-    border-right: 1px solid $c-neutral6;
-    padding-right: ($gs-gutter / 2);
-    @media (min-width: $breakpoint1) {
-        padding-right: $gs-gutter;
-    }
-}
-
-.policy-title__share {
-    font-size: 18px;
-    padding-left: ($gs-gutter / 2);
-    @media (min-width: $breakpoint1) {
-        padding-left: $gs-gutter;
-    }
-}
-
-.policy-title__share__text {
-    display: none;
-    padding-right: 10px;
-    @media (min-width: $breakpoint2) {
-        display: inline;
-    }
-}
-
 .policy-grid {
     position: relative;
     clear: both;
-    border-bottom: 1px solid $c-neutral1;
-}
-
-.policy-grid__list {
     overflow: hidden;
     padding-bottom: 160px;
     margin-top: ($gs-baseline * 4);

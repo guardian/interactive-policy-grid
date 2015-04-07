@@ -1,30 +1,13 @@
-<div class="policy-grid sticky-bar-spacing">
-    <sticky-bar>
-        <span class="top-bar--left policy-title">
-            <h2 class="policy-title__title">{{policies.length || 0}} policies</h2>
-            <span class="policy-title__share">
-                <span class="policy-title__share__text">Share your policies</span>
-                <button on-click="share:twitter" class="share share--twitter"></button>
-                <button on-click="share:facebook" class="share share--facebook"></button>
-                <button on-click="share:email" class="share share--email"></button>
-                <button on-click="share:google" class="share share--google"></button>
-            </span>
-        </span>
-        <span class="top-bar--right">{{yield}}</span>
-    </sticky-bar>
-
-    <div class="policy-grid__list {{#policyNo != -1}}has-selected{{/policyNo}}">
+<div class="policy-grid {{#policyNo != -1}}has-selected{{/policyNo}}">
     {{#policies}}
         <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}">
             <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
+            <h4 class="policy-grid__item__title">{{policy}}</h4>
             {{#rowNumber == policyNo}}
                 <p class="policy-grid__item__share">
                     <button on-click="share:twitter" class="share share--twitter"></button>
                     <button on-click="share:facebook" class="share share--facebook"></button>
                 </p>
-            {{/rowNumber}}
-            <h4 class="policy-grid__item__title">{{policy}}</h4>
-            {{#rowNumber == policyNo}}
                 <p>{{policyverbatim}}</p>
             {{/rowNumber}}
             <a class="policy-grid__item__link" href="#policy" title="Read more about this policy" on-click="open"></a>
@@ -36,11 +19,11 @@
             </p>
         </div>
     {{/policies}}
-    </div>
 </div>
 
 <script>
     component.exports = {
+        'isolated': true,
         'data': {
             'policyNo': -1
         },
@@ -52,7 +35,7 @@
             });
 
             this.on('close', function () {
-                this.set('policyNo', '-1');
+                this.set('policyNo', -1);
             });
         }
     };
