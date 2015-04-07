@@ -42,6 +42,7 @@
     border-right: 1px solid $c-neutral6;
     text-align: center;
     color: $c-neutral3;
+    outline: 0;
     @include sticky-bar--height(width);
 
     &:hover,
@@ -60,6 +61,7 @@
 .question-bar__summary__link {
     display: inline-block;
     color: $c-neutral1;
+    outline: 0;
 }
 
 @keyframes flash {
