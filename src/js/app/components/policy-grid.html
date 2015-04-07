@@ -17,6 +17,12 @@
     {{#policies}}
         <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}">
             <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
+            {{#rowNumber == policyNo}}
+                <p class="policy-grid__item__share">
+                    <button on-click="share:twitter" class="share share--twitter"></button>
+                    <button on-click="share:facebook" class="share share--facebook"></button>
+                </p>
+            {{/rowNumber}}
             <h4 class="policy-grid__item__title">{{policy}}</h4>
             {{#rowNumber == policyNo}}
                 <p>{{policyverbatim}}</p>
@@ -25,7 +31,7 @@
             <p class="policy-grid__item__toggle-selected">Read</p>
             <p class="policy-grid__item__tags">
                 {{#areas:i}}
-                    {{.}}{{#if i != areas.length - 1}}{{", "}}{{/if}}
+                    {{.}}{{#i != areas.length - 1}}{{", "}}{{/i}}
                 {{/areas}}
             </p>
         </div>

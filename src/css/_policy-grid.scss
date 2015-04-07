@@ -47,6 +47,7 @@
 
     width: 100%;
 
+    // Misusing CSS as much as possible
     @mixin columns($cols, $start, $end: -1) {
         $q: '(min-width: #{$start})';
         @if $end != -1 { $q: '#{$q} and (max-width: #{$end - 1px})'; }
@@ -111,6 +112,16 @@
     &:hover + .policy-grid__item__toggle-selected {
         opacity: 1;
         text-decoration: underline;
+    }
+}
+
+.policy-grid__item__share {
+    position: relative;
+    z-index: 2;
+    @media (min-width: $breakpoint1) {
+        position: absolute;
+        left: $gs-gutter;
+        top: (24px + $gs-baseline * 3);
     }
 }
 

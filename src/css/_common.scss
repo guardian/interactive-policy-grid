@@ -94,12 +94,18 @@ figure img {
     &::before {
         background-image: url('../imgs/twitter.svg');
     }
+    &:hover {
+        background-color: #028dbc;
+    }
 }
 
 .share--facebook {
     background-color: #3067a3;
     &::before {
         background-image: url('../imgs/facebook.svg');
+    }
+    &:hover {
+        background-color: #244e7c;
     }
 }
 
@@ -108,12 +114,18 @@ figure img {
     &::before {
         background-image: url('../imgs/email.svg');
     }
+    &:hover {
+        background-color: #5d5d5d;
+    }
 }
 
 .share--google {
     background-color: #e15440;
     &::before {
         background-image: url('../imgs/google.svg');
+    }
+    &:hover {
+        background-color: #ce3620;
     }
 }
 
