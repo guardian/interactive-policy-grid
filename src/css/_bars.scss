@@ -9,7 +9,7 @@
     }
 }
 
-.sticky-bar {
+.sticky-bar__inner {
     @include container--width;
     @include sticky-bar--height(height);
     @include sticky-bar--height(line-height);
