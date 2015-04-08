@@ -1,16 +1,16 @@
 @mixin container--width {
     margin: 0 auto;
 
-    @media (min-width: gs-span(9)) {
+    @media (min-width: (gs-span(9) + $gs-gutter * 2)) {
         max-width: gs-span(9);
     }
-    @media (min-width: gs-span(12)) {
+    @media (min-width: (gs-span(12) + $gs-gutter * 2)) {
         max-width: gs-span(12);
     }
-    @media (min-width: gs-span(14)) {
+    @media (min-width: (gs-span(14) + $gs-gutter * 2)) {
         max-width: gs-span(14);
     }
-    @media (min-width: gs-span(16)) {
+    @media (min-width: (gs-span(16) + $gs-gutter * 2)) {
         max-width: gs-span(16);
     }
 }

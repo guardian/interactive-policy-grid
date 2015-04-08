@@ -49,8 +49,8 @@
     }
 
     @include columns(2, $breakpoint1, $breakpoint2);
-    @include columns(3, $breakpoint2, gs-span(14));
-    @include columns(4, gs-span(14));
+    @include columns(3, $breakpoint2, $breakpoint3);
+    @include columns(4, $breakpoint3);
 
     &:hover {
         box-shadow: none;
