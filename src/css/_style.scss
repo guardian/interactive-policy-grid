@@ -51,8 +51,15 @@ body::after {
 .header__advert {
     position: absolute;
     bottom: 0;
-    right: 30px;
-    height: 150px;
+    right: 20px;
+    height: 85px;
+    @media (min-width: $breakpoint3) {
+        height: 150px;
+    }
+    display: none;
+    @media (min-width: $breakpoint1) {
+        display: block;
+    }
 }
 
 h2 {
@@ -104,13 +111,22 @@ h2 {
 .cta {
     display: block;
     margin: 0 auto;
-    max-width: gs-span(12);
-    height: 300px;
-    padding-top: ($gs-baseline * 4);
+    max-width: gs-span(11);
+    padding: ($gs-baseline * 4) 0;
     color: inherit;
 
     &:hover {
         text-decoration: none;
+    }
+
+    @media (min-width: $breakpoint3) {
+        max-width: gs-span(12);
+    }
+
+    &::after {
+        content: " ";
+        display: block;
+        clear: both;
     }
 }
 
@@ -125,9 +141,13 @@ h2 {
 }
 
 .cta__advert {
-    float: left;
-    margin-right: 30px;
-    margin-top: -60px;
+    display: none;
+    @media (min-width: $breakpoint2) {
+        display: block;
+        float: left;
+        margin-right: 30px;
+        margin-top: -60px;
+    }
 }
 
 .cta__link {
