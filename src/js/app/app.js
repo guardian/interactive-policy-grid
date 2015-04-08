@@ -153,6 +153,8 @@ define([
 
             ractive.set('currentSection', currentSection);
         });
+
+        initElectionNav("pollprojection");
     }
 
     return {
