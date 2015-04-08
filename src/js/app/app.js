@@ -42,7 +42,7 @@ define([
     })();
 
     function start(el, policies, questions, areas) {
-        var questionBarEle, questionEles, policyGridEle;
+        var questionBarEle, questionEles, policiesEle;
 
         var ractive = new Ractive({
             'el': el,
@@ -76,7 +76,7 @@ define([
 
         questionBarEle = ractive.find('.js-question-bar');
         questionEles = ractive.findAll('.question');
-        policyGridEle = ractive.find('.js-policy-grid');
+        policiesEle = ractive.find('.js-policies');
 
         function getQuestionOffset(questionNo) {
             return getOffset(questionEles[questionNo]) - questionBarEle.clientHeight;
@@ -86,8 +86,8 @@ define([
             scrollTo(getQuestionOffset(questionNo));
         }
 
-        function gotoPolicyGrid() {
-            scrollTo(getOffset(policyGridEle));
+        function gotoPolicies() {
+            scrollTo(getOffset(policiesEle));
         }
 
         function closePolicyGrids() {
@@ -103,7 +103,7 @@ define([
         });
 
         ractive.on('policies', function (evt) {
-            gotoPolicyGrid();
+            gotoPolicies();
             evt.original.preventDefault();
         });
 
@@ -123,7 +123,7 @@ define([
             var questionNo = evt.index.questionNo;
             this.set('userAnswers.' + questionNo, evt.context);
             if (questionNo === questionEles.length - 1) {
-                gotoPolicyGrid();
+                gotoPolicies();
             } else {
                 gotoQuestion(questionNo + 1);
             }
@@ -143,7 +143,7 @@ define([
             var offset = window.pageYOffset;
             var currentSection = -1;
 
-            if (offset < getOffset(policyGridEle)) {
+            if (offset < getOffset(policiesEle)) {
                 questionEles.forEach(function (question, questionNo) {
                     if (offset >= getQuestionOffset(questionNo)) {
                         currentSection = questionNo;
