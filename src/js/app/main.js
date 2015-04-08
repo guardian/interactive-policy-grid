@@ -5,7 +5,6 @@ define([
     pegasus,
     app
 ) {
-    var MAX_ANSWERS = 4;
     var SHEET_URL = 'http://interactive.guim.co.uk/spreadsheetdata/1FH1NEYStgczP_B4xPPMr3_DuXHBAipkn2S0zhcFH_LU.json';
 
     function parseList(list) {
@@ -16,25 +15,35 @@ define([
 
     function init(el) {
         pegasus(SHEET_URL).then(function (spreadsheet) {
-            var areas = spreadsheet.sheets.areas.map(function (area) { return area.area.toLowerCase(); });
-
             var policies = spreadsheet.sheets.policies.map(function (policy) {
                 policy.area = policy.area.toLowerCase();
-                policy.questions = parseList(policy.question);
+                policy.answers = parseList(policy.answers);
                 return policy;
             });
 
+            var areas = spreadsheet.sheets.areas.map(function (area) {
+                var areaName = area.area.toLowerCase();
+                return {
+                    'area': areaName,
+                    'policies': policies.filter(function (policy) {
+                        return policy.area.toLowerCase() === areaName;
+                    })
+                };
+            });
+
             var questions = spreadsheet.sheets.questions.map(function (question) {
-                var i, s, answers = [];
-                for (i = 0; i < MAX_ANSWERS; i++) {
-                    s = 'answer' + (i + 1);
-                    if (question[s]) {
-                        answers[i] = {
-                            'text': question[s],
-                            'id': question[s + 'id']
+                var answers = ['answer1', 'answer2', 'answer3', 'answer4']
+                    .filter(function (key) { return question[key]; })
+                    .map(function (key) {
+                        var id = question[key + 'id'];
+                        return {
+                            'text': question[key],
+                            'id': id,
+                            'policies': policies.filter(function (policy) {
+                                return policy.answers.indexOf(id) !== -1;
+                            })
                         };
-                    }
-                }
+                    });
 
                 return {
                     'question': question.question,

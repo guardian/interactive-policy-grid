@@ -66,40 +66,9 @@ define([
                 'userAnswers': []
             },
             'computed': {
-                'policies': function () {
-                    return policies; // TODO: add party filtering
-                },
-                'answers': function () {
-                    // get list of all answer ids
-                    return this.get('questions')
-                        .map(function (question) { return question.answers; })
-                        .reduce(function (a, b) { return a.concat(b); } );
-                },
-                'areaPolicies': function () {
-                    var policies = this.get('policies');
-                    return this.get('areas').map(function (area) {
-                        return {
-                            'area': area,
-                            'policies': policies.filter(function(policy) {
-                                return policy.area === area;
-                            })
-                        };
-                    });
-                },
-                'answerPolicies': function () {
-                    var policies = this.get('policies');
-                    return this.get('answers').map(function (answer) {
-                        return {
-                            'answer': answer,
-                            'policies': policies.filter(function (policy) {
-                                return policy.questions.indexOf(answer.id) !== -1;
-                            })
-                        };
-                    });
-                },
                 'userPolicyCount': function () {
-                    return this.get('userGrids').reduce(function (len, grid) {
-                        return len + grid.policies.length;
+                    return this.get('userAnswers').reduce(function (len, answer) {
+                        return len + answer.policies.length;
                     }, 0);
                 }
             }
