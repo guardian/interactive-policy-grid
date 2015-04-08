@@ -15,13 +15,6 @@
     }
 }
 
-@mixin button--link {
-    background-color: white;
-    border: 0;
-    cursor: pointer;
-    outline: 0;
-}
-
 body {
     @include fs-bodyCopy(2);
     line-height: 1.25;
@@ -45,8 +38,7 @@ h1, h2, h3, h4, p {
 
 h1 {
     @include f-header;
-    margin-bottom: $gs-baseline;
-    font-size: 38px;
+    font-size: 32px;
     @media (min-width: $breakpoint1) {
         font-size: 48px;
     }

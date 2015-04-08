@@ -112,35 +112,6 @@
     }
 }
 
-.policy-grid__item__toggle-bucket {
-    @include f-textSans;
-    position: absolute;
-    top: $gs-gutter;
-    right: $gs-gutter;
-    width: 26px;
-    line-height: 26px;
-    background-color: $c-neutral3;
-    border-radius: 100px;
-    font-size: 20px;
-    color: white;
-    text-align: center;
-
-    &:hover {
-        background-color: $c-newsmain2;
-        text-decoration: none;
-    }
-
-    &::before {
-        content: "+";
-    }
-
-    transition: opacity 0.1s ease-out;
-    opacity: 0;
-    .policy-grid__item:hover > & {
-        opacity: 1;
-    }
-}
-
 .policy-grid__item__party {
     @include f-textSans;
     font-size: 13px;

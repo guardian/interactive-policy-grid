@@ -8,13 +8,6 @@
     }
 }
 
-.mode {
-    display: none;
-    &.is-active {
-        display: block;
-    }
-}
-
 .header {
     position: relative;
     overflow: hidden;
@@ -61,24 +54,6 @@ h2 {
     }
 }
 
-.top-bar--left {
-    display: table-cell;
-    white-space: nowrap;
-
-    font-size: 26px;
-    @media (min-width: $breakpoint1) {
-        font-size: 40px;
-    }
-}
-
-.top-bar--right {
-    display: table-cell;
-    text-align: right;
-    width: 100%;
-    vertical-align: middle;
-    font-size: 18px;
-}
-
 .back-to-top {
     display: none;
     .is-sticky & {
@@ -108,89 +83,6 @@ h2 {
     }
 }
 
-$font-size: 12px;
-
-.filters {
-    @include f-textSans;
-    line-height: 2;
-    margin-top: $gs-baseline;
-    margin-bottom: ($gs-baseline * 2);
-    text-align: center;
-}
-
-.filters--left {
-    float: left;
-    text-align: left;
-}
-
-.filters--right {
-    float: right;
-    text-align: right;
-}
-
-.filter {
-    display: inline;
-    font-size: ($font-size * 2);
-    line-height: 1;
-    text-transform: capitalize;
-    border-bottom: 2px solid $c-neutral3;
-    margin-right: ($gs-gutter * 2);
-
-    &::before {
-        content: "";
-    }
-
-    &:hover {
-        border-bottom-color: $c-neutral1;
-    }
-}
-
-.filter__title,
-.filter__button {
-    display: inline-block;
-    vertical-align: middle;
-    font-size: $font-size;
-    line-height: 2;
-    height: ($font-size * 2);
-    margin-top: -1px;
-}
-
-.filter__title {
-    padding: 0 10px;
-    background-color: $c-neutral3;
-    color: white;
-    font-weight: bold;
-
-    .filter:hover > & {
-        background-color: $c-neutral1;
-    }
-}
-
-.filter__button {
-    color: $c-neutral3;
-    padding: 0 8px;
-    cursor: pointer;
-
-    &:hover {
-        text-decoration: none;
-        background-color: $c-newsmain2;
-        color: white !important;
-    }
-
-    &.is-selected {
-        background-color: $c-neutral3;
-        color: $c-neutral1;
-    }
-
-    & > input {
-        display: none;
-    }
-
-    .filter:hover > & {
-        color: $c-neutral1;
-    }
-}
-
 .cta {
     display: block;
     margin: 0 auto;
@@ -207,7 +99,6 @@ $font-size: 12px;
 .cta__title,
 .cta__subtitle {
     @include f-header;
-    font-size: 35px;
 }
 
 .cta__subtitle {

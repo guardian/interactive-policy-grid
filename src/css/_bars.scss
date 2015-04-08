@@ -1,11 +1,10 @@
-@mixin sticky-bar--height($prop, $n: 1) {
-    $size: $gs-baseline * $n;
-    #{$prop}: ($size * 4);
+@mixin sticky-bar--height($prop) {
+    #{$prop}: ($gs-baseline * 4);
     @media (min-width: $breakpoint1) {
-        #{$prop}: ($size * 7);
+        #{$prop}: ($gs-baseline * 7);
     }
     @media (min-width: $breakpoint2) {
-        #{$prop}: ($size * 9);
+        #{$prop}: ($gs-baseline * 9);
     }
 }
 
@@ -28,9 +27,7 @@
 }
 
 .sticky-bar__left {
-    @include button--link;
     display: table-cell;
-    vertical-align: top;
     vertical-align: top;
     white-space: nowrap;
 }
@@ -58,7 +55,7 @@
 }
 
 .policy-share__text {
-    font-size: 18px;
+    font-size: inherit;
     padding-right: 10px;
     display: none;
     @media (min-width: $breakpoint2) {
