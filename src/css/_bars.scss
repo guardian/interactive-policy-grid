@@ -11,8 +11,8 @@
 .sticky-bar-container {
     @include sticky-bar--height(padding-top);
     position: relative;
-    padding-bottom: ($gs-baseline * 4);
     border-bottom: 1px solid $c-neutral1;
+    @include v-spacing(padding-bottom);
 }
 
 .sticky-bar__inner {
@@ -46,12 +46,9 @@
 
 .policy-title {
     border-right: 1px solid $c-neutral6;
-    margin: 0 ($gs-gutter / 2) 0 0;
-    padding-right: ($gs-gutter / 2);
-    @media (min-width: $breakpoint1) {
-        padding-right: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
+    margin: 0;
+    @include h-spacing(margin-right);
+    @include h-spacing(padding-right);
 }
 
 .policy-share__text {

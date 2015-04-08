@@ -2,10 +2,7 @@
     @include container--width;
     background-color: white;
     counter-reset: question;
-    padding: ($gs-gutter / 2);
-    @media (min-width: $breakpoint2) {
-        padding: $gs-gutter;
-    }
+    @include h-spacing(padding);
 }
 
 body::after {
@@ -71,12 +68,8 @@ h2 {
 }
 
 .headline {
-    padding-top: ($gs-baseline * 2);
+    @include v-spacing(padding-top);
     padding-bottom: $gs-baseline;
-
-    @media (min-width: $breakpoint1) {
-        padding-top: ($gs-baseline * 4);
-    }
 }
 
 .back-to-top {
@@ -112,8 +105,10 @@ h2 {
     display: block;
     margin: 0 auto;
     max-width: gs-span(11);
-    padding: ($gs-baseline * 4) 0;
     color: inherit;
+
+    @include v-spacing(padding-top);
+    @include v-spacing(padding-bottom);
 
     &:hover {
         text-decoration: none;

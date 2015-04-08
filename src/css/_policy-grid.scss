@@ -1,22 +1,26 @@
+$breakpoint-min: gs-span(7);
+$policy-height: 160px;
+
 .policy-grid {
     position: relative;
     clear: both;
     overflow: hidden;
     @media (min-width: $breakpoint1) {
         &.has-selected {
-            padding-bottom: 160px;
+            padding-bottom: $policy-height;
         }
     }
 }
 
 .policy-grid__item {
     position: relative;
-    height: 160px;
+    height: $policy-height;
     border: 2px solid transparent;
-    padding: ($gs-gutter / 2);
     box-sizing: border-box;
     box-shadow: 0 1px 0 0 $c-neutral6;
     float: left;
+
+    @include h-spacing(padding);
 
     width: 100%;
 
@@ -43,7 +47,6 @@
     }
 
     @media (min-width: $breakpoint1) {
-        padding: $gs-gutter;
         border-bottom-color: transparent;
         box-shadow: ($gs-gutter + 1px) 0 0 (-$gs-gutter) $c-neutral6, 0 ($gs-gutter + 1px) 0 (-$gs-gutter) $c-neutral6;
     }
@@ -92,8 +95,12 @@
 .policy-grid__item__share {
     position: relative;
     z-index: 2;
-    @media (min-width: $breakpoint1) {
+    @media (min-width: $breakpoint-min) {
         position: absolute;
+        left: $gs-gutter / 2;
+        top: (14px + $gs-baseline * 3);
+    }
+    @media (min-width: $breakpoint2) {
         left: $gs-gutter;
         top: (24px + $gs-baseline * 3);
     }
@@ -146,21 +153,17 @@
 @include policy-grid__item__party--color(snp, #fff95d);
 
 .policy-grid__item.is-selected {
-    $breakpoint-min: gs-span(7);
     background-color: transparentize(white, 0.05);
 
     z-index: 2;
-    height: 320px;
+    height: $policy-height * 2;
     box-shadow: none;
     border-color: $c-neutral3;
 
     .policy-grid__item__party {
+        @include h-spacing(left);
         @media (min-width: $breakpoint-min) {
             position: absolute;
-            left: ($gs-gutter / 2);
-        }
-        @media (min-width: $breakpoint1) {
-            left: $gs-gutter;
         }
     }
 
@@ -184,7 +187,7 @@
     }
 
     @media (min-width: $breakpoint1) {
-        margin-bottom: -160px;
+        margin-bottom: (-$policy-height / 2);
     }
 
     .has-selected > & {

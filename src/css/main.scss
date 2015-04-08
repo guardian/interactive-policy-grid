@@ -23,6 +23,21 @@ $breakpoint1: gs-span(9) + $gs-gutter * 2;
 $breakpoint2: gs-span(12) + $gs-gutter * 2;
 $breakpoint3: gs-span(14) + $gs-gutter * 2;
 
+@mixin spacing($prop, $base) {
+    #{$prop}: $base;
+    @media (min-width: $breakpoint1) {
+        #{$prop}: ($base * 2);
+    }
+}
+
+@mixin h-spacing($prop) {
+    @include spacing($prop, $gs-gutter / 2);
+}
+
+@mixin v-spacing($prop) {
+    @include spacing($prop, $gs-baseline * 2);
+}
+
 @import 'common';
 @import 'bars';
 @import 'policy-grid';

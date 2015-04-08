@@ -1,9 +1,6 @@
 .answers {
     border-bottom: 1px solid $c-neutral6;
-    padding-bottom: ($gs-baseline * 2);
-    @media (min-width: $breakpoint1) {
-        padding-bottom: ($gs-baseline * 4);
-    }
+    @include v-spacing(padding-bottom);
 
     &:last-child {
         border-bottom: 0;
