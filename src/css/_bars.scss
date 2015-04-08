@@ -96,3 +96,35 @@
         animation: flash 0.3s ease-out;
     }
 }
+
+.back-to-top {
+    vertical-align: middle;
+    color: $c-neutral1;
+
+    display: none;
+    .is-sticky & {
+        display: inline-block;
+    }
+
+    &::after {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 32px;
+        height: 32px;
+        background: url('../imgs/top.svg') no-repeat center;
+        border: 1px solid $c-neutral1;
+        border-radius: 100px;
+        margin-left: ($gs-gutter / 2);
+    }
+
+    font-size: 0;
+    @media (min-width: $breakpoint1) {
+        font-size: inherit;
+
+        &::after {
+            width: 38px;
+            height: 38px;
+        }
+    }
+}

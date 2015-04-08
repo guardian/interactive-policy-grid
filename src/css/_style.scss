@@ -72,18 +72,6 @@ h2 {
     padding-bottom: $gs-baseline;
 }
 
-.back-to-top {
-    display: none;
-    .is-sticky & {
-        display: inline-block;
-    }
-
-    font-size: 0;
-    @media (min-width: $breakpoint1) {
-        font-size: inherit;
-    }
-}
-
 .question {
     position: relative;
     padding-left: 27px;
