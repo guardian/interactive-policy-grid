@@ -15,6 +15,11 @@
     @include v-spacing(padding-bottom);
 }
 
+.sticky-bar.is-sticky {
+    @include h-spacing(padding-left);
+    @include h-spacing(padding-right);
+}
+
 .sticky-bar__inner {
     @include container--width;
     @include sticky-bar--height(height);
