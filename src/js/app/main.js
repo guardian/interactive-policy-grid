@@ -1,5 +1,4 @@
 define([
-    'iframe-messenger',
     'pegasus',
     'text!templates/main.html',
     'ractive',
@@ -7,7 +6,6 @@ define([
     'rvc!components/policy-grid',
     'rvc!components/sticky-bar'
 ], function(
-    iframeMessenger,
     pegasus,
     mainTemplate,
     Ractive,
@@ -48,12 +46,6 @@ define([
         };
     })();
 
-    function intersection(a, b) {
-        return a.filter(function (aa) {
-            return b.indexOf(aa) !== -1;
-        });
-    }
-
     function app(el, policies, questions, areas) {
         var questionBarEle, questionEles, policyGridEle;
 
@@ -91,7 +83,7 @@ define([
                         return {
                             'area': area,
                             'policies': policies.filter(function(policy) {
-                                return intersection(area.tags, policy.tags).length > 0;
+                                return policy.area === area;
                             })
                         };
                     });
@@ -102,7 +94,7 @@ define([
                         return {
                             'answer': answer,
                             'policies': policies.filter(function (policy) {
-                                return intersection(answer.tags, policy.tags).length > 0;
+                                return policy.questions.indexOf(answer.id) !== -1;
                             })
                         };
                     });
@@ -197,24 +189,18 @@ define([
     }
 
     function init(el) {
-        iframeMessenger.enableAutoResize();
-
-        function parseTags(tagString) {
-            return tagString.split(',')
-                .map(function (tag) { return tag.trim(); })
-                .filter(function (tag) { return tag.length > 0; });
+        function parseList(list) {
+            return list.split(',')
+                .map(function (item) { return item.trim(); })
+                .filter(function (item) { return item.length > 0; });
         }
 
         pegasus(SHEET_URL).then(function (spreadsheet) {
-            var areas = spreadsheet.sheets.areas.map(function (area) {
-                return {
-                    'area': area.area,
-                    'tags': parseTags(area.tags)
-                };
-            });
+            var areas = spreadsheet.sheets.areas.map(function (area) { return area.area.toLowerCase(); });
 
             var policies = spreadsheet.sheets.policies.map(function (policy) {
-                policy.tags = parseTags(policy.tags);
+                policy.area = policy.area.toLowerCase();
+                policy.questions = parseList(policy.question);
                 return policy;
             });
 
@@ -224,16 +210,14 @@ define([
                     s = 'answer' + (i + 1);
                     if (question[s]) {
                         answers[i] = {
-                            'answer': question[s],
-                            'tags': parseTags(question[s + 'tags']),
-                            'img': question[s + 'image']
+                            'text': question[s],
+                            'id': question[s + 'id']
                         };
                     }
                 }
 
                 return {
                     'question': question.question,
-                    'theme': question.theme,
                     'answers': answers
                 };
             });

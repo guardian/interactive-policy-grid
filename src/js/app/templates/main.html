@@ -44,8 +44,8 @@
                 <div class="answers {{#userAnswers[questionNo]}}has-answer{{/userAnswers}}">
                     {{#answers}}
                         <a class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}" href="#" on-click="answer">
-                            <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{img}}.svg" /></i>
-                            {{answer}}
+                            <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{id}}.svg" /></i>
+                            {{text}}
                         </a>
                     {{/answers}}
                 </div>
@@ -70,8 +70,8 @@
             {{#userGrids}}
                 {{#if answer}}
                     <h3 class="you-said headline">
-                        You said <img class="you-said__img" src="@@assets@@/imgs/icons/{{answer.img}}.svg" />
-                        <span class="you-said__text">{{answer.answer}}</span>
+                        You said <img class="you-said__img" src="@@assets@@/imgs/icons/{{answer.id}}.svg" />
+                        <span class="you-said__text">{{answer.text}}</span>
                     </h3>
                     <policy-grid policies="{{policies}}" />
                 {{/if}}
