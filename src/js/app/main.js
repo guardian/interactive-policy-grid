@@ -171,7 +171,7 @@ define([
             evt.original.preventDefault();
         });
 
-        ractive.observe('userPolicies', function () {
+        ractive.observe('userPolicyCount', function () {
             var el = ractive.find('.policy-summary');
             el.className += ' do-animation';
             setTimeout(function () {

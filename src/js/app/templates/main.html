@@ -68,10 +68,13 @@
                 </span>
             </sticky-bar>
             {{#userGrids}}
-                {{#answer}}
-                    <h3 class="headline">You said {{answer}}</h3>
+                {{#if answer}}
+                    <h3 class="you-said headline">
+                        You said <img class="you-said__img" src="@@assets@@/imgs/icons/{{answer.img}}.svg" />
+                        <span class="you-said__text">{{answer.answer}}</span>
+                    </h3>
                     <policy-grid policies="{{policies}}" />
-                {{/answer}}
+                {{/if}}
             {{/userGrids}}
         </div>
 
