@@ -42,7 +42,7 @@ define([
         };
     })();
 
-    function start(el, policies, areas, questions, interests) {
+    function start(el, areas, questions, interests) {
         var questionBarEle, questionEles, policiesEle;
 
         var ractive = new Ractive({
@@ -76,7 +76,7 @@ define([
                 },
                 'userPolicyCount': function () {
                     return this.get('userInterestsAndAnswers').reduce(function (len, answer) {
-                        return len + answer.policies.length;
+                        return len + answer.policies.count;
                     }, 0);
                 }
             }

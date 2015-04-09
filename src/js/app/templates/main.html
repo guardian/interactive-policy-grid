@@ -48,7 +48,7 @@
                            href="#" on-click="answer">
                             <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{id}}.svg" /></i>
                             {{text}}
-                            <div class="answers__item__policies">{{policies.length}}</div>
+                            <div class="answers__item__policies">{{policies.count}}</div>
                         </a>
                     {{/answers}}
                 </div>
@@ -60,7 +60,7 @@
                        href="#" on-click="interest">
                         <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{id}}.svg" /></i>
                         {{text}}
-                        <div class="answers__item__policies">{{policies.length}}</div>
+                        <div class="answers__item__policies">{{policies.count}}</div>
                     </a>
                 {{/interests}}
             </div>
@@ -87,7 +87,10 @@
                         You said <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
                         <span class="you-said__text">{{text}}</span>
                     </h3>
-                    <policy-grid policies="{{policies}}" />
+                    {{#policies.packages}}
+                        <h4>{{name}}</h4>
+                        <policy-grid policies="{{policies}}" />
+                    {{/policies.packages}}
                 {{/if}}
             {{/userInterestsAndAnswers}}
         </div>
