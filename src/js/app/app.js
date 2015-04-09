@@ -110,11 +110,6 @@ define([
             evt.original.preventDefault();
         });
 
-        ractive.on('interest', function (evt) {
-            this.toggle(evt.keypath + '.selected');
-            evt.original.preventDefault();
-        });
-
         ractive.on('policies', function (evt) {
             gotoPolicies();
             evt.original.preventDefault();
@@ -140,6 +135,11 @@ define([
             } else {
                 gotoQuestion(questionNo + 1);
             }
+            evt.original.preventDefault();
+        });
+
+        ractive.on('interest', function (evt) {
+            this.toggle(evt.keypath + '.selected');
             evt.original.preventDefault();
         });
 

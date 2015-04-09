@@ -1,6 +1,6 @@
 <div class="policy-grid {{#policyNo != -1}}has-selected{{/policyNo}}">
     {{#policies}}
-    <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}" style="background-color: {{pkg.color}}">
+    <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}">
             <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
             <h4 class="policy-grid__item__title">{{policy}}</h4>
             {{#rowNumber == policyNo}}
