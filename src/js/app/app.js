@@ -1,3 +1,4 @@
+/* global initElectionNav */
 define([
     'text!templates/main.html',
     'ractive',
