@@ -42,7 +42,7 @@ define([
         };
     })();
 
-    function start(el, policies, questions, areas) {
+    function start(el, policies, areas, questions, interests) {
         var questionBarEle, questionEles, policiesEle;
 
         var ractive = new Ractive({
@@ -56,8 +56,9 @@ define([
             'data': {
                 'mode': window.location.hash === '#explore' ? 'explore' : 'basic',
                 'modeOpacity': 1,
-                'questions': questions,
                 'areas': areas,
+                'questions': questions,
+                'interests': interests,
                 'parties': ['Labour', 'SNP', 'Green', 'UKIP', 'LD', 'Conservatives'].map(function (party) {
                     return {
                         'party': party,
@@ -67,8 +68,14 @@ define([
                 'userAnswers': []
             },
             'computed': {
+                'userInterests': function () {
+                    return this.get('interests').filter(function (interest) { return interest.selected; });
+                },
+                'userInterestsAndAnswers': function () {
+                    return this.get('userAnswers').concat(this.get('userInterests'));
+                },
                 'userPolicyCount': function () {
-                    return this.get('userAnswers').reduce(function (len, answer) {
+                    return this.get('userInterestsAndAnswers').reduce(function (len, answer) {
                         return len + answer.policies.length;
                     }, 0);
                 }
@@ -100,6 +107,11 @@ define([
         ractive.on('question', function (evt, questionNo) {
             closePolicyGrids();
             gotoQuestion(questionNo);
+            evt.original.preventDefault();
+        });
+
+        ractive.on('interest', function (evt) {
+            this.toggle(evt.keypath + '.selected');
             evt.original.preventDefault();
         });
 

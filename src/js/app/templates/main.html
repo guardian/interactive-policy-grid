@@ -44,7 +44,7 @@
                 <h2 class="question headline">{{question}}</h2>
                 <div class="answers {{#userAnswers[questionNo]}}has-answer{{/userAnswers}}">
                     {{#answers}}
-                        <a class="answers__item {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}"
+                        <a class="answers__item answers__item--full {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}"
                            href="#" on-click="answer">
                             <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{id}}.svg" /></i>
                             {{text}}
@@ -53,6 +53,17 @@
                     {{/answers}}
                 </div>
             {{/questions}}
+            <h2 class="question headline">What else interests you?</h2>
+            <div class="answers {{#if userInterests}}has-answer{{/if}}">
+                {{#interests}}
+                    <a class="answers__item {{#selected}}is-selected{{/selected}}"
+                       href="#" on-click="interest">
+                        <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{id}}.svg" /></i>
+                        {{text}}
+                        <div class="answers__item__policies">{{policies.length}}</div>
+                    </a>
+                {{/interests}}
+            </div>
         </div>
 
         <div class="js-policies sticky-bar-container">
@@ -70,7 +81,7 @@
                     <a class="back-to-top" href="#" on-click="question:0">Back to questions</a>
                 </span>
             </sticky-bar>
-            {{#userAnswers}}
+            {{#userInterestsAndAnswers}}
                 {{#if id}}
                     <h3 class="you-said headline">
                         You said <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
@@ -78,7 +89,7 @@
                     </h3>
                     <policy-grid policies="{{policies}}" />
                 {{/if}}
-            {{/userAnswers}}
+            {{/userInterestsAndAnswers}}
         </div>
 
         <a class="cta" href="#" on-click="mode:explore">

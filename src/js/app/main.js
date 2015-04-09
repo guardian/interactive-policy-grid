@@ -59,8 +59,8 @@ define([
                     .map(function (key) {
                         var id = question[key + 'id'];
                         return {
-                            'text': question[key],
                             'id': id,
+                            'text': question[key],
                             'policies': policies.filter(function (policy) {
                                 return policy.answers.indexOf(id) !== -1;
                             })
@@ -73,7 +73,17 @@ define([
                 };
             });
 
-            app.start(el, policies, questions, areas);
+            var interests = spreadsheet.sheets.interests.map(function (interest) {
+                return {
+                    'id': interest.id,
+                    'text': interest.name,
+                    'policies': policies.filter(function (policy) {
+                        return policy.answers.indexOf(interest.id) !== -1;
+                    })
+                };
+            });
+
+            app.start(el, policies, areas, questions, interests);
         });
     }
 
