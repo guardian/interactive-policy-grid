@@ -22,11 +22,10 @@ define([
             });
 
             var areas = spreadsheet.sheets.areas.map(function (area) {
-                var areaName = area.area.toLowerCase();
                 return {
-                    'area': areaName,
+                    'area': area.area,
                     'policies': policies.filter(function (policy) {
-                        return policy.area.toLowerCase() === areaName;
+                        return policy.area.toLowerCase() === area.area.toLowerCase();
                     })
                 };
             });

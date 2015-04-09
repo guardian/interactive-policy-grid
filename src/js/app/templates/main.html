@@ -104,10 +104,10 @@
                     Party filters here
                 </span>
             </sticky-bar>
-            {{#areaPolicies}}
-                <h3 class="headline">{{area.area}}</h3>
+            {{#areas}}
+                <h3 class="headline">{{area}}</h3>
                 <policy-grid policies="{{policies}}" />
-            {{/areaPolicies}}
+            {{/areas}}
         </div>
 
         <a class="cta" href="#" on-click="mode:basic">

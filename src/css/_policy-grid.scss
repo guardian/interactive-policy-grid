@@ -151,6 +151,7 @@ $policy-height: 160px;
 @include policy-grid__item__party--color(ld, #fdbb30);
 @include policy-grid__item__party--color(pc, #3f8428);
 @include policy-grid__item__party--color(snp, #fff95d);
+@include policy-grid__item__party--color(green, #008066);
 
 .policy-grid__item.is-selected {
     background-color: transparentize(white, 0.05);
