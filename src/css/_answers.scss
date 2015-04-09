@@ -10,6 +10,7 @@
 
 .answers__item {
     @include f-textSans;
+    position: relative;
     font-size: 16px;
     display: inline-block;
     vertical-align: top;
@@ -28,6 +29,7 @@
         width: calc(50% - #{$gs-gutter / 2});
         height: 300px;
         text-align: center;
+        margin-bottom: ($gs-gutter / 2 + $gs-baseline + 16px);
     }
     @media (min-width: $breakpoint2) {
         width: calc(25% - #{$gs-gutter / 2});
@@ -80,4 +82,22 @@
         }
     }
 
+}
+
+.answers__item__policies {
+    line-height: 1;
+    color: $c-neutral3;
+
+    &::after {
+        content: " policies";
+    }
+
+    @media (min-width: $breakpoint1) {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding-top: $gs-baseline;
+        font-size: 16px;
+    }
 }
