@@ -1,7 +1,9 @@
 define([
+    'json!data/parties.json',
     'pegasus',
     'app'
 ], function (
+    parties,
     pegasus,
     app
 ) {
@@ -29,7 +31,8 @@ define([
 
             var constituencies = {};
             spreadsheet.sheets.constituencies.forEach(function (constituency) {
-                constituencies[constituency.gss] = constituency;
+                constituencies[constituency.onsid] = constituency;
+                constituencies[constituency.onsid].parties = parties[constituency.onsid];
             });
 
             function mkAnswer(id, text, cmpFn) {

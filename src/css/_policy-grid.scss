@@ -1,11 +1,12 @@
 $policy-height: 130px;
+$policy-height-selected: $policy-height * 2 + $gs-baseline;
 
 .policy-grid {
     overflow: hidden;
     @media (min-width: $breakpoint1) {
         margin-right: -$gs-baseline;
         &.has-selected {
-            padding-bottom: ($policy-height + $gs-baseline);
+            padding-bottom: ($policy-height-selected - $policy-height);
         }
     }
 }
@@ -19,6 +20,7 @@ $policy-height: 130px;
     margin-bottom: ($gs-gutter / 2);
     @include h-spacing(padding);
     font-size: 15px;
+    color: $c-neutral2;
 
     width: 100%;
 
@@ -65,6 +67,10 @@ $policy-height: 130px;
     .has-selected > & {
         opacity: 0.4;
     }
+
+    p:last-child {
+        margin: 0;
+    }
 }
 
 .policy-grid__item__title {
@@ -72,15 +78,9 @@ $policy-height: 130px;
     font-weight: normal;
 }
 
-.policy-grid__item__tags {
-    @include fs-textSans(1);
-    color: $c-neutral3;
-    text-transform: uppercase;
-}
-
 .policy-grid__item__link {
     position: absolute;
-    z-index: 0;
+    z-index: 1;
     top: 0;
     left: 0;
     right: 0;
@@ -111,9 +111,6 @@ $policy-height: 130px;
 .policy-grid__item__source {
     position: relative;
     z-index: 2;
-    &:hover {
-        color: inherit;
-    }
 
     &::after {
         content: "";
@@ -142,12 +139,29 @@ $policy-height: 130px;
     opacity: 0;
     text-transform: uppercase;
     color: map-get($pasteup-palette, guardian-brand);
-    margin: 0;
 
     transition: opacity 0.1s ease-out;
 
     &::after {
         content: " more";
+    }
+}
+
+.policy-grid__item__commentary {
+    position: relative;
+    padding-top: 5px;
+    border-top: 1px dotted $c-neutral5;
+    color: $c-neutral2;
+
+    & > img {
+        float: left;
+        width: 50px;
+        border-radius: 100px;
+        margin-right: 10px;
+        @media (min-width: $breakpoint0) {
+            position: absolute;
+            right: 100%;
+        }
     }
 }
 
@@ -186,10 +200,11 @@ $policy-height: 130px;
     background-color: transparentize(white, 0.05);
 
     z-index: 2;
-    min-height: ($policy-height * 2 + $gs-baseline);
+    min-height: $policy-height-selected;
     height: auto;
     box-shadow: none;
     border-color: $c-neutral3;
+    color: inherit;
 
     .policy-grid__item__party {
         @include h-spacing(left);
@@ -209,17 +224,13 @@ $policy-height: 130px;
         }
     }
 
-    .policy-grid__item__toggle-bucket {
-        opacity: 1;
-    }
-
     @media (min-width: $breakpoint0) {
         padding-left: gs-span(2);
     }
 
     @media (min-width: $breakpoint1) {
-        margin-bottom: -$policy-height;
-        height: ($policy-height * 2 + $gs-baseline);
+        margin-bottom: ($policy-height - $policy-height-selected + $gs-baseline);
+        height: $policy-height-selected;
     }
 
     .has-selected > & {

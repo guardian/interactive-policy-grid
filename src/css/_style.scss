@@ -67,9 +67,26 @@ h2 {
     }
 }
 
+h3 {
+    font-size: 20px;
+    @media (min-width: $breakpoint1) {
+        font-size: 34px;
+    }
+}
+
 .headline {
     @include v-spacing(padding-top);
     padding-bottom: $gs-baseline;
+}
+
+.title,
+.subtitle {
+    @include f-header;
+}
+
+.subtitle {
+    margin-top: -$gs-baseline;
+    color: $c-neutral3;
 }
 
 .question {
@@ -113,16 +130,6 @@ h2 {
     }
 }
 
-.cta__title,
-.cta__subtitle {
-    @include f-header;
-}
-
-.cta__subtitle {
-    margin-top: -$gs-baseline;
-    color: $c-neutral3;
-}
-
 .cta__advert {
     display: none;
     @media (min-width: $breakpoint2) {
@@ -141,9 +148,9 @@ h2 {
 }
 
 .you-said {
-    font-weight: bold;
+    height: 108px;
     &::before {
-        content: "You said";
+        content: "You said ";
         display: block;
         @media (min-width: $breakpoint0) {
             display: inline;
@@ -177,6 +184,7 @@ h2 {
 
 .postcode__text {
     @include fs-data(4);
+    text-transform: uppercase;
     width: 155px;
     border-radius: 100px;
     height: 42px;

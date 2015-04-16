@@ -65,11 +65,19 @@
             {{/questions}}
         </div>
 
-        <div class="js-policies sticky-bar-container">
-            <sticky-bar>
+        <div class="cta js-policies">
+            <h2 class="title">Your policy guide</h2>
+            <h3 class="subtitle">{{userPolicyCount}} policies based on your answers</h3>
+        </div>
+
+        <div style="position: relative">
+            <sticky-bar class="bar">
                 <span class="sticky-bar__left">
-                    <h2 class="policy-title">{{userPolicyCount}} policies</h2><span class="policy-share">
-                        <span class="policy-share__text">Share your policies</span>
+                    <h2 class="policy-title">
+                        You said
+                        <img class="you-said__img" src="@@assets@@/imgs/icons/status-lowpaid.svg" />
+                        <span class="you-said__text">Working (low income)/unemployed</span>
+                    </h2><span class="policy-share">
                         <button on-click="share:twitter" class="share share--twitter"></button>
                         <button on-click="share:facebook" class="share share--facebook"></button>
                         <button on-click="share:email" class="share share--email"></button>
@@ -84,10 +92,10 @@
             {{#questionsAnswered}}
                 {{#answers}}
                     {{#if selected}}
-                        <h3 class="you-said headline">
+                        <h2 class="you-said">
                             <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
                             <span class="you-said__text">{{text}}</span>
-                        </h3>
+                        </h2>
                         {{#policies.packages}}
                             <h4>{{name}}</h4>
                             <policy-grid policies="{{policies}}" />
@@ -98,8 +106,8 @@
         </div>
 
         <a class="cta" href="#" on-click="mode:explore">
-            <h2 class="cta__title">Not what you wanted?</h2>
-            <h2 class="cta__subtitle">Have a look at all the policies</h2>
+            <h2 class="title">Not what you wanted?</h2>
+            <h3 class="subtitle">Have a look at all the policies</h3>
             <span class="cta__link">Explore the policies &raquo;</span>
         </a>
     </div>
@@ -108,8 +116,7 @@
         <div class="sticky-bar-container">
             <sticky-bar>
                 <span class="sticky-bar__left">
-                    <h2 class="policy-title">{{policies.length}} policies</h2><span class="policy-share">
-                        <span class="policy-share__text">Share your policies</span>
+                    <h2 class="policy-title">{{allPolicyCount}} policies</h2><span class="policy-share">
                         <button on-click="share:twitter" class="share share--twitter"></button>
                         <button on-click="share:facebook" class="share share--facebook"></button>
                         <button on-click="share:email" class="share share--email"></button>
@@ -128,8 +135,8 @@
 
         <a class="cta" href="#" on-click="mode:basic">
             <div class="cta__advert"><advert /></div>
-            <h2 class="cta__title">Still can't decide?</h2>
-            <h2 class="cta__subtitle">Let us help build your policy profile</h2>
+            <h2 class="title">Still can't decide?</h2>
+            <h3 class="subtitle">Let us help build your policy profile</h3>
             <span class="cta__link">Answer the questions &raquo;</span>
         </a>
     </div>

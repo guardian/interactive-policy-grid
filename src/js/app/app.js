@@ -126,6 +126,11 @@ define([
                             return policyCount + answer.policies.count;
                         }, 0);
                     }, 0);
+                },
+                'allPolicyCount': function () {
+                    return this.get('areas').reduce(function (len, areas) {
+                        return len + areas.policies.length;
+                    }, 0);
                 }
             }
         });
@@ -176,13 +181,14 @@ define([
         });
 
         ractive.on('postcode', function (evt, postcode) {
-            getConstituency(postcode, function (gss) {
+            getConstituency(postcode, function (ons_id) {
                 var answer = {'E': 0, 'S': 1, 'W': 2, 'N': 3};
                 var set = {
-                    'questions.4.constituency': constituencies[gss],
-                    'questions.4.answers.*.selected': false
+                    'questions.4.constituency': constituencies[ons_id],
+                    'questions.4.answers.*.selected': false,
                 };
-                set['questions.4.answers.' + answer[gss[0]] + '.selected'] = true;
+                set['questions.4.answers.' + answer[ons_id[0]] + '.selected'] = true;
+                console.log(ons_id, constituencies[ons_id]);
                 ractive.set(set);
             }, function () {});
             evt.original.preventDefault();

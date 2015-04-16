@@ -36,6 +36,13 @@
     }
 }
 
+.answer-bar {
+    border-bottom: 0;
+    .is-sticky > & {
+        border-bottom: 1px solid $c-neutral3;
+    }
+}
+
 .sticky-bar__left {
     display: table-cell;
     vertical-align: top;
@@ -66,15 +73,6 @@
     display: none;
     @media (min-width: $breakpoint0) {
         display: inline-block;
-    }
-}
-
-.policy-share__text {
-    font-size: inherit;
-    padding-right: 10px;
-    display: none;
-    @media (min-width: $breakpoint2) {
-        display: inline;
     }
 }
 
