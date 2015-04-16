@@ -46,6 +46,47 @@ define([
         };
     })();
 
+    function debounce(fn) {
+        var timer, run;
+
+        return function runner() {
+            if (timer) {
+                run = true;
+            } else {
+                fn();
+                timer = setTimeout(function () {
+                    timer = undefined;
+                    if (run) {
+                        run = false;
+                        runner();
+                    }
+                }, 100);
+            }
+        };
+    }
+
+    function share(network, extra) {
+        var twitterBaseUrl = 'https://twitter.com/intent/tweet?text=';
+        var twitterMessage = (extra || '') + 'Will their policies work for you? #ge15';
+        var facebookBaseUrl = 'https://www.facebook.com/sharer/sharer.php?ref=responsive&u=';
+        var googleBaseUrl = 'https://plus.google.com/share?url=';
+        var emailSubject = 'Will their policies work for you?';
+        var url = encodeURIComponent(window.location.href);
+        var shareWindow;
+
+        if (network === 'twitter') {
+            shareWindow = twitterBaseUrl + encodeURIComponent(twitterMessage + ' ') + url;
+        } else if (network === 'facebook') {
+            shareWindow = facebookBaseUrl + url;
+        } else if (network === 'email') {
+            shareWindow = 'mailto:?subject=' + encodeURIComponent(emailSubject) + '&body=' + url;
+        } else if (network === 'google') {
+            shareWindow = googleBaseUrl + url;
+        }
+
+        window.open(shareWindow, network + 'share', 'width=640,height=320');
+    }
+
     function getConstituency(postcode, success, error) {
         pegasus(POSTCODE_URL + postcode.replace(/ /g, '').toUpperCase()).then(function (_, xhr) {
             success(xhr.responseText);
@@ -169,6 +210,12 @@ define([
             evt.original.preventDefault();
         });
 
+        ractive.on('share', function (evt, network) { share(network); });
+
+        ractive.on('policy-grid.share', function (evt, network) {
+            share(network, '#' + evt.context.party + ': ' + evt.context.policy + '. ');
+        });
+
         ractive.observe('userPolicyCount', function () {
             var el = ractive.find('.policy-summary');
             el.className += ' do-animation';
@@ -177,25 +224,6 @@ define([
             }, 300);
         }, {'init': false});
 
-    function debounce(fn) {
-        var timer, run;
-
-        return function runner() {
-            if (timer) {
-                run = true;
-            } else {
-                fn();
-                timer = setTimeout(function () {
-                    timer = undefined;
-                    if (run) {
-                        run = false;
-                        runner();
-                    }
-                }, 100);
-            }
-        };
-    }
-        // TODO: debounce
         document.addEventListener('scroll', debounce(function () {
             var offset = window.pageYOffset;
             var currentSection = -1;
