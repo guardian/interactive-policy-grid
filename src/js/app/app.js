@@ -63,9 +63,6 @@ define([
                 'policy-grid': PolicyGrid,
                 'sticky-bar': StickyBar
             },
-            'partials': {
-                'question': ''
-            },
             'data': {
                 'mode': window.location.hash === '#explore' ? 'explore' : 'basic',
                 'modeOpacity': 1,
@@ -140,12 +137,19 @@ define([
         ractive.on('postcode', function (evt, postcode) {
             getConstituency(postcode, function (gss) {
                 var answer = {'E': 0, 'S': 1, 'W': 2, 'N': 3};
-                console.log(constituencies[gss]);
-                ractive.set('constituency', constituencies[gss]);
-                ractive.set('questions.4.answers.*.selected', false);
-                ractive.set('questions.4.answers.' + answer[gss[0]] + '.selected', true);
+                var set = {
+                    'questions.4.constituency': constituencies[gss],
+                    'questions.4.answers.*.selected': false
+                };
+                set['questions.4.answers.' + answer[gss[0]] + '.selected'] = true;
+                ractive.set(set);
             }, function () {});
             evt.original.preventDefault();
+        });
+
+        ractive.on('changePostcode', function () {
+            ractive.set('questions.4.constituency', undefined);
+            ractive.set('questions.4.answers.*.selected', false);
         });
 
         ractive.on('answer', function (evt) {

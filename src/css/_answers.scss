@@ -1,9 +1,7 @@
 .answers {
-    border-bottom: 1px solid $c-neutral6;
     @include v-spacing(padding-bottom);
 
     &:last-child {
-        border-bottom: 0;
         padding-bottom: 0;
     }
 

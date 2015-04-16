@@ -26,9 +26,14 @@
     @include sticky-bar--height(line-height);
 
     background-color: white;
-    border-bottom: 1px solid $c-neutral6;
+    border-bottom: 1px solid $c-neutral3;
     display: table;
     border-spacing: 0;
+    box-shadow: $gs-gutter 0 0 0 white, -$gs-gutter 0 0 0 white;
+
+    .is-bottom > & {
+        border-bottom: 0;
+    }
 }
 
 .sticky-bar__left {
@@ -56,6 +61,14 @@
     @include h-spacing(padding-right);
 }
 
+.policy-share > .share--email,
+.policy-share > .share--google {
+    display: none;
+    @media (min-width: $breakpoint0) {
+        display: inline-block;
+    }
+}
+
 .policy-share__text {
     font-size: inherit;
     padding-right: 10px;
@@ -71,7 +84,13 @@
     text-align: center;
     color: $c-neutral3;
     outline: 0;
-    @include sticky-bar--height(width);
+    width: 33px;
+    @media (min-width: $breakpoint1) {
+        width: 70px;
+    }
+    @media (min-width: $breakpoint2) {
+        width: 100px;
+    }
 
     &:hover,
     &.is-current {
@@ -87,24 +106,17 @@
 }
 
 .policy-summary {
-    display: inline-block;
-    color: $c-neutral1;
-    outline: 0;
-    font-weight: bold;
 
     &.do-animation {
         animation: flash 0.3s ease-out;
     }
 }
 
-.back-to-top {
+.link-to-top,
+.link-to-policies {
+    outline: 0;
     vertical-align: middle;
     color: $c-neutral1;
-
-    display: none;
-    .is-sticky & {
-        display: inline-block;
-    }
 
     &::after {
         content: "";
@@ -116,15 +128,43 @@
         border: 1px solid $c-neutral1;
         border-radius: 100px;
         margin-left: ($gs-gutter / 2);
+
+        @media (min-width: $breakpoint1) {
+            width: 38px;
+            height: 38px;
+        }
+    }
+}
+
+.link-to-top {
+    display: none;
+    .is-sticky & {
+        display: inline-block;
     }
 
     font-size: 0;
     @media (min-width: $breakpoint1) {
         font-size: inherit;
 
-        &::after {
-            width: 38px;
-            height: 38px;
+    }
+}
+
+.link-to-policies {
+    opacity: 0;
+    transition: opacity 0.1s linear;
+    &.has-policies {
+        opacity: 1;
+    }
+
+    .is-bottom & {
+        display: none;
+    }
+
+    &::after {
+        transform: rotate(180deg);
+        display: none;
+        @media (min-width: $breakpoint1) {
+            display: inline-block;
         }
     }
 }

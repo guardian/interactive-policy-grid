@@ -82,6 +82,7 @@ define([
             // Add location question
             questions.push({
                 'question': 'Where do you live?',
+                'constituency': undefined,
                 'answers': ['England', 'Scotland', 'Wales', 'Northern Ireland'].map(function (name) {
                     var id = 'location-' + name.toLowerCase().replace(/ /g, '-');
                     return mkAnswer(id, name, function (policy) {

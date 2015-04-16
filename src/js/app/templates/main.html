@@ -28,33 +28,30 @@
                 <h2 class="sticky-bar__left">
                     {{#questions:questionNo}}
                         <a class="question-no {{#if currentSection == questionNo}}is-current{{/if}}"
-                           href="#" on-click="question:{{questionNo}}">
+                           href="#" on-click="question:{{questionNo}}" title="Go to question {{questionNo + 1}}">
                             {{questionNo + 1}}
                         </a>
                     {{/questions}}
                 </h2>
                 <span class="sticky-bar__right">
-                    <a class="policy-summary" href="#" on-click="policies">
+                    <a class="link-to-policies policy-summary {{#if userPolicyCount}}has-policies{{/if}}"
+                       href="#" on-click="policies" title="View your policies">
                         {{userPolicyCount}} policies
                     </a>
                 </span>
             </sticky-bar>
 
-            {{#constituency}}
-                {{name}}
-            {{/constituency}}
-
             {{#questions:questionNo}}
                 <h2 class="question headline">{{question}}</h2>
-                {{#questionNo == 4}}
-                    Select your postcode
-                    <form on-submit="postcode:{{postcode}}">
-                        <input type="text" value="{{postcode}}" /> <button>Submit</button>
+                {{#if questionNo == 4}}
+                    <form class="postcode" on-submit="postcode:{{postcode}}">
+                        <input class="postcode__text" type="text" value="{{postcode}}" on-input="changePostcode" />
+                        <button class="postcode__button button button--primary button--xlarge">Lookup</button>
                     </form>
-                    {{#constituency}}
-                        {{name}}
-                    {{/constituency}}
-                {{/questionNo}}
+                {{/if}}
+                <div class="constituency {{#if constituency}}has-constituency{{/if}}">
+                    Your constituency is <b>{{constituency.name}}</b>
+                </div>
                 <div class="answers {{#if questionsAnswered.indexOf(this) !== -1}}has-answer{{/if}}">
                     {{#answers}}
                         <a class="answers__item {{^multi}}answers__item--full{{/multi}} {{#selected}}is-selected{{/selected}}"
@@ -80,7 +77,7 @@
                     </span>
                 </span>
                 <span class="sticky-bar__right">
-                    <a class="back-to-top" href="#" on-click="question:0">Back to questions</a>
+                    <a class="link-to-top" href="#" on-click="question:0" title="Go back to questions">Back to questions</a>
                 </span>
             </sticky-bar>
 
@@ -88,7 +85,7 @@
                 {{#answers}}
                     {{#if selected}}
                         <h3 class="you-said headline">
-                            You said <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
+                            <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
                             <span class="you-said__text">{{text}}</span>
                         </h3>
                         {{#policies.packages}}

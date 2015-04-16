@@ -75,7 +75,7 @@ h2 {
 .question {
     position: relative;
     padding-left: 27px;
-    max-width: gs-span(6);
+    border-top: 1px solid $c-neutral6;
 
     @media (min-width: $breakpoint1) {
         padding-left: 37px;
@@ -142,6 +142,13 @@ h2 {
 
 .you-said {
     font-weight: bold;
+    &::before {
+        content: "You said";
+        display: block;
+        @media (min-width: $breakpoint0) {
+            display: inline;
+        }
+    }
 }
 
 .you-said__img {
@@ -152,4 +159,49 @@ h2 {
 .you-said__text {
     font-size: 16px;
     font-weight: normal;
+}
+
+.postcode {
+    padding: 0;
+    margin-bottom: $gs-baseline;
+
+    &::before {
+        content: "Enter your postcode";
+        display: block;
+        margin-bottom: $gs-baseline;
+        @media (min-width: $breakpoint0) {
+            display: inline;
+        }
+    }
+}
+
+.postcode__text {
+    @include fs-data(4);
+    width: 155px;
+    border-radius: 100px;
+    height: 42px;
+    background-color: white;
+    border: 1px solid map-get($pasteup-palette, neutral-5);
+    margin: 0;
+    padding: 0 $gs-gutter;
+    outline: 0;
+    @media (min-width: $breakpoint0) {
+        margin-left: $gs-baseline;
+    }
+}
+
+.postcode__button {
+    width: 95px;
+    margin: 0;
+}
+
+.constituency {
+    overflow: hidden;
+    max-height: 0;
+    padding-bottom: 0;
+    transition: all 0.1s linear;
+    &.has-constituency {
+        max-height: 35px;
+        padding-bottom: $gs-baseline;
+    }
 }

@@ -1,4 +1,3 @@
-$breakpoint-min: gs-span(7);
 $policy-height: 160px;
 
 .policy-grid {
@@ -97,7 +96,7 @@ $policy-height: 160px;
 .policy-grid__item__share {
     position: relative;
     z-index: 2;
-    @media (min-width: $breakpoint-min) {
+    @media (min-width: $breakpoint0) {
         position: absolute;
         left: $gs-gutter / 2;
         top: (14px + $gs-baseline * 3);
@@ -165,7 +164,7 @@ $policy-height: 160px;
 
     .policy-grid__item__party {
         @include h-spacing(left);
-        @media (min-width: $breakpoint-min) {
+        @media (min-width: $breakpoint0) {
             position: absolute;
         }
     }
@@ -185,7 +184,7 @@ $policy-height: 160px;
         opacity: 1;
     }
 
-    @media (min-width: $breakpoint-min) {
+    @media (min-width: $breakpoint0) {
         padding-left: gs-span(2);
     }
 
