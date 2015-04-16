@@ -23,6 +23,7 @@
     border: 1px solid $c-neutral8;
     box-sizing: border-box;
     color: inherit;
+    transform: translateZ(0);
 
     transition: background-color 0.1s linear, color 0.1s linear;
 

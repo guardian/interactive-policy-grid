@@ -27,7 +27,7 @@
             <sticky-bar class="js-question-bar">
                 <h2 class="sticky-bar__left">
                     {{#questions:questionNo}}
-                        <a class="question-no {{#currentSection == questionNo}}is-current{{/currentSection}}"
+                        <a class="question-no {{#if currentSection == questionNo}}is-current{{/if}}"
                            href="#" on-click="question:{{questionNo}}">
                             {{questionNo + 1}}
                         </a>
@@ -40,12 +40,25 @@
                 </span>
             </sticky-bar>
 
+            {{#constituency}}
+                {{name}}
+            {{/constituency}}
+
             {{#questions:questionNo}}
                 <h2 class="question headline">{{question}}</h2>
-                <div class="answers {{#userAnswers[questionNo]}}has-answer{{/userAnswers}}">
+                {{#questionNo == 4}}
+                    Select your postcode
+                    <form on-submit="postcode:{{postcode}}">
+                        <input type="text" value="{{postcode}}" /> <button>Submit</button>
+                    </form>
+                    {{#constituency}}
+                        {{name}}
+                    {{/constituency}}
+                {{/questionNo}}
+                <div class="answers {{#if questionsAnswered.indexOf(this) !== -1}}has-answer{{/if}}">
                     {{#answers}}
-                        <a class="answers__item answers__item--full {{#userAnswers[questionNo] == this}}is-selected{{/userAnswers}}"
-                           href="#" on-click="answer">
+                        <a class="answers__item {{^multi}}answers__item--full{{/multi}} {{#selected}}is-selected{{/selected}}"
+                            href="#" on-click="answer">
                             <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{id}}.svg" /></i>
                             {{text}}
                             <div class="answers__item__policies">{{policies.count}}</div>
@@ -53,17 +66,6 @@
                     {{/answers}}
                 </div>
             {{/questions}}
-            <h2 class="question headline">What else interests you?</h2>
-            <div class="answers {{#if userInterests}}has-answer{{/if}}">
-                {{#interests}}
-                    <a class="answers__item {{#selected}}is-selected{{/selected}}"
-                       href="#" on-click="interest">
-                        <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{id}}.svg" /></i>
-                        {{text}}
-                        <div class="answers__item__policies">{{policies.count}}</div>
-                    </a>
-                {{/interests}}
-            </div>
         </div>
 
         <div class="js-policies sticky-bar-container">
@@ -81,23 +83,26 @@
                     <a class="back-to-top" href="#" on-click="question:0">Back to questions</a>
                 </span>
             </sticky-bar>
-            {{#userInterestsAndAnswers}}
-                {{#if id}}
-                    <h3 class="you-said headline">
-                        You said <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
-                        <span class="you-said__text">{{text}}</span>
-                    </h3>
-                    {{#policies.packages}}
-                        <h4>{{name}}</h4>
-                        <policy-grid policies="{{policies}}" />
-                    {{/policies.packages}}
-                {{/if}}
-            {{/userInterestsAndAnswers}}
+
+            {{#questionsAnswered}}
+                {{#answers}}
+                    {{#if selected}}
+                        <h3 class="you-said headline">
+                            You said <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
+                            <span class="you-said__text">{{text}}</span>
+                        </h3>
+                        {{#policies.packages}}
+                            <h4>{{name}}</h4>
+                            <policy-grid policies="{{policies}}" />
+                        {{/policies.packages}}
+                    {{/if}}
+                {{/answers}}
+            {{/questionsAnswered}}
         </div>
 
         <a class="cta" href="#" on-click="mode:explore">
             <h2 class="cta__title">Not what you wanted?</h2>
-            <h2 class="cta__subtitle">Have a look at the policies</h2>
+            <h2 class="cta__subtitle">Have a look at all the policies</h2>
             <span class="cta__link">Explore the policies &raquo;</span>
         </a>
     </div>

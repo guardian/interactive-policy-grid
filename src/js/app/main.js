@@ -16,7 +16,6 @@ define([
     function init(el) {
         pegasus(SHEET_URL).then(function (spreadsheet) {
             var policies = spreadsheet.sheets.policies.map(function (policy) {
-                policy.area = policy.area.toLowerCase();
                 policy.answers = parseList(policy.answers);
                 return policy;
             });
@@ -28,26 +27,37 @@ define([
                 };
             });
 
-            function mkPolicies(cmpFn) {
+            var constituencies = {};
+            spreadsheet.sheets.constituencies.forEach(function (constituency) {
+                constituencies[constituency.gss] = constituency;
+            });
+
+            function mkAnswer(id, text, cmpFn) {
                 var policyPackages = packages.map(function (pkg) {
                     return {
                         'name': pkg.name,
                         'policies': pkg.policies.filter(cmpFn)
                     };
-                }).filter(function (policyPackage) { return policyPackage.policies.length > 0; });
+                }).filter(function (policyPackage) {
+                    return policyPackage.policies.length > 0;
+                });
 
                 return {
-                    'packages': policyPackages,
-                    'count': policyPackages.reduce(function (len, policyPackage) {
-                        return len + policyPackage.policies.length;
-                    }, 0)
+                    'id': id,
+                    'text': text,
+                    'policies': {
+                        'packages': policyPackages,
+                        'count': policyPackages.reduce(function (len, policyPackage) {
+                            return len + policyPackage.policies.length;
+                        }, 0)
+                    }
                 };
             }
 
             var areas = spreadsheet.sheets.areas.map(function (area) {
                 return {
                     'area': area.area,
-                    'policies': mkPolicies(function (policy) {
+                    'policies': policies.filter(function (policy) {
                         return policy.area.toLowerCase() === area.area.toLowerCase();
                     })
                 };
@@ -58,13 +68,9 @@ define([
                     .filter(function (key) { return question[key]; })
                     .map(function (key) {
                         var answerId = question[key + 'id'];
-                        return {
-                            'id': answerId,
-                            'text': question[key],
-                            'policies': mkPolicies(function (policy) {
-                                return policy.answers.indexOf(answerId) !== -1;
-                            })
-                        };
+                        return mkAnswer(answerId, question[key], function (policy) {
+                            return policy.answers.indexOf(answerId) !== -1;
+                        });
                     });
 
                 return {
@@ -73,17 +79,29 @@ define([
                 };
             });
 
-            var interests = spreadsheet.sheets.interests.map(function (interest) {
-                return {
-                    'id': interest.id,
-                    'text': interest.name,
-                    'policies': mkPolicies(function (policy) {
-                        return policy.answers.indexOf(interest.id) !== -1;
-                    })
-                };
+            // Add location question
+            questions.push({
+                'question': 'Where do you live?',
+                'answers': ['England', 'Scotland', 'Wales', 'Northern Ireland'].map(function (name) {
+                    var id = 'location-' + name.toLowerCase().replace(/ /g, '-');
+                    return mkAnswer(id, name, function (policy) {
+                        return policy.region === name;
+                    });
+                })
             });
 
-            app.start(el, areas, questions, interests);
+            // Add wild card question
+            questions.push({
+                'question': 'What else interests you?',
+                'multi': true,
+                'answers': spreadsheet.sheets.interests.map(function (interest) {
+                    return mkAnswer(interest.id, interest.name, function (policy) {
+                        return policy.answers.indexOf(interest.id) !== -1;
+                    });
+                })
+            });
+
+            app.start(el, areas, questions, constituencies);
         });
     }
 

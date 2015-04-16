@@ -4,15 +4,19 @@ define([
     'ractive',
     'rvc!components/advert',
     'rvc!components/policy-grid',
-    'rvc!components/sticky-bar'
+    'rvc!components/sticky-bar',
+    'pegasus'
 ], function(
     mainTemplate,
     Ractive,
     Advert,
     PolicyGrid,
-    StickyBar
+    StickyBar,
+    pegasus
 ) {
     'use strict';
+
+    var POSTCODE_URL = 'http://interactive.guim.co.uk/2015/general-election/postcodes/';
 
     function getOffset(el) {
         return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
@@ -42,7 +46,13 @@ define([
         };
     })();
 
-    function start(el, areas, questions, interests) {
+    function getConstituency(postcode, success, error) {
+        pegasus(POSTCODE_URL + postcode.replace(/ /g, '').toUpperCase()).then(function (_, xhr) {
+            success(xhr.responseText);
+        }, error);
+    }
+
+    function start(el, areas, questions, constituencies) {
         var questionBarEle, questionEles, policiesEle;
 
         var ractive = new Ractive({
@@ -53,30 +63,30 @@ define([
                 'policy-grid': PolicyGrid,
                 'sticky-bar': StickyBar
             },
+            'partials': {
+                'question': ''
+            },
             'data': {
                 'mode': window.location.hash === '#explore' ? 'explore' : 'basic',
                 'modeOpacity': 1,
                 'areas': areas,
-                'questions': questions,
-                'interests': interests,
-                'parties': ['Labour', 'SNP', 'Green', 'UKIP', 'LD', 'Conservatives'].map(function (party) {
-                    return {
-                        'party': party,
-                        'only': false
-                    };
-                }),
-                'userAnswers': []
+                'questions': questions
             },
             'computed': {
-                'userInterests': function () {
-                    return this.get('interests').filter(function (interest) { return interest.selected; });
-                },
-                'userInterestsAndAnswers': function () {
-                    return this.get('userAnswers').concat(this.get('userInterests'));
+                'questionsAnswered': function () {
+                    return this.get('questions').filter(function (question) {
+                        return question.answers.reduce(function (hasAnswer, answer) {
+                            return hasAnswer || answer.selected;
+                        }, false);
+                    });
                 },
                 'userPolicyCount': function () {
-                    return this.get('userInterestsAndAnswers').reduce(function (len, answer) {
-                        return len + answer.policies.count;
+                    return this.get('questionsAnswered').reduce(function (len, question) {
+                        return len + question.answers.filter(function (answer) {
+                            return answer.selected;
+                        }).reduce(function (policyCount, answer) {
+                            return policyCount + answer.policies.count;
+                        }, 0);
                     }, 0);
                 }
             }
@@ -127,18 +137,30 @@ define([
             evt.original.preventDefault();
         });
 
-        ractive.on('answer', function (evt) {
-            var questionNo = evt.index.questionNo;
-            this.set('userAnswers.' + questionNo, evt.context);
-            if (questionNo === questionEles.length - 1) {
-                gotoPolicies();
-            } else {
-                gotoQuestion(questionNo + 1);
-            }
+        ractive.on('postcode', function (evt, postcode) {
+            getConstituency(postcode, function (gss) {
+                var answer = {'E': 0, 'S': 1, 'W': 2, 'N': 3};
+                console.log(constituencies[gss]);
+                ractive.set('constituency', constituencies[gss]);
+                ractive.set('questions.4.answers.*.selected', false);
+                ractive.set('questions.4.answers.' + answer[gss[0]] + '.selected', true);
+            }, function () {});
             evt.original.preventDefault();
         });
 
-        ractive.on('interest', function (evt) {
+        ractive.on('answer', function (evt) {
+            var questionNo = evt.index.questionNo;
+            var multi = this.get('questions.' + questionNo + '.multi');
+            if (!multi) {
+                this.set('questions.' + questionNo + '.answers.*.selected', false);
+
+                if (questionNo === questionEles.length - 1) {
+                    gotoPolicies();
+                } else {
+                    gotoQuestion(questionNo + 1);
+                }
+            }
+
             this.toggle(evt.keypath + '.selected');
             evt.original.preventDefault();
         });
@@ -151,8 +173,26 @@ define([
             }, 300);
         }, {'init': false});
 
+    function debounce(fn) {
+        var timer, run;
+
+        return function runner() {
+            if (timer) {
+                run = true;
+            } else {
+                fn();
+                timer = setTimeout(function () {
+                    timer = undefined;
+                    if (run) {
+                        run = false;
+                        runner();
+                    }
+                }, 100);
+            }
+        };
+    }
         // TODO: debounce
-        document.addEventListener('scroll', function () {
+        document.addEventListener('scroll', debounce(function () {
             var offset = window.pageYOffset;
             var currentSection = -1;
 
@@ -165,7 +205,7 @@ define([
             }
 
             ractive.set('currentSection', currentSection);
-        });
+        }));
 
         initElectionNav("pollprojection");
     }

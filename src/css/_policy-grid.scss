@@ -6,7 +6,7 @@ $policy-height: 160px;
     @media (min-width: $breakpoint1) {
         margin-right: -$gs-baseline;
         &.has-selected {
-            padding-bottom: $policy-height;
+            padding-bottom: ($policy-height + $gs-baseline);
         }
     }
 }
