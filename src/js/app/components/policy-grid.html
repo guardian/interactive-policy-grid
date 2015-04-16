@@ -1,6 +1,6 @@
 <div class="policy-grid {{#policyNo != -1}}has-selected{{/policyNo}}">
     {{#policies}}
-    <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}">
+        <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}">
             <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
             <h4 class="policy-grid__item__title">{{policy}}</h4>
             {{#rowNumber == policyNo}}
@@ -9,6 +9,7 @@
                     <button on-click="share:facebook" class="share share--facebook"></button>
                 </p>
                 <p>{{policyverbatim}}</p>
+                <p><a class="policy-grid__item__source button button--small button--tertiary" href="{{source}}" target="_blank">Source</a></p>
             {{/rowNumber}}
             <a class="policy-grid__item__link" href="#policy" title="Read more about this policy" on-click="open"></a>
             <p class="policy-grid__item__toggle-selected">Read</p>
