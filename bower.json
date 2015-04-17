@@ -19,7 +19,7 @@
     "almond": "0.3.0",
     "curl": "0.8.12",
     "iframe-messenger": "guardian/iframe-messenger#master",
-    "pasteup-buttons": "~0.4.12",
+    "pasteup-buttons": "~0.5.0",
     "pegasus": "0.2.1",
     "ractive": "0.6.1",
     "requirejs-plugins": "1.0.3",
