@@ -17,8 +17,14 @@ define([
 
     function init(el) {
         pegasus(SHEET_URL).then(function (spreadsheet) {
+            var commentators = {
+                'RM': 'Rowena Mason',
+                'FP': 'Frances Perraudin',
+                'NW': 'Nicholas Watt'
+            };
             var policies = spreadsheet.sheets.policies.map(function (policy) {
                 policy.answers = parseList(policy.answers);
+                policy.commentaryname = commentators[policy.commentaryinitials];
                 return policy;
             });
 
