@@ -69,7 +69,7 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
     }
 
     p:last-child {
-        margin: 0;
+        margin-bottom: 0;
     }
 }
 
@@ -139,11 +139,12 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
     opacity: 0;
     text-transform: uppercase;
     color: map-get($pasteup-palette, guardian-brand);
+    margin-top: (-$gs-baseline / 2);
 
     transition: opacity 0.1s ease-out;
 
     &::after {
-        content: " more";
+        content: "Read more";
     }
 }
 
@@ -220,7 +221,7 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
     .policy-grid__item__toggle-selected {
         opacity: 1;
         &::after {
-            content: " less";
+            content: "Close";
         }
     }
 
