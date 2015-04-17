@@ -94,7 +94,7 @@ define([
     }
 
     function start(el, areas, questions, constituencies) {
-        var questionBarEle, questionEles, policiesEle;
+        var questionBarEle, questionEles, policiesEle, sections;
 
         var ractive = new Ractive({
             'el': el,
@@ -132,12 +132,20 @@ define([
                         return len + areas.policies.length;
                     }, 0);
                 }
+            },
+            'decorators': {
+                'section': function (node, context) {
+                    node.sectionContext = context;
+                    return {'teardown': function () {}};
+                }
             }
         });
 
         questionBarEle = ractive.find('.js-question-bar');
         questionEles = ractive.findAll('.question');
         policiesEle = ractive.find('.js-policies');
+
+        sections = ractive.findAll('.question, .you-said', {'live': true});
 
         function getQuestionOffset(questionNo) {
             return getOffset(questionEles[questionNo]) - questionBarEle.clientHeight;
@@ -188,7 +196,6 @@ define([
                     'questions.4.answers.*.selected': false,
                 };
                 set['questions.4.answers.' + answer[ons_id[0]] + '.selected'] = true;
-                console.log(ons_id, constituencies[ons_id]);
                 ractive.set(set);
             }, function () {});
             evt.original.preventDefault();
@@ -205,9 +212,7 @@ define([
             if (!multi) {
                 this.set('questions.' + questionNo + '.answers.*.selected', false);
 
-                if (questionNo === questionEles.length - 1) {
-                    gotoPolicies();
-                } else {
+                if (questionNo < questionEles.length - 1) {
                     gotoQuestion(questionNo + 1);
                 }
             }
@@ -231,18 +236,16 @@ define([
         }, {'init': false});
 
         document.addEventListener('scroll', debounce(function () {
-            var offset = window.pageYOffset;
-            var currentSection = -1;
+            var i, offset = window.pageYOffset;
 
-            if (offset < getOffset(policiesEle)) {
-                questionEles.forEach(function (question, questionNo) {
-                    if (offset >= getQuestionOffset(questionNo)) {
-                        currentSection = questionNo;
-                    }
-                });
+            for (i = sections.length - 1; i >= 0; i--) {
+                if (offset >= getOffset(sections[i])) {
+                    ractive.set('currentSection', sections[i].sectionContext);
+                    return;
+                }
             }
 
-            ractive.set('currentSection', currentSection);
+            ractive.set('currentSection', undefined);
         }));
 
         initElectionNav("pollprojection");

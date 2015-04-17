@@ -27,7 +27,7 @@
             <sticky-bar class="js-question-bar">
                 <h2 class="sticky-bar__left">
                     {{#questions:questionNo}}
-                        <a class="question-no {{#if currentSection == questionNo}}is-current{{/if}}"
+                        <a class="question-no {{#if this == currentSection}}is-current{{/if}}"
                            href="#" on-click="question:{{questionNo}}" title="Go to question {{questionNo + 1}}">
                             {{questionNo + 1}}
                         </a>
@@ -42,7 +42,7 @@
             </sticky-bar>
 
             {{#questions:questionNo}}
-                <h2 class="question headline">{{question}}</h2>
+                <h2 class="question headline" decorator="section:{{this}}">{{question}}</h2>
                 {{#if questionNo == 4}}
                     <form class="postcode" on-submit="postcode:{{postcode}}">
                         <input class="postcode__text" type="text" value="{{postcode}}" on-input="changePostcode" />
@@ -70,13 +70,17 @@
             <h3 class="subtitle">{{userPolicyCount}} policies based on your answers</h3>
         </div>
 
-        <div style="position: relative">
-            <sticky-bar class="bar">
+        <div style="position: relative; border-bottom: 1px solid #333">
+            <sticky-bar class="you-said-bar">
                 <span class="sticky-bar__left">
                     <h2 class="policy-title">
-                        You said
-                        <img class="you-said__img" src="@@assets@@/imgs/icons/status-lowpaid.svg" />
-                        <span class="you-said__text">Working (low income)/unemployed</span>
+                        {{#currentSection}}
+                            {{#if id}}
+                                You said
+                                <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
+                                <span class="you-said__text">{{text}}</span>
+                            {{/if}}
+                        {{/currentSection}}
                     </h2><span class="policy-share">
                         <button on-click="share:twitter" class="share share--twitter"></button>
                         <button on-click="share:facebook" class="share share--facebook"></button>
@@ -92,7 +96,7 @@
             {{#questionsAnswered}}
                 {{#answers}}
                     {{#if selected}}
-                        <h2 class="you-said">
+                        <h2 class="you-said" decorator="section:{{this}}">
                             <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
                             <span class="you-said__text">{{text}}</span>
                         </h2>
