@@ -26,7 +26,7 @@
          id="polka__bg" />
       <circle
          cx="2"
-         style="fill:#ff0000"
+         style="fill:#4dc6dd"
          cy="2"
          r="1.5"
          id="polka__inner" />

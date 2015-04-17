@@ -12,7 +12,6 @@
   <defs
      id="defs4809">
     <pattern
-       style="fill:#ffffff"
        id="polka"
        patternTransform="rotate(20)"
        height="5"
@@ -27,7 +26,7 @@
          id="polka__fill" />
       <circle
          cx="2"
-         style="fill:#ff0000"
+         style="fill:#4dc6dd"
          cy="2"
          r="1.5"
          id="polka__inner" />
