@@ -74,6 +74,7 @@ define([
             var areas = spreadsheet.sheets.areas.map(function (area) {
                 return {
                     'area': area.area,
+                    'id': area.area.replace(/ /g, '-').toLowerCase(),
                     'policies': policies.filter(function (policy) {
                         return policy.area.toLowerCase() === area.area.toLowerCase();
                     })
@@ -97,7 +98,7 @@ define([
             });
 
             // Add location question
-            questions.push({
+            /*questions.push({
                 'question': 'Where do you live?',
                 'answers': ['England', 'Scotland', 'Wales', 'Northern Ireland'].map(function (name) {
                     var id = 'location-' + name.toLowerCase().replace(/ /g, '-');
@@ -105,7 +106,7 @@ define([
                         return policy.region === name;
                     });
                 })
-            });
+            });*/
 
             // Add wild card question
             questions.push({
@@ -118,7 +119,11 @@ define([
                 })
             });
 
+            try {
             app.start(el, areas, questions, constituencies);
+            } catch (e) {
+                console.log(e);
+            }
         });
     }
 

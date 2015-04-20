@@ -28,12 +28,10 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
         margin: 0 $gs-baseline $gs-baseline 0;
     }
 
-    // Misusing CSS as much as possible
-    @mixin columns($cols, $start, $end: -1) {
-        $q: '(min-width: #{$start})';
-        @if $end != -1 { $q: '#{$q} and (max-width: #{$end - 1px})'; }
-        @media #{$q} {
-            $width: 100% / $cols;
+    @mixin columns($cols, $start) {
+        $width: 100% / $cols;
+
+        @media (min-width: $start) {
             width: calc(#{$width} - #{$gs-baseline});
 
             &.is-selected {
@@ -41,22 +39,11 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
                 margin-left: -$width;
                 left: $width;
             }
-
-            &:nth-child(#{$cols}n) {
-                margin-right: 0;
-            }
-
-            &:nth-child(#{$cols}n).is-selected {
-                margin-left: auto;
-                left: auto;
-                margin-right: -$width;
-                right: $width;
-            }
         }
     }
 
-    @include columns(2, $breakpoint1, $breakpoint2);
-    @include columns(3, $breakpoint2, $breakpoint3);
+    @include columns(2, $breakpoint1);
+    @include columns(3, $breakpoint2);
     @include columns(4, $breakpoint3);
 
     &:hover {
@@ -195,7 +182,7 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
 @include policy-grid__item__party--color(ld, #fdbb30);
 @include policy-grid__item__party--color(pc, #3f8428);
 @include policy-grid__item__party--color(snp, #fff95d);
-@include policy-grid__item__party--color(green, #008066);
+@include policy-grid__item__party--color('green', #008066);
 
 .policy-grid__item.is-selected {
     background-color: transparentize(white, 0.05);

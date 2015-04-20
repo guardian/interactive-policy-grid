@@ -5,7 +5,9 @@ define([
     'rvc!components/advert',
     'rvc!components/policy-grid',
     'rvc!components/sticky-bar',
-    'pegasus'
+    'pegasus',
+    '../libs/requestAnimationFrame',
+    '../libs/classList'
 ], function(
     mainTemplate,
     Ractive,
@@ -18,47 +20,16 @@ define([
 
     var POSTCODE_URL = 'http://interactive.guim.co.uk/2015/general-election/postcodes/';
 
-    // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-    // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
-
-    // requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
-
-    // MIT license
-
-    (function() {
-        var lastTime = 0;
-        var vendors = ['ms', 'moz', 'webkit', 'o'];
-        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
-                                       || window[vendors[x]+'CancelRequestAnimationFrame'];
-        }
-
-        if (!window.requestAnimationFrame)
-            window.requestAnimationFrame = function(callback, element) {
-                var currTime = new Date().getTime();
-                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-                var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
-                  timeToCall);
-                lastTime = currTime + timeToCall;
-                return id;
-            };
-
-        if (!window.cancelAnimationFrame)
-            window.cancelAnimationFrame = function(id) {
-                clearTimeout(id);
-            };
-    }());
-
     function getOffset(el) {
-        return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
+        return el ? el.offsetTop + getOffset(el.offsetParent) : -108; // TODO: bar height
     }
 
     var scrollTo = (function () {
         var scrollTimer, interval = 15, total = 300;
 
-        return function (end) {
+        return function (id) {
             var start = window.pageYOffset;
+            var end = getOffset(document.getElementById(id));
             var distance = end - start;
             var elapsed = 0;
 
@@ -122,7 +93,15 @@ define([
     }
 
     function start(el, areas, questions, constituencies) {
-        var questionBarEle;
+        var parties = ['Labour', 'SNP', 'Green', 'Ukip', 'Conservative', 'LD', 'PC'].map(function (party) {
+            var id = party.toLowerCase();
+            return {
+                'id': id,
+                'name': party,
+                'selected': false,
+                'elements': document.getElementsByClassName('js-party-' + id)
+            };
+        });
 
         var ractive = new Ractive({
             'el': el,
@@ -135,8 +114,9 @@ define([
             'data': {
                 'mode': window.location.hash === '#explore' ? 'explore' : 'basic',
                 'modeOpacity': 1,
+                'questions': questions,
                 'areas': areas,
-                'questions': questions
+                'parties': parties
             },
             'computed': {
                 'questionsAnswered': function () {
@@ -147,13 +127,15 @@ define([
                     });
                 },
                 'userPolicyCount': function () {
-                    return this.get('questionsAnswered').reduce(function (len, question) {
+                    var answerPolicies = this.get('questionsAnswered').reduce(function (len, question) {
                         return len + question.answers.filter(function (answer) {
                             return answer.selected;
                         }).reduce(function (policyCount, answer) {
                             return policyCount + answer.policies.count;
                         }, 0);
                     }, 0);
+
+                    return answerPolicies;
                 },
                 'allPolicyCount': function () {
                     return this.get('areas').reduce(function (len, areas) {
@@ -169,26 +151,15 @@ define([
             }
         });
 
-        questionBarEle = ractive.find('.js-question-bar');
-
-        function getQuestionOffset(questionNo) {
-            return getOffset(document.getElementById('question-' + questionNo)) - questionBarEle.clientHeight;
-        }
-
         function closePolicyGrids() {
             ractive.findAllComponents('policy-grid').forEach(function (grid) {
                 grid.fire('close');
             });
         }
 
-        ractive.on('question', function (evt, questionNo) {
+        ractive.on('goto', function (evt, id) {
+            scrollTo(id);
             closePolicyGrids();
-            scrollTo(getQuestionOffset(questionNo));
-            return false;
-        });
-
-        ractive.on('policies', function () {
-            scrollTo(getOffset(document.getElementById('policies')));
             return false;
         });
 
@@ -196,14 +167,14 @@ define([
             this.animate('modeOpacity', 0).then(function () {
                 ractive.animate('modeOpacity', 1);
                 ractive.set('mode', mode);
-                closePolicyGrids();
                 window.scrollTo(0, 0); // without animation
+                closePolicyGrids();
             });
             return false;
         });
 
-        ractive.on('postcode', function (evt, postcode) {
-            getConstituency(postcode, function (ons_id) {
+        ractive.on('postcode', function (evt, userPostcode) {
+            getConstituency(userPostcode, function (ons_id) {
                 ractive.set('userConstituency', constituencies[ons_id]);
             }, function () {});
             return false;
@@ -214,7 +185,7 @@ define([
             var multi = this.get('questions.' + questionNo + '.multi');
             if (!multi) {
                 this.set('questions.' + questionNo + '.answers.*.selected', false);
-                this.fire('question', undefined, questionNo + 1);
+                this.fire('goto', undefined, 'question-' + (questionNo + 1));
             }
 
             this.toggle(evt.keypath + '.selected');
@@ -229,14 +200,33 @@ define([
 
         ractive.observe('userPolicyCount', function () {
             var el = ractive.find('.policy-summary');
-            el.className += ' do-animation';
+            el.classList.add('do-animation');
             setTimeout(function () {
-                el.className = el.className.replace(/do-animation/g, '').trim();
+                el.classList.remove('do-animation');
             }, 300);
         }, {'init': false});
 
+        ractive.observe('userArea', function (area) {
+            scrollTo('area-' + area);
+            closePolicyGrids();
+        }, {'init': false});
+
+        ractive.observe('parties', function (parties) {
+            var hasSelected = parties.reduce(function (selected, party) {
+                return selected || party.selected;
+            }, false);
+
+            parties.forEach(function (party) {
+                var i, method = !hasSelected || party.selected ? 'remove' : 'add';
+                for (i = 0; i < party.elements.length; i++) {
+                    party.elements[i].classList[method]('is-hidden');
+                }
+            });
+            closePolicyGrids();
+        });
+
         (function () {
-            var sections = ractive.findAll('.question, .you-said', {'live': true});
+            var sections = document.getElementsByClassName('js-section');
 
             document.addEventListener('scroll', debounce(function () {
                 var i, offset = window.pageYOffset;

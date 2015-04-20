@@ -1,18 +1,18 @@
-<div class="policy-grid {{#policyNo != -1}}has-selected{{/policyNo}}">
+<div class="policy-grid {{#if selectedPolicy}}has-selected{{/if}}">
     {{#policies}}
-        <div class="policy-grid__item {{#rowNumber == policyNo}}is-selected{{/rowNumber}}">
+        <div class="policy-grid__item {{#if this == selectedPolicy}}is-selected{{/if}} js-party js-party-{{party.toLowerCase()}}">
             <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
             <h4 class="policy-grid__item__title">{{policy}}</h4>
-            {{#rowNumber == policyNo}}
+            {{#if this == selectedPolicy}}
                 <p class="policy-grid__item__share">
                     <button on-click="share:twitter" class="share share--twitter"></button>
                     <button on-click="share:facebook" class="share share--facebook"></button>
                 </p>
                 <p>{{policyverbatim}}</p>
-            {{/rowNumber}}
-            <a class="policy-grid__item__link" href="#" title="Read more about this policy" on-click="open"></a>
+            {{/if}}
+            <a class="policy-grid__item__link" href="#" title="Read more about this policy" on-click="toggle"></a>
             <p class="policy-grid__item__toggle-selected"></p>
-            {{#rowNumber == policyNo}}
+            {{#if this == selectedPolicy}}
                 <p><a class="policy-grid__item__source button button--small button--tertiary" href="{{source}}" target="_blank">Source</a></p>
                 {{#if commentary}}
                     <p class="policy-grid__item__commentary">
@@ -20,7 +20,7 @@
                         <b>{{commentaryname}}</b>: {{commentary}}
                     </p>
                 {{/if}}
-            {{/rowNumber}}
+            {{/if}}
         </div>
     {{/policies}}
 </div>
@@ -29,17 +29,17 @@
     component.exports = {
         'isolated': true,
         'data': {
-            'policyNo': -1
+            'selectedPolicy': undefined
         },
         'onrender': function () {
-            this.on('open', function (evt) {
-                var policy = evt.context.rowNumber;
-                this.set('policyNo', policy === this.get('policyNo') ? -1 : policy);
-                evt.original.preventDefault();
+            this.on('toggle', function (evt) {
+                var policy = evt.context;
+                this.set('selectedPolicy', policy === this.get('selectedPolicy') ? undefined : policy);
+                return false;
             });
 
             this.on('close', function () {
-                this.set('policyNo', -1);
+                this.set('selectedPolicy', undefined);
             });
         }
     };

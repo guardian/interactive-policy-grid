@@ -56,6 +56,10 @@ figure img {
     display: inline; // Override NGW
 }
 
+img {
+    border: 0;
+}
+
 .is-immersive .l-footer {
     display: block;
 }

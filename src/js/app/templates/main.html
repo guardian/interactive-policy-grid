@@ -2,7 +2,10 @@
 <div class="container">
     <div class="header">
         <h1>Create your own personalised policy guide</h1>
-        <p class="header__text">How will the party's manifesto promises affect you in your daily life? Our guide selects the policy areas which target particular groups and lets you build up a picture of how (or whether ... ) the parties say they will help you 
+        <p class="header__text">
+            How will the party's manifesto promises affect you in your daily life? Our guide selects the policy
+            areas which target particular groups and lets you build up a picture of how (or whether&#8230;)
+            the parties say they will help you
         </p>
         <p class="header__text">
             <a href="http://www.theguardian.com/profile/seanclarke">Seán Clarke</a>,
@@ -25,21 +28,21 @@
                 <h2 class="sticky-bar__left">
                     {{#questions:questionNo}}
                         <a class="question-no {{#if this == currentSection}}is-current{{/if}}"
-                           href="#" on-click="question:{{questionNo}}" title="Go to question {{questionNo + 1}}">
+                           href="#" on-click="goto:question-{{questionNo}}" title="Go to question {{questionNo + 1}}">
                             {{questionNo + 1}}
                         </a>
                     {{/questions}}
                 </h2>
                 <span class="sticky-bar__right">
                     <a class="link-to-policies policy-summary {{#if userPolicyCount}}has-policies{{/if}}"
-                       href="#" on-click="policies" title="View your policies">
+                       href="#" on-click="goto:policies" title="View your policies">
                         {{userPolicyCount}} policies
                     </a>
                 </span>
             </sticky-bar>
 
             {{#questions:questionNo}}
-                <h2 class="question headline" id="question-{{questionNo}}" decorator="section:{{this}}">{{question}}</h2>
+                <h2 class="question headline js-section" id="question-{{questionNo}}" decorator="section:{{this}}">{{question}}</h2>
                 <div class="answers {{#if questionsAnswered.indexOf(this) !== -1}}has-answer{{/if}}">
                     {{#answers}}
                         <a class="answers__item {{^multi}}answers__item--full{{/multi}} {{#selected}}is-selected{{/selected}}"
@@ -57,7 +60,7 @@
             <h2 class="title">Your policy guide</h2>
             <h3 class="subtitle">{{userPolicyCount}} policies based on your answers</h3>
 
-            <p>
+            <!--<p>
                 Something about filtering parties and showing policies relevant to your constituency
             </p>
 
@@ -67,7 +70,7 @@
             </form>
             <div class="constituency {{#if userConstituency}}has-constituency{{/if}}">
                 Your constituency is <b>{{userConstituency.name}}</b>
-            </div>
+            </div>-->
         </div>
 
         <div style="position: relative; border-bottom: 1px solid #333">
@@ -96,7 +99,7 @@
             {{#questionsAnswered}}
                 {{#answers}}
                     {{#if selected}}
-                        <h2 class="you-said" decorator="section:{{this}}">
+                        <h2 class="you-said js-section" decorator="section:{{this}}">
                             <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
                             <span class="you-said__text">{{text}}</span>
                         </h2>
@@ -126,19 +129,26 @@
         <div class="sticky-bar-container">
             <sticky-bar>
                 <span class="sticky-bar__left">
-                    <h2 class="policy-title">{{allPolicyCount}} policies</h2><span class="policy-share">
-                        <button on-click="share:twitter" class="share share--twitter"></button>
-                        <button on-click="share:facebook" class="share share--facebook"></button>
-                        <button on-click="share:email" class="share share--email"></button>
-                        <button on-click="share:google" class="share share--google"></button>
-                    </span>
+                    <h2 class="policy-title">{{allPolicyCount}} policies</h2>
                 </span>
                 <span class="sticky-bar__right">
-                    Party filters here
+                    Show only
+                    {{#parties}}
+                        <label class="party-filter button button--small {{#if !selected}}button--tertiary{{/if}}">
+                            <input type="checkbox" checked="{{selected}}" style="display: none" />
+                            {{name}}
+                        </label>
+                    {{/parties}}
+                    <select value="{{userArea}}">
+                        <option>Jump to</option>
+                        {{#areas}}
+                            <option value="{{id}}">{{area}}</option>
+                        {{/areas}}
+                    </select>
                 </span>
             </sticky-bar>
             {{#areas}}
-                <h3 class="headline">{{area}}</h3>
+                <h3 class="headline" id="area-{{id}}">{{area}}</h3>
                 <policy-grid policies="{{policies}}" />
             {{/areas}}
         </div>
