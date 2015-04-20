@@ -24,7 +24,7 @@
             <sticky-bar class="js-question-bar">
                 <h2 class="sticky-bar__left">
                     {{#questions:questionNo}}
-                        <a class="question-no {{#if currentSection == questionNo}}is-current{{/if}}"
+                        <a class="question-no {{#if this == currentSection}}is-current{{/if}}"
                            href="#" on-click="question:{{questionNo}}" title="Go to question {{questionNo + 1}}">
                             {{questionNo + 1}}
                         </a>
@@ -39,20 +39,11 @@
             </sticky-bar>
 
             {{#questions:questionNo}}
-                <h2 class="question headline">{{question}}</h2>
-                {{#if questionNo == 4}}
-                    <form class="postcode" on-submit="postcode:{{postcode}}">
-                        <input class="postcode__text" type="text" value="{{postcode}}" on-input="changePostcode" />
-                        <button class="postcode__button button button--primary button--xlarge">Lookup</button>
-                    </form>
-                {{/if}}
-                <div class="constituency {{#if constituency}}has-constituency{{/if}}">
-                    Your constituency is <b>{{constituency.name}}</b>
-                </div>
+                <h2 class="question headline" id="question-{{questionNo}}" decorator="section:{{this}}">{{question}}</h2>
                 <div class="answers {{#if questionsAnswered.indexOf(this) !== -1}}has-answer{{/if}}">
                     {{#answers}}
                         <a class="answers__item {{^multi}}answers__item--full{{/multi}} {{#selected}}is-selected{{/selected}}"
-                            href="#" on-click="answer">
+                           href="#" on-click="answer">
                             <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{id}}.svg" /></i>
                             {{text}}
                             <div class="answers__item__policies">{{policies.count}}</div>
@@ -62,18 +53,34 @@
             {{/questions}}
         </div>
 
-        <div class="cta js-policies">
+        <div class="cta" id="policies">
             <h2 class="title">Your policy guide</h2>
             <h3 class="subtitle">{{userPolicyCount}} policies based on your answers</h3>
+
+            <p>
+                Something about filtering parties and showing policies relevant to your constituency
+            </p>
+
+            <form class="postcode" on-submit="postcode:{{userPostcode}}">
+                <input class="postcode__text" type="text" value="{{userPostcode}}" />
+                <button class="postcode__button button button--primary button--xlarge">Lookup</button>
+            </form>
+            <div class="constituency {{#if userConstituency}}has-constituency{{/if}}">
+                Your constituency is <b>{{userConstituency.name}}</b>
+            </div>
         </div>
 
-        <div style="position: relative">
-            <sticky-bar class="bar">
+        <div style="position: relative; border-bottom: 1px solid #333">
+            <sticky-bar class="you-said-bar">
                 <span class="sticky-bar__left">
                     <h2 class="policy-title">
-                        You said
-                        <img class="you-said__img" src="@@assets@@/imgs/icons/status-lowpaid.svg" />
-                        <span class="you-said__text">Working (low income)/unemployed</span>
+                        {{#currentSection}}
+                            {{#if id}}
+                                You said
+                                <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
+                                <span class="you-said__text">{{text}}</span>
+                            {{/if}}
+                        {{/currentSection}}
                     </h2><span class="policy-share">
                         <button on-click="share:twitter" class="share share--twitter"></button>
                         <button on-click="share:facebook" class="share share--facebook"></button>
@@ -89,7 +96,7 @@
             {{#questionsAnswered}}
                 {{#answers}}
                     {{#if selected}}
-                        <h2 class="you-said">
+                        <h2 class="you-said" decorator="section:{{this}}">
                             <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
                             <span class="you-said__text">{{text}}</span>
                         </h2>
@@ -100,6 +107,12 @@
                     {{/if}}
                 {{/answers}}
             {{/questionsAnswered}}
+
+            {{#userConstituency}}
+                <h2>You live in {{name}}</h2>
+                <p>Your constituency is particularly bad for {{max}}
+                <policy-grid policies="{{policies}}" />
+            {{/userConstituency}}
         </div>
 
         <a class="cta" href="#" on-click="mode:explore">

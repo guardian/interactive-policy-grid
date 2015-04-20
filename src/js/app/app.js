@@ -18,6 +18,38 @@ define([
 
     var POSTCODE_URL = 'http://interactive.guim.co.uk/2015/general-election/postcodes/';
 
+    // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+    // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+
+    // requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+
+    // MIT license
+
+    (function() {
+        var lastTime = 0;
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+                                       || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame)
+            window.requestAnimationFrame = function(callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+                  timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+
+        if (!window.cancelAnimationFrame)
+            window.cancelAnimationFrame = function(id) {
+                clearTimeout(id);
+            };
+    }());
+
     function getOffset(el) {
         return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
     }
@@ -30,19 +62,15 @@ define([
             var distance = end - start;
             var elapsed = 0;
 
-            if (scrollTimer) {
-                clearInterval(scrollTimer);
-            }
-
-            scrollTimer = setInterval(function () {
+            scrollTimer = window.requestAnimationFrame(function scrollHandler() {
                 window.scrollTo(0, Math.floor(start + distance * (elapsed / total)));
                 if (elapsed === total) {
-                    clearInterval(scrollTimer);
                     scrollTimer = undefined;
                 } else {
                     elapsed += interval;
+                    scrollTimer = window.requestAnimationFrame(scrollHandler);
                 }
-            }, interval);
+            });
         };
     })();
 
@@ -94,7 +122,7 @@ define([
     }
 
     function start(el, areas, questions, constituencies) {
-        var questionBarEle, questionEles, policiesEle;
+        var questionBarEle;
 
         var ractive = new Ractive({
             'el': el,
@@ -132,23 +160,19 @@ define([
                         return len + areas.policies.length;
                     }, 0);
                 }
+            },
+            'decorators': {
+                'section': function (node, context) {
+                    node.sectionContext = context;
+                    return {'teardown': function () {}};
+                }
             }
         });
 
         questionBarEle = ractive.find('.js-question-bar');
-        questionEles = ractive.findAll('.question');
-        policiesEle = ractive.find('.js-policies');
 
         function getQuestionOffset(questionNo) {
-            return getOffset(questionEles[questionNo]) - questionBarEle.clientHeight;
-        }
-
-        function gotoQuestion(questionNo) {
-            scrollTo(getQuestionOffset(questionNo));
-        }
-
-        function gotoPolicies() {
-            scrollTo(getOffset(policiesEle));
+            return getOffset(document.getElementById('question-' + questionNo)) - questionBarEle.clientHeight;
         }
 
         function closePolicyGrids() {
@@ -159,44 +183,30 @@ define([
 
         ractive.on('question', function (evt, questionNo) {
             closePolicyGrids();
-            gotoQuestion(questionNo);
-            evt.original.preventDefault();
+            scrollTo(getQuestionOffset(questionNo));
+            return false;
         });
 
-        ractive.on('policies', function (evt) {
-            gotoPolicies();
-            evt.original.preventDefault();
+        ractive.on('policies', function () {
+            scrollTo(getOffset(document.getElementById('policies')));
+            return false;
         });
 
         ractive.on('mode', function (evt, mode) {
-            if (mode !== this.get('mode')) {
-                this.animate('modeOpacity', 0).then(function () {
-                    ractive.animate('modeOpacity', 1);
-                    ractive.set('mode', mode);
-                    closePolicyGrids();
-                    window.scrollTo(0, 0); // without animation
-                });
-            }
-            evt.original.preventDefault();
+            this.animate('modeOpacity', 0).then(function () {
+                ractive.animate('modeOpacity', 1);
+                ractive.set('mode', mode);
+                closePolicyGrids();
+                window.scrollTo(0, 0); // without animation
+            });
+            return false;
         });
 
         ractive.on('postcode', function (evt, postcode) {
             getConstituency(postcode, function (ons_id) {
-                var answer = {'E': 0, 'S': 1, 'W': 2, 'N': 3};
-                var set = {
-                    'questions.4.constituency': constituencies[ons_id],
-                    'questions.4.answers.*.selected': false,
-                };
-                set['questions.4.answers.' + answer[ons_id[0]] + '.selected'] = true;
-                console.log(ons_id, constituencies[ons_id]);
-                ractive.set(set);
+                ractive.set('userConstituency', constituencies[ons_id]);
             }, function () {});
-            evt.original.preventDefault();
-        });
-
-        ractive.on('changePostcode', function () {
-            ractive.set('questions.4.constituency', undefined);
-            ractive.set('questions.4.answers.*.selected', false);
+            return false;
         });
 
         ractive.on('answer', function (evt) {
@@ -204,16 +214,11 @@ define([
             var multi = this.get('questions.' + questionNo + '.multi');
             if (!multi) {
                 this.set('questions.' + questionNo + '.answers.*.selected', false);
-
-                if (questionNo === questionEles.length - 1) {
-                    gotoPolicies();
-                } else {
-                    gotoQuestion(questionNo + 1);
-                }
+                this.fire('question', undefined, questionNo + 1);
             }
 
             this.toggle(evt.keypath + '.selected');
-            evt.original.preventDefault();
+            return false;
         });
 
         ractive.on('share', function (evt, network) { share(network); });
@@ -230,20 +235,22 @@ define([
             }, 300);
         }, {'init': false});
 
-        document.addEventListener('scroll', debounce(function () {
-            var offset = window.pageYOffset;
-            var currentSection = -1;
+        (function () {
+            var sections = ractive.findAll('.question, .you-said', {'live': true});
 
-            if (offset < getOffset(policiesEle)) {
-                questionEles.forEach(function (question, questionNo) {
-                    if (offset >= getQuestionOffset(questionNo)) {
-                        currentSection = questionNo;
+            document.addEventListener('scroll', debounce(function () {
+                var i, offset = window.pageYOffset;
+
+                for (i = sections.length - 1; i >= 0; i--) {
+                    if (offset >= getOffset(sections[i])) {
+                        ractive.set('currentSection', sections[i].sectionContext);
+                        return;
                     }
-                });
-            }
+                }
 
-            ractive.set('currentSection', currentSection);
-        }));
+                ractive.set('currentSection', undefined);
+            }));
+        })();
 
         initElectionNav("pollprojection");
     }

@@ -17,8 +17,14 @@ define([
 
     function init(el) {
         pegasus(SHEET_URL).then(function (spreadsheet) {
+            var commentators = {
+                'RM': 'Rowena Mason',
+                'FP': 'Frances Perraudin',
+                'NW': 'Nicholas Watt'
+            };
             var policies = spreadsheet.sheets.policies.map(function (policy) {
                 policy.answers = parseList(policy.answers);
+                policy.commentaryname = commentators[policy.commentaryinitials];
                 return policy;
             });
 
@@ -29,10 +35,18 @@ define([
                 };
             });
 
+            var constituencyIssues = {};
+            ['youthindex', 'ageindex', 'badhealthindex', 'noqualsindex', 'unemploymentindex'].forEach(function (issue) {
+                constituencyIssues[issue] = policies.filter(function (policy) {
+                    return policy.stats === issue;
+                });
+            });
+
             var constituencies = {};
             spreadsheet.sheets.constituencies.forEach(function (constituency) {
+                constituency.parties = parties[constituency.onsid];
+                constituency.policies = constituencyIssues[constituency.max];
                 constituencies[constituency.onsid] = constituency;
-                constituencies[constituency.onsid].parties = parties[constituency.onsid];
             });
 
             function mkAnswer(id, text, cmpFn) {
@@ -85,7 +99,6 @@ define([
             // Add location question
             questions.push({
                 'question': 'Where do you live?',
-                'constituency': undefined,
                 'answers': ['England', 'Scotland', 'Wales', 'Northern Ireland'].map(function (name) {
                     var id = 'location-' + name.toLowerCase().replace(/ /g, '-');
                     return mkAnswer(id, name, function (policy) {
