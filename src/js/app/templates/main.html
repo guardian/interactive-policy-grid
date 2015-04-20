@@ -43,19 +43,10 @@
 
             {{#questions:questionNo}}
                 <h2 class="question headline" id="question-{{questionNo}}" decorator="section:{{this}}">{{question}}</h2>
-                {{#if questionNo == 4}}
-                    <form class="postcode" on-submit="postcode:{{postcode}}">
-                        <input class="postcode__text" type="text" value="{{postcode}}" on-input="changePostcode" />
-                        <button class="postcode__button button button--primary button--xlarge">Lookup</button>
-                    </form>
-                {{/if}}
-                <div class="constituency {{#if constituency}}has-constituency{{/if}}">
-                    Your constituency is <b>{{constituency.name}}</b>
-                </div>
                 <div class="answers {{#if questionsAnswered.indexOf(this) !== -1}}has-answer{{/if}}">
                     {{#answers}}
                         <a class="answers__item {{^multi}}answers__item--full{{/multi}} {{#selected}}is-selected{{/selected}}"
-                            href="#" on-click="answer">
+                           href="#" on-click="answer">
                             <i class="answers__item__icon"><img src="@@assets@@/imgs/icons/{{id}}.svg" /></i>
                             {{text}}
                             <div class="answers__item__policies">{{policies.count}}</div>
@@ -68,6 +59,18 @@
         <div class="cta" id="policies">
             <h2 class="title">Your policy guide</h2>
             <h3 class="subtitle">{{userPolicyCount}} policies based on your answers</h3>
+
+            <p>
+                Something about filtering parties and showing policies relevant to your constituency
+            </p>
+
+            <form class="postcode" on-submit="postcode:{{userPostcode}}">
+                <input class="postcode__text" type="text" value="{{userPostcode}}" />
+                <button class="postcode__button button button--primary button--xlarge">Lookup</button>
+            </form>
+            <div class="constituency {{#if userConstituency}}has-constituency{{/if}}">
+                Your constituency is <b>{{userConstituency.name}}</b>
+            </div>
         </div>
 
         <div style="position: relative; border-bottom: 1px solid #333">
@@ -108,11 +111,11 @@
                 {{/answers}}
             {{/questionsAnswered}}
 
-            {{#questions.4.constituency}}
+            {{#userConstituency}}
                 <h2>You live in {{name}}</h2>
                 <p>Your constituency is particularly bad for {{max}}
                 <policy-grid policies="{{policies}}" />
-            {{/questions.4.constituency}}
+            {{/userConstituency}}
         </div>
 
         <a class="cta" href="#" on-click="mode:explore">

@@ -204,20 +204,9 @@ define([
 
         ractive.on('postcode', function (evt, postcode) {
             getConstituency(postcode, function (ons_id) {
-                var answer = {'E': 0, 'S': 1, 'W': 2, 'N': 3};
-                var set = {
-                    'questions.4.constituency': constituencies[ons_id],
-                    'questions.4.answers.*.selected': false,
-                };
-                set['questions.4.answers.' + answer[ons_id[0]] + '.selected'] = true;
-                ractive.set(set);
+                ractive.set('userConstituency', constituencies[ons_id]);
             }, function () {});
-            evt.original.preventDefault();
-        });
-
-        ractive.on('changePostcode', function () {
-            ractive.set('questions.4.constituency', undefined);
-            ractive.set('questions.4.answers.*.selected', false);
+            return false;
         });
 
         ractive.on('answer', function (evt) {
