@@ -35,10 +35,18 @@ define([
                 };
             });
 
+            var constituencyIssues = {};
+            ['youthindex', 'ageindex', 'badhealthindex', 'noqualsindex', 'unemploymentindex'].forEach(function (issue) {
+                constituencyIssues[issue] = policies.filter(function (policy) {
+                    return policy.stats === issue;
+                });
+            });
+
             var constituencies = {};
             spreadsheet.sheets.constituencies.forEach(function (constituency) {
+                constituency.parties = parties[constituency.onsid];
+                constituency.policies = constituencyIssues[constituency.max];
                 constituencies[constituency.onsid] = constituency;
-                constituencies[constituency.onsid].parties = parties[constituency.onsid];
             });
 
             function mkAnswer(id, text, cmpFn) {

@@ -42,7 +42,7 @@
             </sticky-bar>
 
             {{#questions:questionNo}}
-                <h2 class="question headline" decorator="section:{{this}}">{{question}}</h2>
+                <h2 class="question headline" id="question-{{questionNo}}" decorator="section:{{this}}">{{question}}</h2>
                 {{#if questionNo == 4}}
                     <form class="postcode" on-submit="postcode:{{postcode}}">
                         <input class="postcode__text" type="text" value="{{postcode}}" on-input="changePostcode" />
@@ -65,7 +65,7 @@
             {{/questions}}
         </div>
 
-        <div class="cta js-policies">
+        <div class="cta" id="policies">
             <h2 class="title">Your policy guide</h2>
             <h3 class="subtitle">{{userPolicyCount}} policies based on your answers</h3>
         </div>
@@ -107,6 +107,12 @@
                     {{/if}}
                 {{/answers}}
             {{/questionsAnswered}}
+
+            {{#questions.4.constituency}}
+                <h2>You live in {{name}}</h2>
+                <p>Your constituency is particularly bad for {{max}}
+                <policy-grid policies="{{policies}}" />
+            {{/questions.4.constituency}}
         </div>
 
         <a class="cta" href="#" on-click="mode:explore">
