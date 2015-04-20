@@ -26,18 +26,18 @@
         <div class="sticky-bar-container">
             <sticky-bar class="js-question-bar">
                 <h2 class="sticky-bar__left">
+                    <a class="link-to-policies policy-summary {{#if userPolicyCount}}has-policies{{/if}}"
+                       href="#" on-click="goto:policies" title="View your policies">
+                        {{userPolicyCount}} policies
+                    </a>
+                </h2>
+                <span class="sticky-bar__right">
                     {{#questions:questionNo}}
                         <a class="question-no {{#if this == currentSection}}is-current{{/if}}"
                            href="#" on-click="goto:question-{{questionNo}}" title="Go to question {{questionNo + 1}}">
                             {{questionNo + 1}}
                         </a>
                     {{/questions}}
-                </h2>
-                <span class="sticky-bar__right">
-                    <a class="link-to-policies policy-summary {{#if userPolicyCount}}has-policies{{/if}}"
-                       href="#" on-click="goto:policies" title="View your policies">
-                        {{userPolicyCount}} policies
-                    </a>
                 </span>
             </sticky-bar>
 
@@ -104,7 +104,7 @@
                             <span class="you-said__text">{{text}}</span>
                         </h2>
                         {{#policies.packages}}
-                            <h4>{{name}}</h4>
+                            <h4 class="package">{{name}}</h4>
                             <policy-grid policies="{{policies}}" />
                         {{/policies.packages}}
                     {{/if}}
@@ -119,8 +119,10 @@
         </div>
 
         <a class="cta" href="#" on-click="mode:explore">
-            <h2 class="title">Not what you wanted?</h2>
-            <h3 class="subtitle">Have a look at all the policies</h3>
+            <h2 class="title">
+                Not what you wanted?<br />
+                Have a look at all the policies
+            </h2>
             <span class="cta__link">Explore the policies &raquo;</span>
         </a>
     </div>
@@ -148,15 +150,17 @@
                 </span>
             </sticky-bar>
             {{#areas}}
-                <h3 class="headline" id="area-{{id}}">{{area}}</h3>
+                <h4 class="package" id="area-{{id}}">{{area}}</h4>
                 <policy-grid policies="{{policies}}" />
             {{/areas}}
         </div>
 
         <a class="cta" href="#" on-click="mode:basic">
             <div class="cta__advert"><advert /></div>
-            <h2 class="title">Still can't decide?</h2>
-            <h3 class="subtitle">Let us help build your policy profile</h3>
+            <h2 class="title">
+                Still can't decide?<br />
+                Let us help build your policy profile
+            </h2>
             <span class="cta__link">Answer the questions &raquo;</span>
         </a>
     </div>

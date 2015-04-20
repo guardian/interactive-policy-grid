@@ -11,13 +11,12 @@
                 <p>{{policyverbatim}}</p>
             {{/if}}
             <a class="policy-grid__item__link" href="#" title="Read more about this policy" on-click="toggle"></a>
-            <p class="policy-grid__item__toggle-selected"></p>
             {{#if this == selectedPolicy}}
                 <p><a class="policy-grid__item__source button button--small button--tertiary" href="{{source}}" target="_blank">Source</a></p>
                 {{#if commentary}}
                     <p class="policy-grid__item__commentary">
                         <img src="@@assets@@/imgs/people/{{commentaryinitials}}.jpg">
-                        <b>{{commentaryname}}</b>: {{commentary}}
+                        <b>{{commentaryname}}&nbsp;</b> {{commentary}}
                     </p>
                 {{/if}}
             {{/if}}

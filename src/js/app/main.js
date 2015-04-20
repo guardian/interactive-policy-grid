@@ -59,6 +59,16 @@ define([
                     return policyPackage.policies.length > 0;
                 });
 
+                policyPackages.sort(function (a, b) {
+                    if (a.name === 'Other policies') {
+                        return 1;
+                    }
+                    if (b.name === 'Other policies') {
+                        return -1;
+                    }
+                    return a.policies.length > b.policies.length ? -1 : 1;
+                });
+
                 return {
                     'id': id,
                     'text': text,

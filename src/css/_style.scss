@@ -60,10 +60,10 @@ body::after {
 }
 
 h2 {
-    @include f-headline;
+    font-weight: normal;
     font-size: 26px;
     @media (min-width: $breakpoint1) {
-        font-size: 40px;
+        font-size: 36px;
     }
 }
 
@@ -74,19 +74,14 @@ h3 {
     }
 }
 
+.package {
+    font-size: 18px;
+    margin-top: ($gs-baseline * 2.5);
+}
+
 .headline {
     @include v-spacing(padding-top);
     padding-bottom: $gs-baseline;
-}
-
-.title,
-.subtitle {
-    @include f-header;
-}
-
-.subtitle {
-    margin-top: -$gs-baseline;
-    color: $c-neutral3;
 }
 
 .question {
@@ -141,6 +136,7 @@ h3 {
 }
 
 .cta__link {
+    @include f-textSans;
     color: map-get($pasteup-palette, guardian-brand);
     .cta:hover > & {
         text-decoration: underline;

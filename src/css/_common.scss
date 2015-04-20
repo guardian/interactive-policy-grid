@@ -37,8 +37,8 @@ h1, h2, h3, h4, p {
 }
 
 h1 {
-    @include f-header;
     font-size: 32px;
+    font-weight: normal;
     @media (min-width: $breakpoint1) {
         font-size: 48px;
     }
