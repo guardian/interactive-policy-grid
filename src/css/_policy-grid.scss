@@ -39,6 +39,13 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
                 margin-left: -$width;
                 left: $width;
             }
+
+            &.is-selected.is-at-edge {
+                margin-left: auto;
+                left: auto;
+                margin-right: -$width;
+                right: $width;
+            }
         }
     }
 

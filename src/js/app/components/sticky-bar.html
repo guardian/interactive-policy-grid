@@ -22,25 +22,6 @@
 </style>
 
 <script>
-    function debounce(fn) {
-        var timer, run;
-
-        return function runner() {
-            if (timer) {
-                run = true;
-            } else {
-                fn();
-                timer = setTimeout(function () {
-                    timer = undefined;
-                    if (run) {
-                        run = false;
-                        runner();
-                    }
-                }, 100);
-            }
-        };
-    }
-
     function getOffset(el) {
         return el ? el.offsetTop + getOffset(el.offsetParent) : 0;
     }
@@ -50,7 +31,7 @@
             var parentEle = this.el;
             var barEle = this.find('.sticky-bar');
 
-            var eventHandler = debounce(function () {
+            var eventHandler = window.debounce(function () {
                 var scrollY = window.pageYOffset;
                 var parentTop = getOffset(parentEle);
                 var parentBottom = parentTop + parentEle.clientHeight - barEle.clientHeight;

@@ -45,7 +45,7 @@ define([
         };
     })();
 
-    function debounce(fn) {
+    window.debounce = function (fn) {
         var timer, run;
 
         return function runner() {
@@ -62,7 +62,7 @@ define([
                 }, 100);
             }
         };
-    }
+    };
 
     function share(network, extra) {
         var twitterBaseUrl = 'https://twitter.com/intent/tweet?text=';
@@ -228,7 +228,7 @@ define([
         (function () {
             var sections = document.getElementsByClassName('js-section');
 
-            document.addEventListener('scroll', debounce(function () {
+            document.addEventListener('scroll', window.debounce(function () {
                 var i, offset = window.pageYOffset;
 
                 for (i = sections.length - 1; i >= 0; i--) {

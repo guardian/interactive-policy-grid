@@ -1,6 +1,6 @@
 <div class="policy-grid {{#if selectedPolicy}}has-selected{{/if}}">
     {{#policies}}
-        <div class="policy-grid__item {{#if this == selectedPolicy}}is-selected{{/if}} js-party js-party-{{party.toLowerCase()}}">
+        <div class="policy-grid__item {{#if this == selectedPolicy}}is-selected{{/if}} js-party-{{party.toLowerCase()}}">
             <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
             <h4 class="policy-grid__item__title">{{policy}}</h4>
             {{#if this == selectedPolicy}}
@@ -32,9 +32,31 @@
             'selectedPolicy': undefined
         },
         'onrender': function () {
+            var parentEle = this.find('.policy-grid');
+            var selectedNode;
+
+            var checkSize = window.debounce(function () {
+                if (selectedNode.offsetLeft < 0) {
+                    selectedNode.classList.remove('is-at-edge');
+                } else if (selectedNode.offsetLeft + selectedNode.offsetWidth  >= parentEle.clientWidth) {
+                    selectedNode.classList.add('is-at-edge');
+                }
+            });
+
             this.on('toggle', function (evt) {
                 var policy = evt.context;
-                this.set('selectedPolicy', policy === this.get('selectedPolicy') ? undefined : policy);
+                var selectedPolicy = policy === this.get('selectedPolicy') ? undefined : policy;
+
+                this.set('selectedPolicy', selectedPolicy);
+
+                if (selectedPolicy) {
+                    selectedNode = evt.node.parentNode;
+                    window.addEventListener('resize', checkSize);
+                    checkSize();
+                } else {
+                    window.removeEventListener('resize', checkSize);
+                }
+
                 return false;
             });
 
