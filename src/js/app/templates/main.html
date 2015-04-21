@@ -65,8 +65,10 @@
             <h2>We've found <span style="color: #4bc6df">{{userPolicyCount}} policies</span> relevant to you</h2>
             <sticky-bar class="{{#if !currentSection.id}}is-hidden{{/if}}">
                 <h3 class="sticky-bar__left you-said you-said--sticky-bar">
-                    <img class="you-said__img" src="@@assets@@/imgs/icons/{{currentSection.id}}.svg" />
-                    {{currentSection.text}}
+                    {{#if currentSection.id}}
+                        <img class="you-said__img" src="@@assets@@/imgs/icons/{{currentSection.id}}.svg" />
+                        {{currentSection.text}}
+                    {{/if}}
                 </h3>
                 <span class="sticky-bar__left policy-share">
                     <button on-click="share:twitter" class="share share--twitter"></button>
