@@ -94,9 +94,14 @@
             {{/questionsAnswered}}
 
             {{#userConstituency}}
-                <h2>You live in {{name}}</h2>
-                <p>Your constituency is particularly bad for {{max}}
-                <policy-grid policies="{{policies}}" />
+                <h3>You live in {{name}}</h3>
+                {{#issue}}
+                    <p>
+                        In your constituency, {{actual}}% {{msg}}, compared to {{national}}% nationally. These
+                        policies may be of interest to your neighbours.
+                    </p>
+                    <policy-grid policies="{{policies}}" />
+                {{/issue}}
             {{/userConstituency}}
         </div>
 

@@ -39,9 +39,31 @@ define([
                 };
             });
 
-            var constituencyIssues = {};
+            var constituencyIssues = {
+                'youthindex': {
+                    'national': 18.8,
+                    'msg': 'of residents are aged between 0 and 15'
+                },
+                'ageindex': {
+                    'national': 16.4,
+                    'msg': 'of residents are aged 65 or older'
+                },
+                'badhealthindex': {
+                    'national': 5.6,
+                    'msg': 'of residents describe their health as \'bad\' or \'very bad\''
+                },
+                'noqualsindex': {
+                    'national': 23.2,
+                    'msg': ''
+                },
+                'unemploymentindex': {
+                    'national': 2.7,
+                    'msg': 'of working age residents are claiming benefits'
+                }
+            };
+
             ['youthindex', 'ageindex', 'badhealthindex', 'noqualsindex', 'unemploymentindex'].forEach(function (issue) {
-                constituencyIssues[issue] = policies.filter(function (policy) {
+                constituencyIssues[issue].policies = policies.filter(function (policy) {
                     return (policy.stats && policy.stats.trim()) === issue;
                 });
             });
@@ -49,7 +71,7 @@ define([
             var constituencies = {};
             spreadsheet.sheets.constituencies.forEach(function (constituency) {
                 constituency.parties = parties[constituency.onsid];
-                constituency.policies = constituencyIssues[constituency.max];
+                constituency.issue = constituencyIssues[constituency.index];
                 constituencies[constituency.onsid] = constituency;
             });
 
