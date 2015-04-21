@@ -41,6 +41,9 @@
 
             {{#questions:questionNo}}
                 <h2 class="question js-section" id="question-{{questionNo}}" decorator="section:{{this}}">{{question}}</h2>
+                {{#if questionNo == 4}}
+                    <h3>Any of these?</h3>
+                {{/if}}
                 <div class="answers {{#if questionsAnswered.indexOf(this) !== -1}}has-answer{{/if}}">
                     {{#answers}}
                         <a class="answers__item {{^multi}}answers__item--full{{/multi}} {{#selected}}is-selected{{/selected}}"
@@ -53,7 +56,8 @@
                 </div>
             {{/questions}}
             <form class="postcode {{^questions}}is-hidden{{/questions}}" on-submit="postcode:{{userPostcode}}">
-                <input class="postcode__text" type="text" value="{{userPostcode}}" />
+                <h3>Your local area?</h3>
+                <input class="postcode__text" type="text" placeholder="Enter your postcode" value="{{userPostcode}}" required />
                 <button class="postcode__button button button--primary button--xlarge">Lookup</button>
             </form>
             <div class="constituency {{#if userConstituency}}has-constituency{{/if}}">

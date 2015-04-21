@@ -59,7 +59,7 @@ define([
                 },
                 'unemploymentindex': {
                     'national': 2.7,
-                    'msg': 'of working age residents are claiming benefits'
+                    'msg': 'of working age residents are claiming out-of-work benefits'
                 }
             };
 
