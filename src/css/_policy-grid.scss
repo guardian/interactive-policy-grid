@@ -16,11 +16,15 @@ h4.policy-grid-title {
         margin-bottom: 0;
     }
 
-    @media (min-width: $breakpoint1) {
-        margin-right: -$gs-baseline;
+    @media (min-width: $breakpoint0) {
+        margin-right: (-$gs-gutter / 2);
         &.has-selected {
             padding-bottom: ($policy-height-selected - $policy-height);
         }
+    }
+
+    @media (min-width: $breakpoint1) {
+        margin-right: -$gs-baseline;
     }
 }
 
