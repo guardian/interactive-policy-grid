@@ -53,16 +53,16 @@ h4.policy-grid-title {
             width: calc(#{$width} - #{$gs-baseline});
 
             &.is-selected {
-                width: calc(#{$width * 2} - #{$gs-baseline});
-                margin-left: -$width;
-                left: $width;
+                width: calc(#{$width * 3} - #{$gs-baseline});
+                margin-left: -($width * 2);
+                left: ($width * 2);
             }
 
             &.is-selected.is-at-edge {
                 margin-left: auto;
                 left: auto;
-                margin-right: -$width;
-                right: $width;
+                margin-right: -($width * 2);
+                right: ($width * 2);
             }
         }
     }
@@ -138,12 +138,19 @@ h4.policy-grid-title {
 }
 
 .policy-grid__item__commentary {
-    position: relative;
     padding-top: 5px;
     border-top: 1px dotted $c-neutral5;
     color: $c-neutral2;
+}
+
+.policy-grid__item__commentary__link {
+    position: relative;
+    z-index: 1;
+    font-weight: bold;
 
     & > img {
+        position: relative;
+        z-index: 1;
         float: left;
         width: 50px;
         border-radius: 100px;

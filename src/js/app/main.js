@@ -20,13 +20,25 @@ define([
 
         pegasus(SHEET_URL).then(function (spreadsheet) {
             var commentators = {
-                'RM': 'Rowena Mason',
-                'FP': 'Frances Perraudin',
-                'NW': 'Nicholas Watt'
+                'RM': {
+                    'name': 'Rowena Mason',
+                    'url': 'http://www.theguardian.com/profile/rowena-mason',
+                    'img': 'RM.jpg',
+                },
+                'FP': {
+                    'name': 'Frances Perraudin',
+                    'url': 'http://www.theguardian.com/profile/frances-perraudin',
+                    'img': 'FP.jpg'
+                },
+                'NW': {
+                    'name': 'Nicholas Watt',
+                    'url': 'http://www.theguardian.com/profile/nicholaswatt',
+                    'img': 'NW.jpg'
+                }
             };
             var policies = spreadsheet.sheets.policies.map(function (policy) {
                 policy.answers = parseList(policy.answers);
-                policy.commentaryname = commentators[policy.commentaryinitials];
+                policy.commentator = commentators[policy.commentaryinitials];
                 policy.package = policy.package && policy.package.trim() || "";
                 policy.partyId = policy.party.trim().toLowerCase().replace(/ /g, '-');
                 return policy;

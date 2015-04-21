@@ -8,15 +8,17 @@
                     <button on-click="share:twitter" class="share share--twitter"></button>
                     <button on-click="share:facebook" class="share share--facebook"></button>
                 </p>
-                <p>{{policyverbatim}}</p>
+                <p>&ldquo;{{policyverbatim}}&rdquo;</p>
             {{/if}}
             <a class="policy-grid__item__link" href="#" title="Read more about this policy" on-click="toggle"></a>
             {{#if this == selectedPolicy}}
                 <p><a class="policy-grid__item__source button button--small button--tertiary" href="{{source}}" target="_blank">Source</a></p>
-                {{#if commentary}}
+                {{#commentator}}
                     <p class="policy-grid__item__commentary">
-                        <img src="@@assets@@/imgs/people/{{commentaryinitials}}.jpg">
-                        <b>{{commentaryname}}&nbsp;</b> {{commentary}}
+                        <a class="policy-grid__item__commentary__link" href="{{url}}">
+                            <img src="@@assets@@/imgs/people/{{img}}">
+                            {{name}}
+                        </a>&nbsp; {{commentary}}
                     </p>
                 {{/if}}
             {{/if}}
