@@ -203,7 +203,7 @@ define([
             }, false);
 
             parties.forEach(function (party) {
-                var i, method = !hasSelected || party.selected ? 'remove' : 'add';
+                var method = !hasSelected || party.selected ? 'remove' : 'add';
                 exploreEle.classList[method]('hide-' + party.id);
             });
             closePolicyGrids();
