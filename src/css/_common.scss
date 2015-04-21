@@ -32,7 +32,7 @@ body {
     display: none !important;
 }
 
-h1, h2, h3, p {
+h1, h2, h3, h4, p {
     margin: 0 0 $gs-baseline;
 }
 
@@ -60,6 +60,11 @@ h3 {
 
 h3 + h2 {
     margin-top: -$gs-baseline;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: bold;
 }
 
 a {
