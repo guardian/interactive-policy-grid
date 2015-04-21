@@ -3,6 +3,12 @@
     background-color: white;
     counter-reset: question;
     @include h-spacing(padding);
+
+    // For election nav
+    @media (min-width: 660px) {
+        padding-top: 48px !important;
+        position: relative;
+    }
 }
 
 body::after {
