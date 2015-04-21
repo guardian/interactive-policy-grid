@@ -59,35 +59,12 @@ body::after {
     }
 }
 
-h2 {
-    font-weight: normal;
-    font-size: 26px;
-    @media (min-width: $breakpoint1) {
-        font-size: 36px;
-    }
-}
-
-h3 {
-    font-size: 20px;
-    @media (min-width: $breakpoint1) {
-        font-size: 34px;
-    }
-}
-
-.package {
-    font-size: 18px;
-    margin-top: ($gs-baseline * 2.5);
-}
-
-.headline {
-    @include v-spacing(padding-top);
-    padding-bottom: $gs-baseline;
-}
-
 .question {
     position: relative;
     padding-left: 27px;
     border-top: 1px solid $c-neutral6;
+    padding-bottom: $gs-baseline;
+    @include v-spacing(padding-top);
 
     @media (min-width: $breakpoint1) {
         padding-left: 37px;
@@ -101,14 +78,26 @@ h3 {
     }
 }
 
+.section {
+    @include v-spacing(padding-top);
+    @include v-spacing(padding-bottom);
+
+    position: relative;
+    border-bottom: 1px solid $c-neutral1;
+    &:last-child {
+        border-bottom: 0;
+    }
+}
+
+.section--sticky-bar {
+    @include sticky-bar--height(padding-top);
+}
+
 .cta {
     display: block;
     margin: 0 auto;
     max-width: gs-span(11);
     color: inherit;
-
-    @include v-spacing(padding-top);
-    @include v-spacing(padding-bottom);
 
     &:hover {
         text-decoration: none;

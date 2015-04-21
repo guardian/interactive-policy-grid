@@ -32,16 +32,34 @@ body {
     display: none !important;
 }
 
-h1, h2, h3, h4, p {
+h1, h2, h3, p {
     margin: 0 0 $gs-baseline;
+}
+
+h1, h2 {
+    @include f-headline;
 }
 
 h1 {
     font-size: 32px;
-    font-weight: normal;
     @media (min-width: $breakpoint1) {
         font-size: 48px;
     }
+}
+
+h2 {
+    font-size: 26px;
+    @media (min-width: $breakpoint1) {
+        font-size: 36px;
+    }
+}
+
+h3 {
+    font-size: 18px;
+}
+
+h3 + h2 {
+    margin-top: -$gs-baseline;
 }
 
 a {

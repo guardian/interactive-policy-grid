@@ -8,13 +8,6 @@
     }
 }
 
-.sticky-bar-container {
-    @include sticky-bar--height(padding-top);
-    position: relative;
-    border-bottom: 1px solid $c-neutral1;
-    @include v-spacing(padding-bottom);
-}
-
 .sticky-bar.is-sticky {
     @include h-spacing(padding-left);
     @include h-spacing(padding-right);

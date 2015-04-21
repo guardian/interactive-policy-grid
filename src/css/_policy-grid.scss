@@ -3,6 +3,12 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
 
 .policy-grid {
     overflow: hidden;
+    margin-bottom: ($gs-baseline * 2);
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
     @media (min-width: $breakpoint1) {
         margin-right: -$gs-baseline;
         &.has-selected {
@@ -60,10 +66,6 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
 
     .has-selected > & {
         opacity: 0.4;
-    }
-
-    p:last-child {
-        margin-bottom: 0;
     }
 }
 

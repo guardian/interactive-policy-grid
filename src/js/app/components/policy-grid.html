@@ -2,7 +2,7 @@
     {{#policies}}
         <div class="policy-grid__item {{#if this == selectedPolicy}}is-selected{{/if}} js-party-{{party.toLowerCase()}}">
             <p class="policy-grid__item__party policy-grid__item__party--{{party.toLowerCase()}}">{{party}}</p>
-            <h4 class="policy-grid__item__title">{{policy}}</h4>
+            <h3 class="policy-grid__item__title">{{policy}}</h3>
             {{#if this == selectedPolicy}}
                 <p class="policy-grid__item__share">
                     <button on-click="share:twitter" class="share share--twitter"></button>

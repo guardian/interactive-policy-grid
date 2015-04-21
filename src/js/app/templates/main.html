@@ -23,7 +23,7 @@
     </div>
 
     <div class="{{#mode != 'basic'}}is-hidden{{/mode}}" style="opacity: {{modeOpacity}}">
-        <div class="sticky-bar-container">
+        <div class="section section--sticky-bar">
             <sticky-bar class="js-question-bar">
                 <h2 class="sticky-bar__left">
                     <a class="link-to-policies policy-summary {{#if userPolicyCount}}has-policies{{/if}}"
@@ -42,7 +42,7 @@
             </sticky-bar>
 
             {{#questions:questionNo}}
-                <h2 class="question headline js-section" id="question-{{questionNo}}" decorator="section:{{this}}">{{question}}</h2>
+                <h2 class="question js-section" id="question-{{questionNo}}" decorator="section:{{this}}">{{question}}</h2>
                 <div class="answers {{#if questionsAnswered.indexOf(this) !== -1}}has-answer{{/if}}">
                     {{#answers}}
                         <a class="answers__item {{^multi}}answers__item--full{{/multi}} {{#selected}}is-selected{{/selected}}"
@@ -56,9 +56,9 @@
             {{/questions}}
         </div>
 
-        <div class="cta" id="policies">
-            <h2 class="title">Your policy guide</h2>
-            <h3 class="subtitle">{{userPolicyCount}} policies based on your answers</h3>
+        <div class="section" id="policies">
+            <h3>Your Guide</h3>
+            <h2>We've found {{userPolicyCount}} policies relevant to you</h2>
 
             <!--<p>
                 Something about filtering parties and showing policies relevant to your constituency
@@ -71,9 +71,6 @@
             <div class="constituency {{#if userConstituency}}has-constituency{{/if}}">
                 Your constituency is <b>{{userConstituency.name}}</b>
             </div>-->
-        </div>
-
-        <div style="position: relative; border-bottom: 1px solid #333">
             <sticky-bar class="you-said-bar">
                 <span class="sticky-bar__left">
                     <h2 class="policy-title">
@@ -104,7 +101,7 @@
                             <span class="you-said__text">{{text}}</span>
                         </h2>
                         {{#policies.packages}}
-                            <h4 class="package">{{name}}</h4>
+                            <h3>{{name}}</h3>
                             <policy-grid policies="{{policies}}" />
                         {{/policies.packages}}
                     {{/if}}
@@ -118,7 +115,7 @@
             {{/userConstituency}}
         </div>
 
-        <a class="cta" href="#" on-click="mode:explore">
+        <a class="section cta" href="#" on-click="mode:explore">
             <h2 class="title">
                 Not what you wanted?<br />
                 Have a look at all the policies
@@ -128,7 +125,7 @@
     </div>
 
     <div class="{{#mode != 'explore'}}is-hidden{{/mode}}" style="opacity: {{modeOpacity}}">
-        <div class="sticky-bar-container">
+        <div class="section section--sticky-bar">
             <sticky-bar>
                 <span class="sticky-bar__left">
                     <h2 class="policy-title">{{allPolicyCount}} policies</h2>
@@ -150,12 +147,12 @@
                 </span>
             </sticky-bar>
             {{#areas}}
-                <h4 class="package" id="area-{{id}}">{{area}}</h4>
+                <h3 id="area-{{id}}">{{area}}</h3>
                 <policy-grid policies="{{policies}}" />
             {{/areas}}
         </div>
 
-        <a class="cta" href="#" on-click="mode:basic">
+        <a class="section cta" href="#" on-click="mode:basic">
             <div class="cta__advert"><advert /></div>
             <h2 class="title">
                 Still can't decide?<br />
