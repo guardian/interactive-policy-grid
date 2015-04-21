@@ -155,6 +155,13 @@ define([
                 'section': function (node, context) {
                     node.sectionContext = context;
                     return {'teardown': function () {}};
+                },
+                'constituency': function (node, name) {
+                    node.sectionContext = {
+                        'text': name,
+                        'sentence': 'You said you lived in ' + name
+                    };
+                    return {'teardown': function () {}};
                 }
             }
         });
