@@ -165,16 +165,6 @@ define([
             return false;
         });
 
-        ractive.on('mode', function (evt, mode) {
-            this.animate('modeOpacity', 0).then(function () {
-                ractive.animate('modeOpacity', 1);
-                ractive.set('mode', mode);
-                window.scrollTo(0, 0); // without animation
-                closePolicyGrids();
-            });
-            return false;
-        });
-
         ractive.on('answer', function (evt) {
             var questionNo = evt.index.questionNo;
             var multi = this.get('questions.' + questionNo + '.multi');
@@ -236,6 +226,16 @@ define([
                 ractive.set('currentSection', undefined);
             }));
         })();
+
+        window.addEventListener('hashchange', function () {
+            var mode = window.location.hash === '#explore' ? 'explore' : 'basic';
+            ractive.animate('modeOpacity', 0).then(function () {
+                ractive.animate('modeOpacity', 1);
+                ractive.set('mode', mode);
+                window.scrollTo(0, 0); // without animation
+                closePolicyGrids();
+            });
+        });
 
         var head = document.querySelector('head');
         var script = document.createElement('script');
