@@ -188,7 +188,7 @@ define([
             el.classList.add('do-animation');
             setTimeout(function () {
                 el.classList.remove('do-animation');
-            }, 300);
+            }, 1000);
         }, {'init': false});
 
         ractive.observe('userArea', function (area) {
