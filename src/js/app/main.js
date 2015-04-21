@@ -25,12 +25,12 @@ define([
             var policies = spreadsheet.sheets.policies.map(function (policy) {
                 policy.answers = parseList(policy.answers);
                 policy.commentaryname = commentators[policy.commentaryinitials];
-                policy.package = policy.package && policy.package.trim();
+                policy.package = policy.package && policy.package.trim() || "";
                 return policy;
             });
 
             var packages = spreadsheet.sheets.packages.map(function (pkg) {
-                pkg.id = pkg.id && pkg.id.trim();
+                pkg.id = pkg.id && pkg.id.trim() || "";
                 return {
                     'name': pkg.name,
                     'policies': policies.filter(function (policy) { return policy.package === pkg.id; })
@@ -125,6 +125,7 @@ define([
                 'question': 'What else interests you?',
                 'multi': true,
                 'answers': spreadsheet.sheets.interests.map(function (interest) {
+                    interest.id = interest.id.trim();
                     return mkAnswer(interest.id, interest.name, function (policy) {
                         return policy.answers.indexOf(interest.id) !== -1;
                     });
