@@ -57,6 +57,7 @@ h2 {
 h3 {
     font-size: 18px;
     font-weight: bold;
+    line-height: inherit; // Override NGW
 }
 
 h3 + h2 {
@@ -82,10 +83,6 @@ figure img {
 
 img {
     border: 0;
-}
-
-.is-immersive .l-footer {
-    display: block;
 }
 
 .share {

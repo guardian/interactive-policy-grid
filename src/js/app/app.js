@@ -252,6 +252,9 @@ define([
             return false;
         });
 
+        if (window.guardian) {
+            document.querySelector('.l-footer').style.display = 'block';
+        }
     }
 
     return {
