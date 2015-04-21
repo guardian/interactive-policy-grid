@@ -86,7 +86,7 @@
 
             {{#questionsAnswered}}
                 {{#answers}}
-                    {{#if selected}}
+                    {{#if selected && policies.count}}
                         <h3 class="you-said js-section" decorator="section:{{this}}">
                             <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" /> {{sentence}}
                         </h3>
