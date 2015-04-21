@@ -1,4 +1,3 @@
-/* global initElectionNav */
 define([
     'text!templates/main.html',
     'ractive',
@@ -238,7 +237,13 @@ define([
             }));
         })();
 
-        initElectionNav("pollprojection");
+        var head = document.querySelector('head');
+        var script = document.createElement('script');
+
+        script.setAttribute('src','http://interactive.guim.co.uk/2015/04/election-nav/electionNav.js');
+        script.setAttribute('type','text/javascript');
+
+        head.appendChild(script);
     }
 
     function data(areas, questions, constituencies) {
