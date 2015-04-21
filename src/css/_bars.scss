@@ -34,25 +34,13 @@
     display: table-cell;
     vertical-align: top;
     white-space: nowrap;
+    @include h-spacing(padding-right);
 }
 
 .sticky-bar__right {
     display: table-cell;
     width: 100%;
     text-align: right;
-}
-
-.policy-title,
-.policy-share {
-    display: inline-block;
-    vertical-align: top;
-}
-
-.policy-title {
-    border-right: 1px solid $c-neutral6;
-    margin: 0;
-    @include h-spacing(margin-right);
-    @include h-spacing(padding-right);
 }
 
 .policy-share > .share--email,
@@ -113,23 +101,13 @@
 }
 
 .link-to-top {
-    display: none;
-    .is-sticky & {
-        display: inline-block;
-    }
-
     font-size: 0;
-    @media (min-width: $breakpoint1) {
+    @media (min-width: $breakpoint2) {
         font-size: inherit;
-
     }
 }
 
 .link-to-policies {
-    .is-bottom & {
-        display: none;
-    }
-
     &::after {
         transform: rotate(180deg);
     }
@@ -138,6 +116,7 @@
         animation: flash 0.3s ease-out;
     }
 
+    font-weight: bold;
     font-size: 18px;
     @media (min-width: $breakpoint1) {
         font-size: 24px;

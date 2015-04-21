@@ -25,11 +25,9 @@
     <div class="{{#mode != 'basic'}}is-hidden{{/mode}}" style="opacity: {{modeOpacity}}">
         <div class="section section--sticky-bar">
             <sticky-bar class="js-question-bar">
-                <h3 class="sticky-bar__left">
-                    <a class="link-to-policies" href="#" on-click="goto:policies" title="View your policies">
-                        {{userPolicyCount}} policies
-                    </a>
-                </h3>
+                <a class="sticky-bar__left link-to-policies" href="#" on-click="goto:policies" title="View your policies">
+                    {{userPolicyCount}} policies
+                </a>
                 <span class="sticky-bar__right">
                     {{#questions:questionNo}}
                         <a class="question-no {{#if this == currentSection}}is-current{{/if}}"
@@ -53,35 +51,28 @@
                     {{/answers}}
                 </div>
             {{/questions}}
-        </div>
-
-        <div class="section" id="policies">
-            <h3>Your Guide</h3>
-            <h2>We've found <span style="color: #4bc6df">{{userPolicyCount}} policies</span> relevant to you</h2>
-
-            <!--<p>
-                Something about filtering parties and showing policies relevant to your constituency
-            </p>
-
             <form class="postcode" on-submit="postcode:{{userPostcode}}">
                 <input class="postcode__text" type="text" value="{{userPostcode}}" />
                 <button class="postcode__button button button--primary button--xlarge">Lookup</button>
             </form>
             <div class="constituency {{#if userConstituency}}has-constituency{{/if}}">
                 Your constituency is <b>{{userConstituency.name}}</b>
-            </div>-->
+            </div>
+        </div>
+
+        <div class="section" id="policies">
+            <h3>Your Guide</h3>
+            <h2>We've found <span style="color: #4bc6df">{{userPolicyCount}} policies</span> relevant to you</h2>
             <sticky-bar class="{{#if !currentSection.id}}is-hidden{{/if}}">
-                <span class="sticky-bar__left">
-                    <h2 class="policy-title">
-                        You said
-                        <img class="you-said__img" src="@@assets@@/imgs/icons/{{currentSection.id}}.svg" />
-                        <span class="you-said__text">{{currentSection.text}}</span>
-                    </h2><span class="policy-share">
-                        <button on-click="share:twitter" class="share share--twitter"></button>
-                        <button on-click="share:facebook" class="share share--facebook"></button>
-                        <button on-click="share:email" class="share share--email"></button>
-                        <button on-click="share:google" class="share share--google"></button>
-                    </span>
+                <h3 class="sticky-bar__left you-said you-said--sticky-bar">
+                    <img class="you-said__img" src="@@assets@@/imgs/icons/{{currentSection.id}}.svg" />
+                    {{currentSection.text}}
+                </h3>
+                <span class="sticky-bar__left policy-share">
+                    <button on-click="share:twitter" class="share share--twitter"></button>
+                    <button on-click="share:facebook" class="share share--facebook"></button>
+                    <button on-click="share:email" class="share share--email"></button>
+                    <button on-click="share:google" class="share share--google"></button>
                 </span>
                 <span class="sticky-bar__right">
                     <a class="link-to-top" href="#" on-click="goto:question-0" title="Go back to questions">Back to questions</a>
@@ -91,10 +82,9 @@
             {{#questionsAnswered}}
                 {{#answers}}
                     {{#if selected}}
-                        <h2 class="you-said js-section" decorator="section:{{this}}">
-                            <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
-                            <span class="you-said__text">{{text}}</span>
-                        </h2>
+                        <h3 class="you-said js-section" decorator="section:{{this}}">
+                            <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" /> {{text}}
+                        </h3>
                         {{#policies.packages}}
                             <h4>{{name}}</h4>
                             <policy-grid policies="{{policies}}" />
@@ -122,9 +112,7 @@
     <div class="{{#mode != 'explore'}}is-hidden{{/mode}}" style="opacity: {{modeOpacity}}">
         <div class="section section--sticky-bar">
             <sticky-bar>
-                <span class="sticky-bar__left">
-                    <h2 class="policy-title">{{allPolicyCount}} policies</h2>
-                </span>
+                <h2 class="sticky-bar__left">{{allPolicyCount}} policies</h2>
                 <span class="sticky-bar__right">
                     Show only
                     {{#parties}}

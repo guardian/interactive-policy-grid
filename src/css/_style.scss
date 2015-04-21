@@ -133,24 +133,21 @@ body::after {
 }
 
 .you-said {
-    height: 108px;
-    &::before {
-        content: "You said ";
-        display: block;
-        @media (min-width: $breakpoint0) {
-            display: inline;
-        }
+    @include f-textSans;
+    border-top: 1px solid $c-neutral5;
+}
+
+.you-said--sticky-bar {
+    border-top: 0;
+    font-size: 0;
+    @media (min-width: $breakpoint0) {
+        font-size: inherit;
     }
 }
 
 .you-said__img {
-    width: 90px;
+    width: 60px;
     vertical-align: middle;
-}
-
-.you-said__text {
-    font-size: 16px;
-    font-weight: normal;
 }
 
 .postcode {
