@@ -111,7 +111,7 @@
     }
 
     &.do-animation {
-        animation: flash 1s ease-out;
+        animation: flash 1s linear;
     }
 
     font-weight: bold;
