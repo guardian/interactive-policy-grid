@@ -20,7 +20,7 @@ $c-neutral7: map-get($pasteup-palette, neutral-7);
 $c-neutral8: map-get($pasteup-palette, neutral-8);
 $c-newsmain2: map-get($pasteup-palette, news-main-2);
 
-$breakpoint0: gs-span(7);
+$breakpoint0: gs-span(6);
 $breakpoint1: gs-span(9) + $gs-gutter * 2;
 $breakpoint2: gs-span(12) + $gs-gutter * 2;
 $breakpoint3: gs-span(14) + $gs-gutter * 2;

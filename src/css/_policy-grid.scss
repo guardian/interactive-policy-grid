@@ -19,7 +19,7 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
 
 .policy-grid__item {
     position: relative;
-    height: $policy-height;
+    height: 100px;
     border: 2px solid $c-neutral7;
     box-sizing: border-box;
     float: left;
@@ -31,6 +31,7 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
     width: 100%;
 
     @media (min-width: $breakpoint0) {
+        height: $policy-height;
         margin: 0 $gs-baseline $gs-baseline 0;
     }
 
