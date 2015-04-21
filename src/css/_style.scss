@@ -196,8 +196,9 @@ body::after {
     max-height: 0;
     padding-bottom: 0;
     transition: all 0.1s linear;
+    max-width: gs-span(8);
     &.has-constituency {
-        max-height: 35px;
+        max-height: 60px;
         padding-bottom: $gs-baseline;
     }
 }

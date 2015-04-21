@@ -57,7 +57,11 @@
                 <button class="postcode__button button button--primary button--xlarge">Lookup</button>
             </form>
             <div class="constituency {{#if userConstituency}}has-constituency{{/if}}">
-                Your constituency is <b>{{userConstituency.name}}</b>
+                {{#userConstituency}}
+                    Your constituency is <b>{{name}}</b>. In {{name}}, {{actual}}% {{issue.msg}}, compared
+                    to {{issue.national}}% nationally. We've added some policies that might also be of interest
+                    to you.
+                {{/userConstituency}}
             </div>
         </div>
 
@@ -99,10 +103,6 @@
             {{#userConstituency}}
                 <h3>You live in {{name}}</h3>
                 {{#issue}}
-                    <p>
-                        In your constituency, {{actual}}% {{msg}}, compared to {{national}}% nationally. These
-                        policies may be of interest to your neighbours.
-                    </p>
                     <policy-grid policies="{{policies}}" />
                 {{/issue}}
             {{/userConstituency}}
