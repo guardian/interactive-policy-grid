@@ -20,8 +20,9 @@ define([
 
     var POSTCODE_URL = 'http://interactive.guim.co.uk/2015/general-election/postcodes/';
 
+    // TODO: sticky-bar height
     function getOffset(el) {
-        return el ? el.offsetTop + (el.classList.contains('section--sticky-bar') && -108) + getOffset(el.offsetParent) : 0;
+        return el ? el.offsetTop + (el.classList.contains('section--sticky-bar') && -60) + getOffset(el.offsetParent) : 0;
     }
 
     var scrollTo = (function () {

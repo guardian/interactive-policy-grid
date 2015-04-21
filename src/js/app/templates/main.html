@@ -25,12 +25,11 @@
     <div class="{{#mode != 'basic'}}is-hidden{{/mode}}" style="opacity: {{modeOpacity}}">
         <div class="section section--sticky-bar">
             <sticky-bar class="js-question-bar">
-                <span class="sticky-bar__left">
-                    <a class="link-to-policies policy-summary {{#if userPolicyCount}}has-policies{{/if}}"
-                       href="#" on-click="goto:policies" title="View your policies">
+                <h3 class="sticky-bar__left">
+                    <a class="link-to-policies" href="#" on-click="goto:policies" title="View your policies">
                         {{userPolicyCount}} policies
                     </a>
-                </span>
+                </h3>
                 <span class="sticky-bar__right">
                     {{#questions:questionNo}}
                         <a class="question-no {{#if this == currentSection}}is-current{{/if}}"
@@ -58,7 +57,7 @@
 
         <div class="section" id="policies">
             <h3>Your Guide</h3>
-            <h2>We've found {{userPolicyCount}} policies relevant to you</h2>
+            <h2>We've found <span style="color: #4bc6df">{{userPolicyCount}} policies</span> relevant to you</h2>
 
             <!--<p>
                 Something about filtering parties and showing policies relevant to your constituency

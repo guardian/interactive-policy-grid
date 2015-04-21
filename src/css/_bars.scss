@@ -1,8 +1,5 @@
 @mixin sticky-bar--height($prop) {
-    #{$prop}: ($gs-baseline * 4);
-    @media (min-width: $breakpoint1) {
-        #{$prop}: ($gs-baseline * 6);
-    }
+    #{$prop}: ($gs-baseline * 5);
 }
 
 .sticky-bar.is-sticky {
@@ -67,9 +64,11 @@
 }
 
 .question-no {
+    @include f-textSans;
+    font-weight: bold;
     display: inline-block;
     text-align: center;
-    color: $c-neutral3;
+    color: inherit;
     outline: 0;
     width: 30px;
     @media (min-width: $breakpoint1) {
@@ -78,7 +77,7 @@
 
     &:hover,
     &.is-current {
-        color: inherit;
+        color: $c-newsmain2;
         text-decoration: none;
     }
 }
@@ -127,12 +126,6 @@
 }
 
 .link-to-policies {
-    opacity: 0;
-    transition: opacity 0.1s ease-out;
-    &.has-policies {
-        opacity: 1;
-    }
-
     .is-bottom & {
         display: none;
     }
