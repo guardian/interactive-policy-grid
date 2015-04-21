@@ -1,7 +1,11 @@
 $policy-height: 130px;
 $policy-height-selected: $policy-height * 2 + $gs-baseline;
 
-.policy-grid-title {
+h3.policy-grid-title {
+    padding-top: ($gs-baseline * 2);
+}
+
+h4.policy-grid-title {
     padding-top: $gs-baseline;
 }
 
