@@ -32,6 +32,10 @@ define([
                 return policy;
             });
 
+            policies.sort(function (a, b) {
+                return a.party > b.party ? 1 : -1;
+            });
+
             var packages = spreadsheet.sheets.packages.map(function (pkg) {
                 pkg.id = pkg.id && pkg.id.trim() || "";
                 return {
