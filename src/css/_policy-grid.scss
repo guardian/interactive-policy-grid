@@ -1,4 +1,4 @@
-$policy-height: 130px;
+$policy-height: 150px;
 $policy-height-selected: $policy-height * 2 + $gs-baseline;
 
 h3.policy-grid-title {
@@ -68,7 +68,6 @@ h4.policy-grid-title {
     }
 
     @include columns(3, $breakpoint0);
-    @include columns(4, $breakpoint1);
     @include columns(5, $breakpoint2);
 
     &:hover {
