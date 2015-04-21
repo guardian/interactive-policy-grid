@@ -93,7 +93,7 @@
                             <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" /> {{sentence}}
                         </h3>
                         {{#policies.packages}}
-                            <h4>{{name}}</h4>
+                            <h4 class="policy-grid-title">{{name}}</h4>
                             <policy-grid policies="{{policies}}" />
                         {{/policies.packages}}
                     {{/if}}
@@ -101,7 +101,7 @@
             {{/questionsAnswered}}
 
             {{#userConstituency}}
-                <h3>You live in {{name}}</h3>
+                <h3 class="you-said policy-grid-title" decorator="section">You live in {{name}}</h3>
                 {{#issue}}
                     <policy-grid policies="{{policies}}" />
                 {{/issue}}
@@ -138,7 +138,7 @@
                 </span>
             </sticky-bar>
             {{#areas}}
-                <h3 id="area-{{id}}">{{area}}</h3>
+                <h3 class="policy-grid-title" id="area-{{id}}">{{area}}</h3>
                 <policy-grid policies="{{policies}}" />
             {{/areas}}
         </div>

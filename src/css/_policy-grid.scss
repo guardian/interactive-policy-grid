@@ -1,9 +1,12 @@
 $policy-height: 130px;
 $policy-height-selected: $policy-height * 2 + $gs-baseline;
 
+.policy-grid-title {
+    padding-top: $gs-baseline;
+}
+
 .policy-grid {
     overflow: hidden;
-    margin-bottom: ($gs-baseline * 2);
 
     &:last-child {
         margin-bottom: 0;

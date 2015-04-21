@@ -141,6 +141,7 @@ body::after {
 .you-said {
     @include f-textSans;
     border-top: 1px solid $c-neutral5;
+    margin-top: ($gs-baseline * 2);
 }
 
 .you-said--sticky-bar {
