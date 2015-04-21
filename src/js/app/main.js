@@ -16,6 +16,8 @@ define([
     }
 
     function init(el) {
+        app.start(el);
+
         pegasus(SHEET_URL).then(function (spreadsheet) {
             var commentators = {
                 'RM': 'Rowena Mason',
@@ -133,7 +135,7 @@ define([
             });
 
             try {
-            app.start(el, areas, questions, constituencies);
+                app.data(areas, questions, constituencies);
             } catch (e) {
                 console.log(e);
             }

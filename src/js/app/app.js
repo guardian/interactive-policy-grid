@@ -20,6 +20,8 @@ define([
 
     var POSTCODE_URL = 'http://interactive.guim.co.uk/2015/general-election/postcodes/';
 
+    var ractive;
+
     // TODO: sticky-bar height
     function getOffset(el) {
         return el ? el.offsetTop + (el.classList.contains('section--sticky-bar') && -60) + getOffset(el.offsetParent) : 0;
@@ -93,7 +95,13 @@ define([
         }, error);
     }
 
-    function start(el, areas, questions, constituencies) {
+    function closePolicyGrids() {
+        ractive.findAllComponents('policy-grid').forEach(function (grid) {
+            grid.fire('close');
+        });
+    }
+
+    function start(el) {
         var parties = ['Labour', 'SNP', 'Green', 'Ukip', 'Conservative', 'LD', 'PC'].map(function (party) {
             var id = party.toLowerCase();
             return {
@@ -104,7 +112,7 @@ define([
             };
         });
 
-        var ractive = new Ractive({
+        ractive = new Ractive({
             'el': el,
             'template': mainTemplate,
             'components': {
@@ -115,8 +123,8 @@ define([
             'data': {
                 'mode': window.location.hash === '#explore' ? 'explore' : 'basic',
                 'modeOpacity': 1,
-                'questions': questions,
-                'areas': areas,
+                'questions': [],
+                'areas': [],
                 'parties': parties
             },
             'computed': {
@@ -152,12 +160,6 @@ define([
             }
         });
 
-        function closePolicyGrids() {
-            ractive.findAllComponents('policy-grid').forEach(function (grid) {
-                grid.fire('close');
-            });
-        }
-
         ractive.on('goto', function (evt, id) {
             scrollTo(id);
             closePolicyGrids();
@@ -171,13 +173,6 @@ define([
                 window.scrollTo(0, 0); // without animation
                 closePolicyGrids();
             });
-            return false;
-        });
-
-        ractive.on('postcode', function (evt, userPostcode) {
-            getConstituency(userPostcode, function (ons_id) {
-                ractive.set('userConstituency', constituencies[ons_id]);
-            }, function () {});
             return false;
         });
 
@@ -246,7 +241,21 @@ define([
         initElectionNav("pollprojection");
     }
 
+    function data(areas, questions, constituencies) {
+        ractive.set('areas', areas);
+        ractive.set('questions', questions);
+
+        ractive.on('postcode', function (evt, userPostcode) {
+            getConstituency(userPostcode, function (ons_id) {
+                ractive.set('userConstituency', constituencies[ons_id]);
+            }, function () {});
+            return false;
+        });
+
+    }
+
     return {
-        'start': start
+        'start': start,
+        'data': data
     };
 });
