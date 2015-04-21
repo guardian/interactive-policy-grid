@@ -1,5 +1,5 @@
 .answers {
-    @include v-spacing(padding-bottom);
+    padding-bottom: ($gs-baseline * 3);
 
     &:last-child {
         padding-bottom: 0;
@@ -90,14 +90,14 @@
 .answers__item--full {
     @media (min-width: $breakpoint1) {
         font-size: 20px;
-        height: 300px;
+        height: 285px;
         text-align: center;
         margin-bottom: ($gs-gutter / 2 + $gs-baseline + 16px);
 
         & > .answers__item__icon {
             float: none;
             display: block;
-            margin: 0 0 $gs-baseline;
+            margin: -$gs-baseline 0 $gs-baseline;
             border-bottom: 1px solid $c-neutral6;
             padding: 0 0 $gs-baseline;
 

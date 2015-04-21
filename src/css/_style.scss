@@ -70,7 +70,7 @@ body::after {
     padding-left: 27px;
     border-top: 1px solid $c-neutral6;
     padding-bottom: $gs-baseline;
-    @include v-spacing(padding-top);
+    padding-top: $gs-baseline;
 
     @media (min-width: $breakpoint1) {
         padding-left: 37px;
