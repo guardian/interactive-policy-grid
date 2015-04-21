@@ -51,7 +51,7 @@
                     {{/answers}}
                 </div>
             {{/questions}}
-            <form class="postcode" on-submit="postcode:{{userPostcode}}">
+            <form class="postcode {{^questions}}is-hidden{{/questions}}" on-submit="postcode:{{userPostcode}}">
                 <input class="postcode__text" type="text" value="{{userPostcode}}" />
                 <button class="postcode__button button button--primary button--xlarge">Lookup</button>
             </form>
