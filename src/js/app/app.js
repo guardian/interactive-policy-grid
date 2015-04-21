@@ -134,6 +134,7 @@ define([
                     });
                 },
                 'userPolicyCount': function () {
+                    var userConstituency = this.get('userConstituency');
                     var answerPolicies = this.get('questionsAnswered').reduce(function (len, question) {
                         return len + question.answers.filter(function (answer) {
                             return answer.selected;
@@ -142,7 +143,7 @@ define([
                         }, 0);
                     }, 0);
 
-                    return answerPolicies;
+                    return (userConstituency ? userConstituency.issue.policies.length : 0) + answerPolicies;
                 },
                 'allPolicyCount': function () {
                     return this.get('areas').reduce(function (len, areas) {
