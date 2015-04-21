@@ -11,24 +11,6 @@
     }
 }
 
-body::after {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    content: "bp0";
-    background-color: black;
-    color: white;
-    @media (min-width: $breakpoint1) {
-        content: "bp1";
-    }
-    @media (min-width: $breakpoint2) {
-        content: "bp2";
-    }
-    @media (min-width: $breakpoint3) {
-        content: "bp3";
-    }
-}
-
 .header {
     position: relative;
     overflow: hidden;
