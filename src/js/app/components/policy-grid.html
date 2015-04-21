@@ -1,7 +1,7 @@
 <div class="policy-grid {{#if selectedPolicy}}has-selected{{/if}}">
     {{#policies}}
-        <div class="policy-grid__item {{#if this == selectedPolicy}}is-selected{{/if}} js-party-{{partyId}}">
-            <p class="policy-grid__item__party policy-grid__item__party--{{partyId}}">{{party}}</p>
+        <div class="policy-grid__item party-{{partyId}} {{#if this == selectedPolicy}}is-selected{{/if}}">
+            <p class="policy-grid__item__party">{{party}}</p>
             <h3 class="policy-grid__item__title">{{policy}}</h3>
             {{#if this == selectedPolicy}}
                 <p class="policy-grid__item__share">

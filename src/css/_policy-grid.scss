@@ -157,19 +157,33 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
     }
 }
 
-@mixin policy-grid__item__party--color($party, $color) {
-    .policy-grid__item__party--#{$party}::before {
+@mixin party-color($party, $color) {
+    .party-#{$party} > .policy-grid__item__party::before {
         background-color: $color;
     }
 }
 
-@include policy-grid__item__party--color(conservatives, #0087dc);
-@include policy-grid__item__party--color(labour, #d50000);
-@include policy-grid__item__party--color(ukip, #70147A);
-@include policy-grid__item__party--color(lib-dems, #fdbb30);
-@include policy-grid__item__party--color(plaid-cymru, #3f8428);
-@include policy-grid__item__party--color(snp, #fff95d);
-@include policy-grid__item__party--color('green', #008066);
+@include party-color(conservatives, #0087dc);
+@include party-color(labour, #d50000);
+@include party-color(ukip, #70147A);
+@include party-color(lib-dems, #fdbb30);
+@include party-color(plaid-cymru, #3f8428);
+@include party-color(snp, #fff95d);
+@include party-color('green', #008066);
+
+@mixin party-hide($party) {
+    .hide-#{$party} > .policy-grid > .party-#{$party} {
+        display: none;
+    }
+}
+
+@include party-hide(conservatives);
+@include party-hide(labour);
+@include party-hide(ukip);
+@include party-hide(lib-dems);
+@include party-hide(plaid-cymru);
+@include party-hide(snp);
+@include party-hide('green');
 
 .policy-grid__item.is-selected {
     background-color: transparentize(white, 0.05);

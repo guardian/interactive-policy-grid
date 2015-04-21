@@ -106,8 +106,7 @@ define([
             return {
                 'id': id,
                 'name': party,
-                'selected': false,
-                'elements': document.getElementsByClassName('js-party-' + id)
+                'selected': false
             };
         });
 
@@ -197,15 +196,15 @@ define([
         }, {'init': false});
 
         ractive.observe('parties', function (parties) {
+            var exploreEle = this.find('.js-explore');
+
             var hasSelected = parties.reduce(function (selected, party) {
                 return selected || party.selected;
             }, false);
 
             parties.forEach(function (party) {
                 var i, method = !hasSelected || party.selected ? 'remove' : 'add';
-                for (i = 0; i < party.elements.length; i++) {
-                    party.elements[i].classList[method]('is-hidden');
-                }
+                exploreEle.classList[method]('hide-' + party.id);
             });
             closePolicyGrids();
         });
