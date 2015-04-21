@@ -27,13 +27,6 @@
     .is-bottom > & {
         border-bottom: 0;
     }
-
-    &.you-said-bar {
-        display: none;
-        .is-sticky > & {
-            display: block;
-        }
-    }
 }
 
 .answer-bar {

@@ -71,16 +71,12 @@
             <div class="constituency {{#if userConstituency}}has-constituency{{/if}}">
                 Your constituency is <b>{{userConstituency.name}}</b>
             </div>-->
-            <sticky-bar class="you-said-bar">
+            <sticky-bar class="{{#if !currentSection.id}}is-hidden{{/if}}">
                 <span class="sticky-bar__left">
                     <h2 class="policy-title">
-                        {{#currentSection}}
-                            {{#if id}}
-                                You said
-                                <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
-                                <span class="you-said__text">{{text}}</span>
-                            {{/if}}
-                        {{/currentSection}}
+                        You said
+                        <img class="you-said__img" src="@@assets@@/imgs/icons/{{currentSection.id}}.svg" />
+                        <span class="you-said__text">{{currentSection.text}}</span>
                     </h2><span class="policy-share">
                         <button on-click="share:twitter" class="share share--twitter"></button>
                         <button on-click="share:facebook" class="share share--facebook"></button>
