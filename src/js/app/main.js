@@ -76,7 +76,7 @@ define([
                 constituencies[constituency.onsid] = constituency;
             });
 
-            function mkAnswer(id, text, cmpFn) {
+            function mkAnswer(id, text, sentence, cmpFn) {
                 var policyPackages = packages.map(function (pkg) {
                     return {
                         'name': pkg.name,
@@ -99,6 +99,7 @@ define([
                 return {
                     'id': id,
                     'text': text,
+                    'sentence': sentence,
                     'policies': {
                         'packages': policyPackages,
                         'count': policyPackages.reduce(function (len, policyPackage) {
@@ -123,7 +124,7 @@ define([
                     .filter(function (key) { return question[key]; })
                     .map(function (key) {
                         var answerId = question[key + 'id'];
-                        return mkAnswer(answerId, question[key], function (policy) {
+                        return mkAnswer(answerId, question[key], question[key + 'sentence'], function (policy) {
                             return policy.answers.indexOf(answerId) !== -1;
                         });
                     });
@@ -151,7 +152,7 @@ define([
                 'multi': true,
                 'answers': spreadsheet.sheets.interests.map(function (interest) {
                     interest.id = interest.id.trim();
-                    return mkAnswer(interest.id, interest.name, function (policy) {
+                    return mkAnswer(interest.id, interest.name, interest.sentence, function (policy) {
                         return policy.answers.indexOf(interest.id) !== -1;
                     });
                 })

@@ -72,7 +72,7 @@
                 <h3 class="sticky-bar__left you-said you-said--sticky-bar">
                     {{#if currentSection.id}}
                         <img class="you-said__img" src="@@assets@@/imgs/icons/{{currentSection.id}}.svg" />
-                        {{currentSection.text}}
+                        {{currentSection.sentence}}
                     {{/if}}
                 </h3>
                 <span class="sticky-bar__left policy-share">
@@ -90,7 +90,7 @@
                 {{#answers}}
                     {{#if selected}}
                         <h3 class="you-said js-section" decorator="section:{{this}}">
-                            <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" /> {{text}}
+                            <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" /> {{sentence}}
                         </h3>
                         {{#policies.packages}}
                             <h4>{{name}}</h4>
