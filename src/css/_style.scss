@@ -146,15 +146,24 @@ body::after {
 
 .you-said--sticky-bar {
     border-top: 0;
-    font-size: 0;
-    @media (min-width: $breakpoint0) {
-        font-size: inherit;
-    }
 }
 
 .you-said__img {
     width: 60px;
     vertical-align: middle;
+}
+
+.you-said__sentence {
+    display: none;
+    @media (min-width: $breakpoint1) {
+        display: inline;
+    }
+}
+
+.you-said__text {
+    @media (min-width: $breakpoint1) {
+        display: none;
+    }
 }
 
 .postcode {
