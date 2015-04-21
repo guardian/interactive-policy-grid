@@ -209,7 +209,14 @@ body::after {
     }
 }
 
-.party-filter {
+.filters {
+    display: none;
+    @media (min-width: $breakpoint2) {
+        display: table-cell;
+    }
+}
+
+.filters__party {
     vertical-align: middle;
     margin: 0 0 0 ($gs-baseline / 2);
 }

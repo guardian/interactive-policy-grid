@@ -119,10 +119,10 @@
         <div class="section section--sticky-bar js-explore">
             <sticky-bar>
                 <h2 class="sticky-bar__left">{{allPolicyCount}} policies</h2>
-                <span class="sticky-bar__right">
+                <span class="sticky-bar__right filters">
                     Show only
                     {{#parties}}
-                        <label class="party-filter button button--small {{#if !selected}}button--tertiary{{/if}}">
+                        <label class="filters__party button button--small {{#if !selected}}button--tertiary{{/if}}">
                             <input type="checkbox" checked="{{selected}}" style="display: none" />
                             {{name}}
                         </label>
