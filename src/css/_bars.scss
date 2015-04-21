@@ -34,7 +34,6 @@
     display: table-cell;
     vertical-align: top;
     white-space: nowrap;
-    @include h-spacing(padding-right);
 }
 
 .sticky-bar__right {
