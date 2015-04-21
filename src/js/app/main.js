@@ -40,7 +40,7 @@ define([
             var constituencyIssues = {};
             ['youthindex', 'ageindex', 'badhealthindex', 'noqualsindex', 'unemploymentindex'].forEach(function (issue) {
                 constituencyIssues[issue] = policies.filter(function (policy) {
-                    return policy.stats === issue;
+                    return (policy.stats && policy.stats.trim()) === issue;
                 });
             });
 
