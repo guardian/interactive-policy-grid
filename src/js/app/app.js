@@ -199,7 +199,7 @@ define([
         });
 
         ractive.observe('userPolicyCount', function () {
-            var el = ractive.find('.policy-summary');
+            var el = ractive.find('.link-to-policies');
             el.classList.add('do-animation');
             setTimeout(function () {
                 el.classList.remove('do-animation');

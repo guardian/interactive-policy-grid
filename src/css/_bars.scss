@@ -1,10 +1,7 @@
 @mixin sticky-bar--height($prop) {
     #{$prop}: ($gs-baseline * 4);
     @media (min-width: $breakpoint1) {
-        #{$prop}: ($gs-baseline * 7);
-    }
-    @media (min-width: $breakpoint2) {
-        #{$prop}: ($gs-baseline * 9);
+        #{$prop}: ($gs-baseline * 6);
     }
 }
 
@@ -71,16 +68,12 @@
 
 .question-no {
     display: inline-block;
-    border-right: 1px solid $c-neutral6;
     text-align: center;
     color: $c-neutral3;
     outline: 0;
-    width: 33px;
+    width: 30px;
     @media (min-width: $breakpoint1) {
         width: 70px;
-    }
-    @media (min-width: $breakpoint2) {
-        width: 100px;
     }
 
     &:hover,
@@ -94,13 +87,6 @@
     0%   { color: $c-neutral1; }
     50%  { color: $c-newsmain2; }
     100% { color: $c-neutral1; }
-}
-
-.policy-summary {
-
-    &.do-animation {
-        animation: flash 0.3s ease-out;
-    }
 }
 
 .link-to-top,
@@ -142,7 +128,7 @@
 
 .link-to-policies {
     opacity: 0;
-    transition: opacity 0.1s linear;
+    transition: opacity 0.1s ease-out;
     &.has-policies {
         opacity: 1;
     }
@@ -153,9 +139,14 @@
 
     &::after {
         transform: rotate(180deg);
-        display: none;
-        @media (min-width: $breakpoint1) {
-            display: inline-block;
-        }
+    }
+
+    &.do-animation {
+        animation: flash 0.3s ease-out;
+    }
+
+    font-size: 20px;
+    @media (min-width: $breakpoint1) {
+        font-size: 24px;
     }
 }

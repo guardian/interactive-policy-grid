@@ -25,12 +25,12 @@
     <div class="{{#mode != 'basic'}}is-hidden{{/mode}}" style="opacity: {{modeOpacity}}">
         <div class="section section--sticky-bar">
             <sticky-bar class="js-question-bar">
-                <h2 class="sticky-bar__left">
+                <span class="sticky-bar__left">
                     <a class="link-to-policies policy-summary {{#if userPolicyCount}}has-policies{{/if}}"
                        href="#" on-click="goto:policies" title="View your policies">
                         {{userPolicyCount}} policies
                     </a>
-                </h2>
+                </span>
                 <span class="sticky-bar__right">
                     {{#questions:questionNo}}
                         <a class="question-no {{#if this == currentSection}}is-current{{/if}}"
