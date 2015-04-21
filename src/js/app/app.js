@@ -101,8 +101,8 @@ define([
     }
 
     function start(el) {
-        var parties = ['Labour', 'SNP', 'Green', 'Ukip', 'Conservative', 'LD', 'PC'].map(function (party) {
-            var id = party.toLowerCase();
+        var parties = ['Labour', 'SNP', 'Green', 'Ukip', 'Conservatives', 'Lib Dems', 'Plaid Cymru'].map(function (party) {
+            var id = party.toLowerCase().replace(/ /g, '-');
             return {
                 'id': id,
                 'name': party,

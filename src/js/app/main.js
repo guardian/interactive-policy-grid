@@ -28,6 +28,7 @@ define([
                 policy.answers = parseList(policy.answers);
                 policy.commentaryname = commentators[policy.commentaryinitials];
                 policy.package = policy.package && policy.package.trim() || "";
+                policy.partyId = policy.party.trim().toLowerCase().replace(/ /g, '-');
                 return policy;
             });
 

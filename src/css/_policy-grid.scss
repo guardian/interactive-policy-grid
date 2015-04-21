@@ -163,11 +163,11 @@ $policy-height-selected: $policy-height * 2 + $gs-baseline;
     }
 }
 
-@include policy-grid__item__party--color(conservative, #0087dc);
+@include policy-grid__item__party--color(conservatives, #0087dc);
 @include policy-grid__item__party--color(labour, #d50000);
 @include policy-grid__item__party--color(ukip, #70147A);
-@include policy-grid__item__party--color(ld, #fdbb30);
-@include policy-grid__item__party--color(pc, #3f8428);
+@include policy-grid__item__party--color(lib-dems, #fdbb30);
+@include policy-grid__item__party--color(plaid-cymru, #3f8428);
 @include policy-grid__item__party--color(snp, #fff95d);
 @include policy-grid__item__party--color('green', #008066);
 
