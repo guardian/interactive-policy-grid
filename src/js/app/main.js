@@ -25,10 +25,12 @@ define([
             var policies = spreadsheet.sheets.policies.map(function (policy) {
                 policy.answers = parseList(policy.answers);
                 policy.commentaryname = commentators[policy.commentaryinitials];
+                policy.package = policy.package && policy.package.trim();
                 return policy;
             });
 
             var packages = spreadsheet.sheets.packages.map(function (pkg) {
+                pkg.id = pkg.id && pkg.id.trim();
                 return {
                     'name': pkg.name,
                     'policies': policies.filter(function (policy) { return policy.package === pkg.id; })
