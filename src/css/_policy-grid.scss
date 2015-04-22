@@ -61,7 +61,7 @@ h4.policy-grid-title {
             &.is-selected.is-at-edge {
                 margin-left: auto;
                 left: auto;
-                margin-right: -($width * 2);
+                margin-right: calc(#{(-$width * 2)} + #{$gs-baseline});
                 right: ($width * 2);
             }
         }
