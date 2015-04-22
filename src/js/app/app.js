@@ -187,7 +187,7 @@ define([
         ractive.on('share', function (evt, network) { share(network); });
 
         ractive.on('policy-grid.share', function (evt, network) {
-            share(network, '#' + evt.context.party + ': ' + evt.context.policy + '. ');
+            share(network, '#' + evt.context.party.replace(/ /g, '') + ': ' + evt.context.policy + '. ');
         });
 
         ractive.observe('userPolicyCount', function () {
