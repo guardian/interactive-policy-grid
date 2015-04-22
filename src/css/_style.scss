@@ -128,20 +128,20 @@
 
 .you-said--sticky-bar {
     border-top: 0;
+    & .you-said__img,
+    & .you-said__sentence {
+        display: none;
+        @media (min-width: $breakpoint1) {
+            display: inline;
+        }
+    }
+
 }
 
 .you-said__img {
     width: 60px;
     height: 60px;
     vertical-align: middle;
-}
-
-.you-said__img,
-.you-said__sentence {
-    display: none;
-    @media (min-width: $breakpoint1) {
-        display: inline;
-    }
 }
 
 .you-said__text {
