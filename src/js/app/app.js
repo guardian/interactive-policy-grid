@@ -72,7 +72,7 @@ define([
         var facebookBaseUrl = 'https://www.facebook.com/sharer/sharer.php?ref=responsive&u=';
         var googleBaseUrl = 'https://plus.google.com/share?url=';
         var emailSubject = 'Will their policies work for you?';
-        var url = encodeURIComponent(window.location.href);
+        var url = encodeURIComponent('http://gu.com/p/46mqa');
         var shareWindow;
 
         if (network === 'twitter') {
