@@ -146,3 +146,15 @@ img {
         background-color: #ce3620;
     }
 }
+
+figure.element-interactive {
+    margin:0
+}
+#article-body.interactivePadding {
+    padding-left:0;
+    padding-right:0;
+}
+
+a {
+    text-shadow: none !important; // Override apps
+}
