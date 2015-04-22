@@ -159,7 +159,7 @@ define([
                 'constituency': function (node, name) {
                     node.sectionContext = {
                         'text': name,
-                        'sentence': 'You said you lived in ' + name
+                        'sentence': 'You said you live in ' + name
                     };
                     return {'teardown': function () {}};
                 }
