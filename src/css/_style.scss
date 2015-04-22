@@ -212,3 +212,28 @@
     vertical-align: middle;
     margin: 0 0 0 ($gs-baseline / 2);
 }
+
+.section--questions {
+    padding-bottom: 76px;
+}
+
+@keyframes flash2 {
+    0%   { opacity: 0; color: white; }
+    30%  { color: $c-neutral1; }
+    60%  { color: $c-newsmain2; }
+    100% { opacity: 1; color: $c-neutral1; }
+}
+.go-to-policies {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: ($gs-gutter / 2) 0;
+
+    opacity: 0;
+    &.is-visible {
+        animation: flash2 1s ease-out;
+        opacity: 1;
+    }
+}
