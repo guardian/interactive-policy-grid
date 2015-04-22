@@ -68,10 +68,10 @@ define([
 
     function share(network, extra) {
         var twitterBaseUrl = 'https://twitter.com/intent/tweet?text=';
-        var twitterMessage = (extra || '') + 'Will their policies work for you? #ge15';
+        var twitterMessage = (extra || '') + '#GE2015: What are the parties offering you?';
         var facebookBaseUrl = 'https://www.facebook.com/sharer/sharer.php?ref=responsive&u=';
         var googleBaseUrl = 'https://plus.google.com/share?url=';
-        var emailSubject = 'Will their policies work for you?';
+        var emailSubject = 'Election 2015: What are the parties offering you?';
         var url = encodeURIComponent('http://gu.com/p/46mqa');
         var shareWindow;
 
