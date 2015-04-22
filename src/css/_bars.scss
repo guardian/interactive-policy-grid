@@ -99,7 +99,9 @@ a.link-to-policies {
 }
 
 .link-to-top {
-    font-size: 0;
+    @media (min-width: $breakpoint1) {
+        font-size: 0;
+    }
     @media (min-width: $breakpoint2) {
         font-size: inherit;
     }

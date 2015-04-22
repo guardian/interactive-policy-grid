@@ -83,7 +83,6 @@
                         <img class="you-said__img" src="@@assets@@/imgs/icons/{{currentSection.id}}.svg" />
                     {{/if}}
                     <span class="you-said__sentence">{{currentSection.sentence}}</span>
-                    <span class="you-said__text">{{currentSection.text}}</span>
                 </h3>
                 <span class="sticky-bar__right">
                     <a class="link-to-top" href="#" on-click="goto:question-0" title="Go back to questions">Back to questions</a>
@@ -96,7 +95,6 @@
                         <h3 class="you-said js-section" decorator="section:{{this}}">
                             <img class="you-said__img" src="@@assets@@/imgs/icons/{{id}}.svg" />
                             <span class="you-said__sentence">{{sentence}}</span>
-                            <span class="you-said__text">{{text}}</span>
                         </h3>
                         {{#policies.packages}}
                             <h4 class="policy-grid-title">{{name}}</h4>
