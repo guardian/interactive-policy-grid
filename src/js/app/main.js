@@ -1,9 +1,7 @@
 define([
-    'json!data/parties.json',
     'pegasus',
     'app'
 ], function (
-    parties,
     pegasus,
     app
 ) {
@@ -87,7 +85,6 @@ define([
 
             var constituencies = {};
             spreadsheet.sheets.constituencies.forEach(function (constituency) {
-                constituency.parties = parties[constituency.onsid];
                 constituency.issue = constituencyIssues[constituency.index];
                 constituencies[constituency.onsid] = constituency;
             });
