@@ -69,7 +69,7 @@ define([
                 },
                 'noqualsindex': {
                     'national': 23.2,
-                    'msg': ''
+                    'msg': 'of residents have no formal qualifications'
                 },
                 'unemploymentindex': {
                     'national': 2.7,
