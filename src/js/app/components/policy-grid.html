@@ -41,6 +41,9 @@
                     selectedNode.classList.remove('is-at-edge');
                 } else if (selectedNode.offsetLeft + selectedNode.offsetWidth  >= parentEle.clientWidth) {
                     selectedNode.classList.add('is-at-edge');
+                    if (selectedNode.offsetLeft < 0) {
+                        selectedNode.classList.add('is-at-middle');
+                    }
                 }
             });
 

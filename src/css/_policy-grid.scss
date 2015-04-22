@@ -18,13 +18,13 @@ h4.policy-grid-title {
 
     @media (min-width: $breakpoint0) {
         margin-right: (-$gs-gutter / 2);
-        &.has-selected {
-            padding-bottom: ($policy-height-selected - $policy-height);
-        }
     }
 
     @media (min-width: $breakpoint1) {
         margin-right: -$gs-baseline;
+        &.has-selected {
+            padding-bottom: ($policy-height-selected - $policy-height);
+        }
     }
 }
 
@@ -61,8 +61,13 @@ h4.policy-grid-title {
             &.is-selected.is-at-edge {
                 margin-left: auto;
                 left: auto;
-                margin-right: calc(#{(-$width * 2)} + #{$gs-baseline});
+                margin-right: calc(#{-$width * 2} + #{$gs-baseline});
                 right: ($width * 2);
+            }
+
+            &.is-selected.is-at-middle {
+                margin-right: calc(#{-$width} + #{$gs-baseline});
+                right: $width;
             }
         }
     }
